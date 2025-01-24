@@ -1,7 +1,9 @@
 package Model_Pojos;
 
+import java.util.ArrayList;
+
 public class Viajes {
- 
+
 	private String nombre;
 	private String tipoViaje;
 	private String fechaInicio;
@@ -10,54 +12,99 @@ public class Viajes {
 	private String pais;
 	private String descripcion;
 	private String servicios;
-	
+
+	private ArrayList<Viajes> viajes = new ArrayList<>();
+
+	public Viajes(String nombre, String tipoViaje, String fechaInicio, String fechaFin, String duracion, String pais,
+			String descripcion, String servicios, ArrayList<Viajes> viajes) {
+		this.nombre = nombre;
+		this.tipoViaje = tipoViaje;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.duracion = duracion;
+		this.pais = pais;
+		this.descripcion = descripcion;
+		this.servicios = servicios;
+		this.viajes = viajes;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getTipo() {
+
+	public String getTipoViaje() {
 		return tipoViaje;
 	}
-	public void setTipo(String tipo) {
-		this.tipoViaje = tipo;
+
+	public void setTipoViaje(String tipoViaje) {
+		this.tipoViaje = tipoViaje;
 	}
-	public String getInicio() {
+
+	public String getFechaInicio() {
 		return fechaInicio;
 	}
-	public void setInicio(String inicio) {
-		this.fechaInicio = inicio;
+
+	public void setFechaInicio(String fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
-	public String getFin() {
+
+	public String getFechaFin() {
 		return fechaFin;
 	}
-	public void setFin(String fin) {
-		this.fechaFin = fin;
+
+	public void setFechaFin(String fechaFin) {
+		this.fechaFin = fechaFin;
 	}
-	public String getDias() {
+
+	public String getDuracion() {
 		return duracion;
 	}
-	public void setDias(String dias) {
-		this.duracion = dias;
+
+	public void setDuracion(String duracion) {
+		this.duracion = duracion;
 	}
+
 	public String getPais() {
 		return pais;
 	}
+
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
 	public String getServicios() {
 		return servicios;
 	}
+
 	public void setServicios(String servicios) {
 		this.servicios = servicios;
+	}
+
+	public ArrayList<Viajes> getViajes() {
+		return viajes;
+	}
+
+	public void setViajes(ArrayList<Viajes> viajes) {
+		this.viajes = viajes;
+	}
+
+	@Override
+	public String toString() {
+		return "Viajes [nombre=" + nombre + ", tipoViaje=" + tipoViaje + ", fechaInicio=" + fechaInicio + ", fechaFin="
+				+ fechaFin + ", duracion=" + duracion + ", pais=" + pais + ", descripcion=" + descripcion
+				+ ", servicios=" + servicios + ", viajes=" + viajes + "]";
 	}
 
 }
