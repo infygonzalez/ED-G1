@@ -3,7 +3,7 @@ package Model_Pojos;
 public class Agencias {
  private String nombre;
  private String color;
- private String empleados;
+ private int empleados;
  private String tipo;
  private String logo;
 
@@ -20,10 +20,10 @@ public String getColor() {
 public void setColor(String color) {
 	this.color = color;
 }
-public String getEmpleados() {
+public int getEmpleados() {
 	return empleados;
 }
-public void setEmpleados(String empleados) {
+public void setEmpleados(int empleados) {
 	this.empleados = empleados;
 }
 public String getTipo() {

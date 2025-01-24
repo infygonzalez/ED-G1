@@ -5,7 +5,7 @@ public class Actividad {
 	private String nombreEvento;
 	private String descripcion;
 	private String fecha;
-	private String precio;
+	private float precio;
 	
 	public String getNombreEvento() {
 		return nombreEvento;
@@ -25,11 +25,13 @@ public class Actividad {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public String getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
-	public void setPrecio(String precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
+	
+	
 	
 }

@@ -5,9 +5,9 @@ public class Vuelo {
 	private String codigoAeroOrigen;
 	private String aeropuertoDestino;
 	private String codigoAeroDestino;
-	private String codigoVuelo;
+	private int codigoVuelo;
 	private String aerolinea;
-	private String precio;
+	private float precio;
 	private String fechaSalida;
 	private String horarioSalida;
 	private String duracionViaje;
@@ -36,10 +36,10 @@ public class Vuelo {
 	public void setCodigoAeroDestino(String codigoAeroDestino) {
 		this.codigoAeroDestino = codigoAeroDestino;
 	}
-	public String getCodigoVuelo() {
+	public int getCodigoVuelo() {
 		return codigoVuelo;
 	}
-	public void setCodigoVuelo(String codigoVuelo) {
+	public void setCodigoVuelo(int codigoVuelo) {
 		this.codigoVuelo = codigoVuelo;
 	}
 	public String getAerolinea() {
@@ -48,10 +48,10 @@ public class Vuelo {
 	public void setAerolinea(String aerolinea) {
 		this.aerolinea = aerolinea;
 	}
-	public String getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
-	public void setPrecio(String precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 	public String getFechaSalida() {

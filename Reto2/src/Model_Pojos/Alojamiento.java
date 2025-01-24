@@ -4,7 +4,7 @@ public class Alojamiento {
 	
 	private String nombreHotel;
 	private String ciudad;
-	private String precio;
+	private float precio;
 	private String fechaEntrada;
 	private String fechaSalida;
 	private String tipoHabitacion;
@@ -23,10 +23,10 @@ public class Alojamiento {
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
-	public String getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
-	public void setPrecio(String precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 	public String getFechaEntrada() {
