@@ -1,4 +1,4 @@
-package Modelo_Pojos;
+package Model_Pojos;
 
 public class Agencias {
  private String nombre;
