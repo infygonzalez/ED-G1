@@ -1,18 +1,18 @@
 package Model_Pojos;
 
-import java.util.ArrayList;
-
 public class Pais {
 
 	private String codigo;
-	private String descripcion;
-	private ArrayList<Pais> pais = new ArrayList<>();
+	private String nombre;
 
-	public Pais(String codigo, String descripcion, ArrayList<Pais> pais) {
-		
+	// Relaciones
+	private CodigoIATA codigoIATA;
+
+	public Pais(String codigo, String nombre, CodigoIATA codigoIATA) {
+		super();
 		this.codigo = codigo;
-		this.descripcion = descripcion;
-		this.pais = pais;
+		this.nombre = nombre;
+		this.codigoIATA = codigoIATA;
 	}
 
 	public String getCodigo() {
@@ -23,25 +23,25 @@ public class Pais {
 		this.codigo = codigo;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public ArrayList<Pais> getPais() {
-		return pais;
+	public CodigoIATA getCodigoIATA() {
+		return codigoIATA;
 	}
 
-	public void setPais(ArrayList<Pais> pais) {
-		this.pais = pais;
+	public void setCodigoIATA(CodigoIATA codigoIATA) {
+		this.codigoIATA = codigoIATA;
 	}
 
 	@Override
 	public String toString() {
-		return "Pais [codigo=" + codigo + ", descripcion=" + descripcion + ", pais=" + pais + "]";
+		return "Pais [codigo=" + codigo + ", nombre=" + nombre + "]";
 	}
 
 }
