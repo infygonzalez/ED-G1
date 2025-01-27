@@ -2,17 +2,26 @@ package Model_Pojos;
 
 public class Pais {
 
+	private String pais;
 	private String codigo;
-	private String nombre;
 
-	// Relaciones
-	private CodigoIATA codigoIATA;
+	private Viajes viajes;
+	private IATAS iatas;
 
-	public Pais(String codigo, String nombre, CodigoIATA codigoIATA) {
+	public Pais(String pais, String codigo, Viajes viajes, IATAS iatas) {
 		super();
+		this.pais = pais;
 		this.codigo = codigo;
-		this.nombre = nombre;
-		this.codigoIATA = codigoIATA;
+		this.viajes = viajes;
+		this.iatas = iatas;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
 
 	public String getCodigo() {
@@ -23,25 +32,25 @@ public class Pais {
 		this.codigo = codigo;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Viajes getViajes() {
+		return viajes;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setViajes(Viajes viajes) {
+		this.viajes = viajes;
 	}
 
-	public CodigoIATA getCodigoIATA() {
-		return codigoIATA;
+	public IATAS getIatas() {
+		return iatas;
 	}
 
-	public void setCodigoIATA(CodigoIATA codigoIATA) {
-		this.codigoIATA = codigoIATA;
+	public void setIatas(IATAS iatas) {
+		this.iatas = iatas;
 	}
 
 	@Override
 	public String toString() {
-		return "Pais [codigo=" + codigo + ", nombre=" + nombre + "]";
+		return "Pais [pais=" + pais + ", codigo=" + codigo + ", viajes=" + viajes + ", iatas=" + iatas + "]";
 	}
 
 }

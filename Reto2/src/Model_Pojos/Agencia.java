@@ -1,22 +1,27 @@
 package Model_Pojos;
 
-public class Empresa {
+import java.util.ArrayList;
+
+public class Agencia {
 
 	private int id;
 	private String nombre;
 	private String logo;
 	private String colorMarca;
-	private String numeroEmpresa;
+	private String numeroEmpleados;
 	private String tipoAgencia;
-	
-	public Empresa(int id, String nombre, String logo, String colorMarca, String numeroEmpresa, String tipoAgencia) {
+	private ArrayList<Viajes> viajes;
+
+	public Agencia(int id, String nombre, String logo, String colorMarca, String numeroEmpleados, String tipoAgencia,
+			ArrayList<Viajes> viajes) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.logo = logo;
 		this.colorMarca = colorMarca;
-		this.numeroEmpresa = numeroEmpresa;
+		this.numeroEmpleados = numeroEmpleados;
 		this.tipoAgencia = tipoAgencia;
+		this.viajes = viajes;
 	}
 
 	public int getId() {
@@ -51,12 +56,12 @@ public class Empresa {
 		this.colorMarca = colorMarca;
 	}
 
-	public String getNumeroEmpresa() {
-		return numeroEmpresa;
+	public String getNumeroEmpleados() {
+		return numeroEmpleados;
 	}
 
-	public void setNumeroEmpresa(String numeroEmpresa) {
-		this.numeroEmpresa = numeroEmpresa;
+	public void setNumeroEmpleados(String numeroEmpleados) {
+		this.numeroEmpleados = numeroEmpleados;
 	}
 
 	public String getTipoAgencia() {
@@ -67,12 +72,18 @@ public class Empresa {
 		this.tipoAgencia = tipoAgencia;
 	}
 
+	public ArrayList<Viajes> getViajes() {
+		return viajes;
+	}
+
+	public void setViajes(ArrayList<Viajes> viajes) {
+		this.viajes = viajes;
+	}
+
 	@Override
 	public String toString() {
-		return "Empresa [id=" + id + ", nombre=" + nombre + ", logo=" + logo + ", colorMarca=" + colorMarca
-				+ ", numeroEmpresa=" + numeroEmpresa + ", tipoAgencia=" + tipoAgencia + "]";
+		return "Agencia [id=" + id + ", nombre=" + nombre + ", logo=" + logo + ", colorMarca=" + colorMarca
+				+ ", numeroEmpleados=" + numeroEmpleados + ", tipoAgencia=" + tipoAgencia + ", viajes=" + viajes + "]";
 	}
-	
-	
 
 }
