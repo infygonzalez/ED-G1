@@ -10,7 +10,20 @@ public class Agencia {
 	private String colorMarca;
 	private String numeroEmpleados;
 	private String tipoAgencia;
+	private String contraseña;
 	private ArrayList<Viajes> viajes;
+
+	public Agencia() {
+		this.id = 0;
+		this.nombre = "";
+		this.logo = "";
+		this.colorMarca = "";
+		this.numeroEmpleados = "";
+		this.tipoAgencia = "";
+		this.contraseña = "";
+		this.viajes = null;
+
+	}
 
 	public Agencia(int id, String nombre, String logo, String colorMarca, String numeroEmpleados, String tipoAgencia,
 			ArrayList<Viajes> viajes) {
@@ -21,7 +34,16 @@ public class Agencia {
 		this.colorMarca = colorMarca;
 		this.numeroEmpleados = numeroEmpleados;
 		this.tipoAgencia = tipoAgencia;
+		this.contraseña = contraseña;
 		this.viajes = viajes;
+	}
+
+	public String getContraseña() {
+		return contraseña;
+	}
+
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
 	}
 
 	public int getId() {
@@ -83,7 +105,8 @@ public class Agencia {
 	@Override
 	public String toString() {
 		return "Agencia [id=" + id + ", nombre=" + nombre + ", logo=" + logo + ", colorMarca=" + colorMarca
-				+ ", numeroEmpleados=" + numeroEmpleados + ", tipoAgencia=" + tipoAgencia + ", viajes=" + viajes + "]";
+				+ ", numeroEmpleados=" + numeroEmpleados + ", tipoAgencia=" + tipoAgencia + ", contraseña=" + contraseña
+				+ ", viajes=" + viajes + "]";
 	}
 
 }
