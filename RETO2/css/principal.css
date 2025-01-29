@@ -1,0 +1,263 @@
+body {
+  margin: 0 ;
+  padding: 0;
+  width: 100%;
+  height: 100%; 
+  overflow-x: hidden;
+  background-color: rgb(224, 224, 224);
+}
+
+.avionCabecera {
+  width: 100%;
+  height: 80vh; /* Aseguramos que ocupe toda la pantalla */
+  object-fit: cover; /* Mantiene el aspecto de la imagen */
+  position: relative; /* Permite posicionar el título sobre esta imagen */
+
+
+  }
+
+.titulo {
+  position: absolute; /* Absoluto respecto al contenedor `.avionCabecera` */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  text-align: center;
+  color: white;
+  font-size: 100px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  z-index: 1; /* Garantiza que esté por encima de la imagen */
+}
+
+.menu {
+  padding: 10px;
+  
+  display: flex;
+  list-style: none;
+  background-color: #222;
+  justify-content: center;
+  padding: 20px;
+
+}
+
+.menu li a {
+  color: white;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  font-size: 16px;
+  margin-right: 100px;
+}
+
+.menu li a:hover {
+  color: #1ee2e7;
+}
+
+
+.menu {
+  padding: 20px;
+  display: flex;
+  list-style: none;
+  background-color: #222;
+  justify-content: center;
+  position: relative; /* Necesario para posicionar el submenú */
+}
+
+.menu li {
+  position: relative; /* Necesario para anclar el submenú */
+}
+
+.menu li a {
+  color: white;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.menu li a:hover {
+  color: #1ee2e7;
+}
+
+
+
+
+#carrusel {
+  width: 50%;
+  height: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.carrusel {
+  overflow-x: scroll;
+}
+
+#carrusel p {
+  color: #134A73;
+  font-family: sans-serif;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 3%;
+  margin-bottom: 40px;
+}
+
+#carrusel .galeria {
+  display: flex;
+  flex-direction: row;
+  width: 2500px;
+  height: 70vh;
+}
+
+#carrusel .imagen {
+  flex: 1;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: flex 0.8s ease;
+}
+
+#carrusel .imagen:hover {
+  flex: 15%;
+}
+
+/* Fotos */
+#carrusel .imagen-1 { 
+  background-image: url('../imagenes/suiza.jpeg');
+}
+#carrusel .imagen-2 { 
+  background-image: url('../imagenes/AMS.jpg');
+}
+#carrusel .imagen-3 { 
+  background-image: url('../imagenes/jamaica.jpg');
+}
+#carrusel .imagen-4 { 
+  background-image: url('../imagenes/frankfurt.jpg');
+}
+#carrusel .imagen-5 { 
+  background-image: url('../imagenes/amsterdam.jpg');
+}
+#carrusel .imagen-6 { 
+  background-image: url('../imagenes/helsinki.jpg');
+}
+#carrusel .imagen-7 { 
+  background-image: url('../imagenes/SVQ.jpg');
+}
+#carrusel .imagen-8 { 
+  background-image: url('../imagenes/londres.jpg');
+}
+
+.galeria .imagen:hover {
+  cursor: pointer;
+}
+
+
+
+#contacto {
+  background-color: #444442;
+  color: white;
+  font-family: 'Poppins', sans-serif, 'arial';
+  padding-top: 85px;
+
+}
+#contacto input {
+  padding: 30px;
+  width: 30vh;
+  margin: 2px;
+  cursor: pointer;
+  border: 1px solid black;
+  outline: none;
+}
+
+textarea {
+  width: 60px;
+  min-height: 15em;
+}
+input,
+textarea {
+    padding: 30px;
+    border: 0;
+    width: 100%;
+    font-size: 1rem;
+    background-color: #2d2d2d;
+    color: white;
+    border-radius: 4px;	
+    border: 1px solid black;
+    font-family: 'Poppins', sans-serif, 'arial';
+
+}
+#contactoBoton {
+  width: 20%;
+  border-radius: 6px;
+  padding: 10px;
+  background-color:#cacaca;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  border: none;
+}
+#contactoBoton:hover {
+  cursor: pointer;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 414px) {
+  .menu {
+    display: flex;
+    
+  }
+}
+
+
+
+
+@media (max-width: 1327px) {
+
+  .titulo {
+    text-align: center;
+    margin: 0;
+    color: white;
+    font-size: 100px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif ;
+    position: absolute;
+    top: 20%; 
+    left: 50%; 
+
+}
+}
+@media (max-width: 715px) {
+  .titulo {
+    top: 15%; 
+    left: 50%; 
+    font-size: 60px;
+}
+}
+
+@media (max-width: 470px) {
+  .titulo {
+    top: 10%; 
+    left: 50%; 
+    font-size: 35px;
+  }
+}
+@media (max-width: 309px) {
+  .titulo {
+    top: 7%; 
+    left: 50%; 
+    font-size: 35px;
+  }
+}
