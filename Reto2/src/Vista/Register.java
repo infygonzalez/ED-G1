@@ -10,6 +10,8 @@ import Controlador.Controlador;
 import Modelo_Pojos.Agencia;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Canvas;
@@ -24,6 +26,7 @@ import javax.swing.JButton;
 public class Register extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	protected static final JOptionPane OptionPane = null;
 	private JPanel contentPane;
 	private JTextField textNombreAgencia;
 	private JTextField textColor;
@@ -174,12 +177,12 @@ public class Register extends JFrame {
 					Agencia agencia = new Agencia(nombreAgencia, logo, color, tipoEmpleados, tipoAgencia, contraseña);
 
 					if (Controlador.registrarAgencia(agencia)) {
-						System.out.println("Agencia registrada correctamente.");
+						OptionPane.showMessageDialog(null, "Usuario Creado Correctamente.", "Usuario Creado", JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						System.out.println("Error al registrar la agencia.");
+						OptionPane.showMessageDialog(null, "Error al Registrar Agencia.", "Error de creacion", JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
-					System.out.println("Las contraseñas no coinciden.");
+					OptionPane.showMessageDialog(null, "Las Contraseñas NO coinciden.", "Error de contraseñas ", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

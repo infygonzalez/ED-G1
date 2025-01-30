@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import Vista.BotonInicio;
 
 public class Launcher extends JFrame {
+	public Launcher() {
+	}
 
 	private static final long serialVersionUID = 1L;
 
