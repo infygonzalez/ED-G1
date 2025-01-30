@@ -1,14 +1,14 @@
-package Model_Pojos;
+package Modelo_Pojos;
 
 public class Pais {
 
 	private String pais;
 	private String codigo;
 
-	private Viajes viajes;
+	private Viaje viajes;
 	private IATAS iatas;
 
-	public Pais(String pais, String codigo, Viajes viajes, IATAS iatas) {
+	public Pais(String pais, String codigo, Viaje viajes, IATAS iatas) {
 		super();
 		this.pais = pais;
 		this.codigo = codigo;
@@ -32,11 +32,11 @@ public class Pais {
 		this.codigo = codigo;
 	}
 
-	public Viajes getViajes() {
+	public Viaje getViajes() {
 		return viajes;
 	}
 
-	public void setViajes(Viajes viajes) {
+	public void setViajes(Viaje viajes) {
 		this.viajes = viajes;
 	}
 

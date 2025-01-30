@@ -1,18 +1,20 @@
-package Model_Pojos;
+package Modelo_Pojos;
 
 public class Otros {
 	private String nombre;
 	private String fecha;
 	private String descripcion;
 	private float precio;
-	private Viajes viajes;
+	private String nombreViaje;
+	private Viaje viajes;
 
-	public Otros(String nombre, String fecha, String descripcion, float precio, Viajes viajes) {
+	public Otros(String nombre, String fecha, String descripcion, float precio, String nombreViaje, Viaje viajes) {
 		super();
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.descripcion = descripcion;
 		this.precio = precio;
+		this.nombreViaje = nombreViaje;
 		this.viajes = viajes;
 	}
 
@@ -48,18 +50,28 @@ public class Otros {
 		this.precio = precio;
 	}
 
-	public Viajes getViajes() {
+	public String getNombreViaje() {
+		return nombreViaje;
+	}
+
+	public void setNombreViaje(String nombreViaje) {
+		this.nombreViaje = nombreViaje;
+	}
+
+	public Viaje getViajes() {
 		return viajes;
 	}
 
-	public void setViajes(Viajes viajes) {
+	public void setViajes(Viaje viajes) {
 		this.viajes = viajes;
 	}
 
 	@Override
 	public String toString() {
 		return "Otros [nombre=" + nombre + ", fecha=" + fecha + ", descripcion=" + descripcion + ", precio=" + precio
-				+ ", viajes=" + viajes + "]";
+				+ ", nombreViaje=" + nombreViaje + ", viajes=" + viajes + "]";
 	}
+
+	
 
 }

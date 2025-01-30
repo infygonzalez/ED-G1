@@ -1,13 +1,16 @@
-package View;
+package Vista;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Agencia extends JFrame {
+public class BotonInicio extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -19,7 +22,7 @@ public class Agencia extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Agencia frame = new Agencia();
+					BotonInicio frame = new BotonInicio();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,13 +34,26 @@ public class Agencia extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Agencia() {
+	public BotonInicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login login = new Login();
+				login.setVisible(true);
+				dispose();
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon(BotonInicio.class.getResource("/img/Inicio.jpg")));
+		btnNewButton.setBounds(0, 0, 434, 261);
+		contentPane.add(btnNewButton);
 	}
 
 }

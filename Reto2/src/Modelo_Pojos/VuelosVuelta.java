@@ -1,4 +1,4 @@
-package Model_Pojos;
+package Modelo_Pojos;
 
 public class VuelosVuelta extends VuelosIda {
 
@@ -7,7 +7,7 @@ public class VuelosVuelta extends VuelosIda {
 	private String duracionVuelta;
 
 	public VuelosVuelta(int codigoVuelo, float precio, String aerolinea, String fechaSalida, String horaSalida,
-			String duracion, Viajes viajes, IATAS salida, IATAS destino, String fechaVuelta, String horaVuelta,
+			String duracion, Viaje viajes, IATAS salida, IATAS destino, String fechaVuelta, String horaVuelta,
 			String duracionVuelta) {
 		super(codigoVuelo, precio, aerolinea, fechaSalida, horaSalida, duracion, viajes, salida, destino);
 		this.fechaVuelta = fechaVuelta;

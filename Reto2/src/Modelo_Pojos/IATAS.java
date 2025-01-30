@@ -1,19 +1,17 @@
-package Model_Pojos;
+package Modelo_Pojos;
 
 public class IATAS {
 	private String Aeropuerto;
 	private String Codigo;
 	private Pais pais;
-	private VuelosIda salida;
-	private VuelosIda destino;
+	
 
-	public IATAS(String aeropuerto, String codigo, Pais pais, VuelosIda salida, VuelosIda destino) {
+	public IATAS(String aeropuerto, String codigo, Pais pais ) {
 		super();
 		Aeropuerto = aeropuerto;
 		Codigo = codigo;
 		this.pais = pais;
-		this.salida = salida;
-		this.destino = destino;
+		
 	}
 
 	public String getAeropuerto() {
@@ -40,21 +38,7 @@ public class IATAS {
 		this.pais = pais;
 	}
 
-	public VuelosIda getSalida() {
-		return salida;
-	}
-
-	public void setSalida(VuelosIda salida) {
-		this.salida = salida;
-	}
-
-	public VuelosIda getDestino() {
-		return destino;
-	}
-
-	public void setDestino(VuelosIda destino) {
-		this.destino = destino;
-	}
+	
 
 	@Override
 	public String toString() {

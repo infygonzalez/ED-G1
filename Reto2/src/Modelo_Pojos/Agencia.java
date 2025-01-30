@@ -1,4 +1,4 @@
-package Model_Pojos;
+package Modelo_Pojos;
 
 import java.util.ArrayList;
 
@@ -11,32 +11,31 @@ public class Agencia {
 	private String numeroEmpleados;
 	private String tipoAgencia;
 	private String contraseña;
-	private ArrayList<Viajes> viajes;
+	private ArrayList<Viaje> viaje;
 
 	public Agencia() {
-		this.id = 0;
-		this.nombre = "";
-		this.logo = "";
-		this.colorMarca = "";
-		this.numeroEmpleados = "";
-		this.tipoAgencia = "";
-		this.contraseña = "";
-		this.viajes = null;
-
+	    this.id = 0;
+	    this.nombre = "";
+	    this.logo = "";
+	    this.colorMarca = "";
+	    this.numeroEmpleados = "";
+	    this.tipoAgencia = "";
+	    this.contraseña = "";
+	    this.viaje = new ArrayList<>();
 	}
 
-	public Agencia(int id, String nombre, String logo, String colorMarca, String numeroEmpleados, String tipoAgencia,
-			ArrayList<Viajes> viajes) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.logo = logo;
-		this.colorMarca = colorMarca;
-		this.numeroEmpleados = numeroEmpleados;
-		this.tipoAgencia = tipoAgencia;
-		this.contraseña = contraseña;
-		this.viajes = viajes;
+
+	public Agencia(String nombre, String logo, String colorMarca, String numeroEmpleados, String tipoAgencia, String contraseña) {
+	    this.id = 0;
+	    this.nombre = nombre;
+	    this.logo = logo;
+	    this.colorMarca = colorMarca;
+	    this.numeroEmpleados = numeroEmpleados;
+	    this.tipoAgencia = tipoAgencia;
+	    this.contraseña = contraseña;  
+	    this.viaje = new ArrayList<>(); 
 	}
+
 
 	public String getContraseña() {
 		return contraseña;
@@ -94,19 +93,19 @@ public class Agencia {
 		this.tipoAgencia = tipoAgencia;
 	}
 
-	public ArrayList<Viajes> getViajes() {
-		return viajes;
+	public ArrayList<Viaje> getViajes() {
+		return viaje;
 	}
 
-	public void setViajes(ArrayList<Viajes> viajes) {
-		this.viajes = viajes;
+	public void setViajes(ArrayList<Viaje> viaje) {
+		this.viaje = viaje;
 	}
 
 	@Override
 	public String toString() {
 		return "Agencia [id=" + id + ", nombre=" + nombre + ", logo=" + logo + ", colorMarca=" + colorMarca
 				+ ", numeroEmpleados=" + numeroEmpleados + ", tipoAgencia=" + tipoAgencia + ", contraseña=" + contraseña
-				+ ", viajes=" + viajes + "]";
+				+ ", viaje=" + viaje + "]";
 	}
 
 }

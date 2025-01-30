@@ -1,4 +1,4 @@
-package Model_Pojos;
+package Modelo_Pojos;
 
 public class Alojamiento {
 
@@ -8,10 +8,10 @@ public class Alojamiento {
 	private String fechaEntrada;
 	private String fechaSalida;
 	private String tipoHabitacion;
-	private Viajes viajes;
+	private Viaje viajes;
 
 	public Alojamiento(String nombreHotel, String ciudad, float precio, String fechaEntrada, String fechaSalida,
-			String tipoHabitacion, Viajes viajes) {
+			String tipoHabitacion, Viaje viajes) {
 		super();
 		this.nombreHotel = nombreHotel;
 		this.ciudad = ciudad;
@@ -70,11 +70,11 @@ public class Alojamiento {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 
-	public Viajes getViajes() {
+	public Viaje getViajes() {
 		return viajes;
 	}
 
-	public void setViajes(Viajes viajes) {
+	public void setViajes(Viaje viajes) {
 		this.viajes = viajes;
 	}
 

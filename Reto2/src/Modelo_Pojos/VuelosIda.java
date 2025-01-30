@@ -1,4 +1,4 @@
-package Model_Pojos;
+package Modelo_Pojos;
 
 public class VuelosIda {
 
@@ -8,12 +8,12 @@ public class VuelosIda {
 	private String fechaSalida;
 	private String horaSalida;
 	private String duracion;
-	private Viajes viajes;
+	private Viaje viajes;
 	private IATAS salida;
 	private IATAS destino;
 
 	public VuelosIda(int codigoVuelo, float precio, String aerolinea, String fechaSalida, String horaSalida,
-			String duracion, Viajes viajes, IATAS salida, IATAS destino) {
+			String duracion, Viaje viajes, IATAS salida, IATAS destino) {
 		super();
 		this.codigoVuelo = codigoVuelo;
 		this.precio = precio;
@@ -74,11 +74,11 @@ public class VuelosIda {
 		this.duracion = duracion;
 	}
 
-	public Viajes getViajes() {
+	public Viaje getViajes() {
 		return viajes;
 	}
 
-	public void setViajes(Viajes viajes) {
+	public void setViajes(Viaje viajes) {
 		this.viajes = viajes;
 	}
 
