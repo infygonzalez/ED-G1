@@ -18,6 +18,7 @@ import Modelo_Gestor.Gestor;
 import Modelo_Pojos.Agencia;
 import Controlador.Controlador;
 import javax.swing.JPasswordField;
+import java.awt.Color;
 
 public class Login extends JFrame {
 
@@ -49,6 +50,7 @@ public class Login extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 865, 495);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -87,7 +89,9 @@ public class Login extends JFrame {
 		        if (agencia == null) {
 		            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "Error de Login", JOptionPane.ERROR_MESSAGE);
 		        } else {
-		            System.out.println("Login exitoso");
+		            PestañaPrincipal pestañaPrincipal = new PestañaPrincipal();
+		            pestañaPrincipal.setVisible(true);
+		            dispose();
 		        }}
 		});
 		btnLogin.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
