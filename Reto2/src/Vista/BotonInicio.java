@@ -36,7 +36,7 @@ public class BotonInicio extends JFrame {
 	 */
 	public BotonInicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 598, 425);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -52,7 +52,7 @@ public class BotonInicio extends JFrame {
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(BotonInicio.class.getResource("/img/Inicio.jpg")));
-		btnNewButton.setBounds(0, 0, 434, 261);
+		btnNewButton.setBounds(0, 0, 589, 394);
 		contentPane.add(btnNewButton);
 	}
 

@@ -1,9 +1,12 @@
 package Controlador;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import Modelo_Gestor.Gestor;
 import Modelo_Pojos.Agencia;
+import Modelo_Pojos.Viaje;
+
 
 public class Controlador {
 	public static Agencia comprobarAgencias(String usuario, String contraseña) {
@@ -11,22 +14,16 @@ public class Controlador {
 	}
 
 	public static boolean registrarAgencia(Agencia agencia) {
-		if (Gestor.existeAgencia(agencia.getNombre())) {
-			System.out.println("Error: La agencia ya está registrada.");
-			return false;
-		}
-		Gestor.crearAgencia(agencia);
-		System.out.println("Agencia registrada correctamente.");
-		return true;
+	    if (Gestor.existeAgencia(agencia.getNombre())) {
+	        return false; 
+	    } else {
+	        return Gestor.crearAgencia(agencia);  
+	    }
 	}
 
 	public static boolean existeAgencia(String nombre) {
 		boolean existe = Gestor.existeAgencia(nombre);
-		if (existe) {
-			System.out.println("La agencia con el nombre " + nombre + " ya existe.");
-		} else {
-			System.out.println("No se encontró una agencia con el nombre " + nombre);
-		}
+		
 		return existe;
 	}
 
@@ -49,5 +46,11 @@ public class Controlador {
 			return false; 
 		}
 	}
+	
+	public static ArrayList<Viaje> actualizarViajes() {
+		return null;
+	
+	}
+	
 
 }

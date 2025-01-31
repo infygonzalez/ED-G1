@@ -80,9 +80,10 @@ public class Login extends JFrame {
 		JButton btnLogin = new JButton("INICIAR SESIÓN");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String usuario = textUsuario.getText();
+		        String usuario = textUsuario.getText().trim();  
 		        char[] passwordChars = password.getPassword();
-		        String contraseña = new String(passwordChars);
+		        String contraseña = new String(passwordChars).trim(); 
+		      
 
 		        Agencia agencia = Controlador.comprobarAgencias(usuario, contraseña);
 
@@ -92,7 +93,8 @@ public class Login extends JFrame {
 		            PestañaPrincipal pestañaPrincipal = new PestañaPrincipal();
 		            pestañaPrincipal.setVisible(true);
 		            dispose();
-		        }}
+		        }
+		    }
 		});
 		btnLogin.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
 		btnLogin.setBounds(91, 329, 185, 76);

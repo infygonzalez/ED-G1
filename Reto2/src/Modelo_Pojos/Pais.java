@@ -3,18 +3,24 @@ package Modelo_Pojos;
 public class Pais {
 
 	private String pais;
-	private String codigo;
+    private String codigo;
+    private Viaje viajes;
+    private IATAS iatas;
 
-	private Viaje viajes;
-	private IATAS iatas;
-
-	public Pais(String pais, String codigo, Viaje viajes, IATAS iatas) {
-		super();
-		this.pais = pais;
-		this.codigo = codigo;
-		this.viajes = viajes;
-		this.iatas = iatas;
+	public Pais() {
+		this.pais = null;
+		this.codigo = null;
+		this.viajes = null;
+		this.iatas = null;
 	}
+	
+	public Pais(String pais, String codigo) {
+        this.pais = pais;
+        this.codigo = codigo;
+        this.viajes = null;  
+        this.iatas = null;   
+    }
+
 
 	public String getPais() {
 		return pais;

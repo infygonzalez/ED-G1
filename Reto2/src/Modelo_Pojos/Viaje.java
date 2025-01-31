@@ -17,6 +17,21 @@ public class Viaje {
 	private ArrayList<Otros> otros;
 	private ArrayList<VuelosIda> vuelosIda;
 
+	public Viaje() {
+		NombreViaje = "";
+		Descripcion = "";
+		TipoViaje = "";
+		FechaInicio = "";
+		FechaFin = "";
+		DuracionViaje = "";
+		ServiciosNoIncluidos = "";
+		Pais = null;
+		this.agencia = null;
+		this.alojamiento = null;
+		this.otros = null;
+		this.vuelosIda = null;
+	}
+	
 	public Viaje(String nombreViaje, String descripcion, String tipoViaje, String fechaInicio, String fechaFin,
 			String duracionViaje, String serviciosNoIncluidos, Pais pais, Agencia agencia,
 			ArrayList<Alojamiento> alojamiento, ArrayList<Otros> otros, ArrayList<VuelosIda> vuelosIda) {

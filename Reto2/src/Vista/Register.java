@@ -22,6 +22,9 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 
 public class Register extends JFrame {
 
@@ -105,20 +108,33 @@ public class Register extends JFrame {
 		contentPane.add(lblVerificarContraseña);
 
 		textColor = new JTextField();
-		textColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textColor.getDocument().addDocumentListener(new DocumentListener() {
+		    @Override
+		    public void insertUpdate(DocumentEvent e) {
+		        actualizarColor();
+		    }
 
-				String hexColor = textColor.getText().trim();
+		    @Override
+		    public void removeUpdate(DocumentEvent e) {
+		        actualizarColor();
+		    }
 
-				if (Controlador.validacionColor(hexColor)) {
-					// Si el valor es válido, cambiamos el color del panel
-					colorPanel.setBackground(Color.decode(hexColor));
-				} else {
-					// Si no es un color hexadecimal válido, mostramos el color blanco
-					colorPanel.setBackground(Color.WHITE);
-				}
-			}
+		    @Override
+		    public void changedUpdate(DocumentEvent e) {
+		        actualizarColor();
+		    }
+
+		    private void actualizarColor() {
+		        String hexColor = textColor.getText().trim();
+
+		        if (Controlador.validacionColor(hexColor)) {
+		            colorPanel.setBackground(Color.decode(hexColor));
+		        } else {
+		            colorPanel.setBackground(Color.WHITE);
+		        }
+		    }
 		});
+
 		textColor.setBounds(297, 107, 140, 27);
 		contentPane.add(textColor);
 		textColor.setColumns(10);
@@ -128,7 +144,8 @@ public class Register extends JFrame {
 		contentPane.add(colorPanel);
 
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Entre 2 y 10 Empleados", "Entre 10 y 100 Empleados", "Entre 100 y 1000 Empleados"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "", "Entre 2 y 10 Empleados",
+				"Entre 10 y 100 Empleados", "Entre 100 y 1000 Empleados" }));
 		comboBox.setBounds(297, 147, 214, 22);
 		contentPane.add(comboBox);
 
@@ -156,37 +173,37 @@ public class Register extends JFrame {
 		JButton btnCrearCuenta = new JButton("CREAR CUENTA");
 		btnCrearCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		        String nombreAgencia = textNombreAgencia.getText().trim();
+		        String logo = textLogo.getText().trim();
+		        String color = textColor.getText().trim();
+		        String tipoEmpleados = (String) comboBox.getSelectedItem();
+		        String tipoAgencia = (String) comboBox_1.getSelectedItem();
+		        String contraseña = new String(password.getPassword()).trim();
+		        String contraseñaValidar = new String(passwordValidar.getPassword()).trim();
 
-				String nombreAgencia = textNombreAgencia.getText().trim();
-				String logo = textLogo.getText().trim();
-				String color = textColor.getText().trim();
-				String tipoEmpleados = (String) comboBox.getSelectedItem();
-				String tipoAgencia = (String) comboBox_1.getSelectedItem();
-				String contraseña = new String(password.getPassword()).trim();
-				String contraseñaValidar = new String(passwordValidar.getPassword()).trim();
+		        if (nombreAgencia.isEmpty() || logo.isEmpty() || color.isEmpty() || tipoEmpleados.isEmpty()
+		                || tipoAgencia.isEmpty() || contraseña.isEmpty() || contraseñaValidar.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error de validación",
+		                    JOptionPane.ERROR_MESSAGE);
+		            return; 
+		        }
 
-				// Verificar si los campos están vacíos
-				if (nombreAgencia.isEmpty() || logo.isEmpty() || color.isEmpty() || tipoEmpleados.isEmpty()
-						|| tipoAgencia.isEmpty() || contraseña.isEmpty() || contraseñaValidar.isEmpty()) {
-					System.out.println("Error: Todos los campos son obligatorios.");
-					return; // Detener la ejecución si hay campos vacíos
-				}
+		        if (Controlador.validarContraseña(contraseña, contraseñaValidar)) {
+		            Agencia agencia = new Agencia(nombreAgencia, logo, color, tipoEmpleados, tipoAgencia, contraseña);
 
-				// Llamar al método de validación de contraseñas del controlador
-				if (Controlador.validarContraseña(contraseña, contraseñaValidar)) {
-					// Si las contraseñas son válidas, proceder con el registro
-					Agencia agencia = new Agencia(nombreAgencia, logo, color, tipoEmpleados, tipoAgencia, contraseña);
-
-					if (Controlador.registrarAgencia(agencia)) {
-						OptionPane.showMessageDialog(null, "Usuario Creado Correctamente.", "Usuario Creado", JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						OptionPane.showMessageDialog(null, "Error al Registrar Agencia.", "Error de creacion", JOptionPane.ERROR_MESSAGE);
-					}
-				} else {
-					OptionPane.showMessageDialog(null, "Las Contraseñas NO coinciden.", "Error de contraseñas ", JOptionPane.ERROR_MESSAGE);
-				}
-
-			}
+		            if (Controlador.registrarAgencia(agencia)) {
+		                JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente.", "Usuario Creado",
+		                        JOptionPane.INFORMATION_MESSAGE);
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Error al Registrar Agencia.", "Error de creacion",
+		                        JOptionPane.ERROR_MESSAGE);
+		            }
+		        } else {
+		            System.out.println("Las contraseñas no coinciden.");
+		            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.", "Error de contraseñas",
+		                    JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
 		});
 		btnCrearCuenta.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
 		btnCrearCuenta.setBounds(81, 362, 185, 76);
