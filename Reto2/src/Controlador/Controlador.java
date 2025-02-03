@@ -5,8 +5,12 @@ import java.util.ArrayList;
 
 import Modelo_Gestor.Gestor;
 import Modelo_Pojos.Agencia;
+import Modelo_Pojos.Alojamiento;
 import Modelo_Pojos.Evento;
+import Modelo_Pojos.Otros;
 import Modelo_Pojos.Viaje;
+import Modelo_Pojos.VuelosIda;
+import Modelo_Pojos.VuelosVuelta;
 
 
 public class Controlador {
@@ -52,9 +56,23 @@ public class Controlador {
 	    return Gestor.actualizarViaje();
 	}
 	
-	public static ArrayList<Evento> actualizarEvento(){
-		return Gestor.actualizarEvento();
+	public static ArrayList<Alojamiento> actualizarAlojamiento(){
+		return Gestor.actualizarAlojamiento();
 	}
+
+	public static ArrayList<Otros> actualizarOtros() {
+		return Gestor.actualizarOtros();
+	}
+
+	public static ArrayList<VuelosIda> actualizarVuelosIda() {
+		return Gestor.actualizarVuelosIda();
+	}
+
+	public static ArrayList<VuelosVuelta> actualizarVuelosVuelta() {
+		return Gestor.actualizarVuelosVuelta();	
+	}
+	
+	
 	
 	
 	

@@ -8,18 +8,29 @@ public class Otros extends Evento {
     private float precio;
     private String nombreViaje;
     private Viaje viajes;
-    private Evento evento;  // Añadido el atributo evento
+    private Evento evento;  
+    
+    public Otros() {
+    	super("");  
+        this.nombre = "";
+        this.fecha = "";
+        this.descripcion = "";
+        this.precio = 0;
+        this.nombreViaje = "";
+        this.viajes = null;
+        this.evento = null;
+    }
 
     // Constructor
     public Otros(String nombre, String fecha, String descripcion, float precio, String nombreViaje, Viaje viajes, Evento evento) {
-        super(evento.getTipoEvento());  // Llamada al constructor de Evento
+        super(evento.getTipoEvento());  
         this.nombre = nombre;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.precio = precio;
         this.nombreViaje = nombreViaje;
         this.viajes = viajes;
-        this.evento = evento;  // Inicializamos el atributo evento
+        this.evento = evento;  
     }
 
     // Getters y setters

@@ -9,6 +9,17 @@ public class Alojamiento extends Evento {
     private String fechaSalida;
     private String tipoHabitacion;
     private Viaje viajes;
+    
+    public Alojamiento() {
+    	super("");  
+        this.nombreHotel = "";
+        this.ciudad = "";
+        this.precio = 0;
+        this.fechaEntrada = "";
+        this.fechaSalida = "";
+        this.tipoHabitacion = "";
+        this.viajes = null;
+    }
 
     // Constructor extendiendo la clase Evento
     public Alojamiento(String tipoEvento, String nombreHotel, String ciudad, float precio, String fechaEntrada,

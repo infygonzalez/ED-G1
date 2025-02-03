@@ -7,6 +7,13 @@ public class SQLQuerys {
 			+ "FROM viajes v " + "JOIN codigopaises p ON v.pais = p.pais";
 
 	public static final String SELECT_PAIS =  "SELECT pais, codigo FROM codigopaises WHERE pais = ?";
+	
+	public static final String SELECT_ALOJAMIENTO = "Select Nom_Hotel, Fec_Ent, Fec_Sal, Precio FROM alojamiento ";
+	public static final String SELECT_OTROS = "Select Nombre,Fecha, Precio FROM otros ";
+	public static final String SELECT_VUELOSIDA = "Select Nombre,Fec_Sal, Precio FROM Vuelos_Ida WHERE IdaVuelta = 'Ida' ";
+	public static final String SELECT_VUELOSVUELTA = "SELECT Nombre, Fec_Sal, Precio FROM Vuelos_Ida where IdaVuelta = 'Ida y Vuelta'";
+
+	
 	// INSERTS
 	public static final String INSERT_NUEVA_AGENCIA = "INSERT INTO agencia (nombre, logo, Col_Marca, Num_Emp, Tipo_Agencia, Contraseña) VALUES (?, ?, ?, ?, ?, ?)";
 
