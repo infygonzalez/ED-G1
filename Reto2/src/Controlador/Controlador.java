@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import Modelo_Gestor.Gestor;
 import Modelo_Pojos.Agencia;
+import Modelo_Pojos.Evento;
 import Modelo_Pojos.Viaje;
 
 
@@ -49,6 +50,10 @@ public class Controlador {
 
 	public static ArrayList<Viaje> actualizarViajes() {
 	    return Gestor.actualizarViaje();
+	}
+	
+	public static ArrayList<Evento> actualizarEvento(){
+		return Gestor.actualizarEvento();
 	}
 	
 	

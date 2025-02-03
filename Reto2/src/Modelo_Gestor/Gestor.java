@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Modelo_Pojos.Agencia;
+import Modelo_Pojos.Evento;
 import Modelo_Pojos.Pais;
 import Modelo_Pojos.Viaje;
 import Modelo_Utils.DBUtils;
@@ -204,6 +205,10 @@ public class Gestor {
 		        }
 		    }
 		    return pais;  
+		}
+
+		public static ArrayList<Evento> actualizarEvento() {
+			return null;
 		}
 
 }
