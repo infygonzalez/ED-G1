@@ -133,60 +133,42 @@ public class Gestor {
 		    return existe;
 		}
 		
-		public static void actualizarViaje() {
-		    Connection conexion = null;
-		    PreparedStatement sentencia = null;
-		    ResultSet resultSet = null;
+		public static ArrayList<Viaje> actualizarViaje() {
+		    ArrayList<Viaje> viajes = new ArrayList<>();
 		    
-
 		    try {
 		        Class.forName(DBUtils.DRIVER);
-		        conexion = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+		        Connection conexion = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 		        String sql = SQLQuerys.SELECT_VIAJES;
-		        sentencia = conexion.prepareStatement(sql);
-		        resultSet = sentencia.executeQuery();
-		      ArrayList<Viaje> viajes = new ArrayList();
-		      while (resultSet.next()) {
-		    	    Viaje viaje = new Viaje();
-		    	    viaje.setNombreViaje(resultSet.getString("Nom_Via"));
-		    	    viaje.setTipoViaje(resultSet.getString("Tipo_Viaje"));
-		    	    viaje.setDuracionViaje(resultSet.getString("Duracion_Via"));
-		    	    viaje.setFechaInicio(resultSet.getString("Fec_Ini"));
-		    	    viaje.setFechaFin(resultSet.getString("Fec_Fin"));
+		        PreparedStatement sentencia = conexion.prepareStatement(sql);
+		        ResultSet resultSet = sentencia.executeQuery();
 
-		    	    String paisId = resultSet.getString("PaisId");
+		        while (resultSet.next()) {
+		            Viaje viaje = new Viaje();
+		            viaje.setNombreViaje(resultSet.getString("Nom_Via"));
+		            viaje.setTipoViaje(resultSet.getString("Tipo_Viaje"));
+		            viaje.setDuracionViaje(resultSet.getString("Duracion_Via"));
+		            viaje.setFechaInicio(resultSet.getString("Fec_Ini"));
+		            viaje.setFechaFin(resultSet.getString("Fec_Fin"));
 
-		    	    Pais pais = obtenerPais(paisId); 
+		            String paisId = resultSet.getString("Pais");
+		            Pais pais = obtenerPais(paisId);
+		            viaje.setPais(pais);
 
-		    	    viaje.setPais(pais);
-
-		    	    viajes.add(viaje);
-		    	}
-
-		      
+		            viajes.add(viaje);
+		        }
 		        
-		  
-		        
-		        
-		        resultSet = sentencia.executeQuery();
-
-		       
+		        System.out.println("Viajes recuperados: " + viajes.size());  // Verifica cuántos viajes se recuperan.
 		    } catch (SQLException sqle) {
 		        System.out.println("Error con la base de datos: " + sqle.getMessage());
 		    } catch (Exception e) {
 		        System.out.println("Error inesperado: " + e.getMessage());
-		    } finally {
-		        try {
-		            if (resultSet != null) resultSet.close();
-		            if (sentencia != null) sentencia.close();
-		            if (conexion != null) conexion.close();
-		        } catch (Exception e) {
-		            System.out.println("Error al cerrar recursos: " + e.getMessage());
-		        }
 		    }
-		    
-			
+
+		    return viajes;
 		}
+
+
 		
 		private static Pais obtenerPais(String paisId) {
 		    Pais pais = null;
@@ -206,7 +188,7 @@ public class Gestor {
 		        if (resultSet.next()) {
 		            String paisNombre = resultSet.getString("nombre");
 		            String paisCodigo = resultSet.getString("codigo");
-		            pais = new Pais(paisNombre, paisCodigo);  // Crear el objeto Pais
+		            pais = new Pais(paisNombre, paisCodigo);
 		        }
 		    } catch (SQLException sqle) {
 		        System.out.println("Error con la base de datos: " + sqle.getMessage());

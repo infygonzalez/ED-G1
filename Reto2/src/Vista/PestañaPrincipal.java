@@ -21,6 +21,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JCheckBox;
@@ -36,6 +38,7 @@ public class PestañaPrincipal extends JFrame {
 	private JTable tableEventos;
 	private JScrollPane scrollViajes;
 	private JScrollPane scrollEventos;
+	private JTable tableViajes;
 
 	/**
 	 * Launch the application.
@@ -105,7 +108,7 @@ public class PestañaPrincipal extends JFrame {
 		scrollViajes.setBounds(187, 98, 452, 99);
 		contentPane.add(scrollViajes);
 
-		JTable tableViajes = new JTable();
+		tableViajes = new JTable();
 		tableViajes.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Viajes", "Tipo", "Dias", "Fecha Inicio", "Fecha Fin", "Pais" }));
 		scrollViajes.setViewportView(tableViajes);
@@ -151,12 +154,27 @@ public class PestañaPrincipal extends JFrame {
 				btnBorrarEventos.getHeight(), Image.SCALE_SMOOTH);
 		btnBorrarEventos.setIcon(new ImageIcon(resizedImageEventos));
 
+		 actualizarViajes();
+		
 	}
 	public void actualizarViajes() {
-	    ArrayList<Viaje> viajes = Controlador.actualizarViajes();
-	    for (Viaje Viaje : viajes) {
-	    	
-	    	
-	    }
-	}
+        ArrayList<Viaje> viajes = Controlador.actualizarViajes(); 
+        DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
+        modelo.setRowCount(0); 
+
+        if (viajes != null && !viajes.isEmpty()) {
+            for (Viaje viaje : viajes) {
+                modelo.addRow(new Object[] {
+                        viaje.getNombreViaje(),
+                        viaje.getTipoViaje(),
+                        viaje.getDuracionViaje(),
+                        viaje.getFechaInicio(),
+                        viaje.getFechaFin(),
+                        viaje.getPais() != null ? viaje.getPais().getCodigo() : "N/A" 
+                });
+            }
+        } else {
+            System.out.println("No hay viajes disponibles.");
+        }
+    }
 }

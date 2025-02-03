@@ -46,11 +46,12 @@ public class Controlador {
 			return false; 
 		}
 	}
-	
+
 	public static ArrayList<Viaje> actualizarViajes() {
-		return null;
-	
+	    return Gestor.actualizarViaje();
 	}
+	
+	
 	
 
 }
