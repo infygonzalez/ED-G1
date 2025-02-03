@@ -330,6 +330,29 @@ public class Gestor {
 		return vuelosVuelta ;
 	}
 
+	public static boolean borrarViajes(int viajeId) {
+	    try {
+	        Class.forName(DBUtils.DRIVER);
+	        Connection conexion = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+	        String sql = SQLQuerys.DELETE_VIAJES;
+	        PreparedStatement sentencia = conexion.prepareStatement(sql);
+	        sentencia.setInt(1, viajeId);
+	        int rowsAffected = sentencia.executeUpdate();
+	        return rowsAffected > 0;
+	        
+	    } catch (SQLException sqle) {
+	        System.out.println("Error con la base de datos: " + sqle.getMessage());
+	        return false;
+	    } catch (Exception e) {
+	        System.out.println("Error inesperado: " + e.getMessage());
+	        return false;
+	    }
+	
+
+
+    }
+
+
 	
 
 }

@@ -19,5 +19,10 @@ public class SQLQuerys {
 
 	public static final String END_BLOCK = "')";
 	public static final String SEPARATOR = "', '";
+	
+	//DELETES
+	
+	public static final String DELETE_VIAJES = "DELETE FROM Viajes WHERE ID_Viaje = ?";
+
 
 }

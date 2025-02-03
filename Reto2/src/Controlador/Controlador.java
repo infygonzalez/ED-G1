@@ -72,6 +72,9 @@ public class Controlador {
 		return Gestor.actualizarVuelosVuelta();	
 	}
 	
+	public static boolean borrarViajes(int viajeID) {
+		return Gestor.borrarViajes(viajeID);
+	}
 	
 	
 	

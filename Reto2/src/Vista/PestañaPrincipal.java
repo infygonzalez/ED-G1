@@ -140,6 +140,37 @@ public class PestañaPrincipal extends JFrame {
 		contentPane.add(lblEventos);
 
 		JButton btnBorrarViajes = new JButton("");
+		btnBorrarViajes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 int filaSeleccionada = tableViajes.getSelectedRow();
+			        if (filaSeleccionada != -1) { // Verifica si hay una fila seleccionada
+			            int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
+			            
+			            // Confirmación antes de eliminar
+			            int opcion = JOptionPane.showConfirmDialog(null, 
+			                "¿Estás seguro de que quieres eliminar este viaje?", 
+			                "Confirmar eliminación", 
+			                JOptionPane.YES_NO_OPTION, 
+			                JOptionPane.WARNING_MESSAGE);
+			            
+			            if (opcion == JOptionPane.YES_OPTION) {
+			                DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
+			                modelo.removeRow(filaSeleccionada);
+			                
+			                // Llamar al controlador para eliminar el viaje
+			                boolean eliminado = Controlador.borrarViajes(viajeId);
+			                if (eliminado) {
+			                    JOptionPane.showMessageDialog(null, "Viaje eliminado correctamente.");
+			                } else {
+			                    JOptionPane.showMessageDialog(null, "Hubo un error al eliminar el viaje.");
+			                }
+			            }
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Por favor, selecciona un viaje para eliminar.");
+			        }
+
+			}
+		});
 		btnBorrarViajes.setBounds(661, 98, 33, 31);
 		contentPane.add(btnBorrarViajes);
 		ImageIcon icon = new ImageIcon(BotonInicio.class.getResource("/img/Papelera.png"));
@@ -179,57 +210,55 @@ public class PestañaPrincipal extends JFrame {
 		}
 
 	}
-	
+
 	public void actualizarEventos() {
 		ArrayList<Alojamiento> alojamientos = Controlador.actualizarAlojamiento();
 		ArrayList<Otros> otros = Controlador.actualizarOtros();
 		ArrayList<VuelosIda> vuelosIda = Controlador.actualizarVuelosIda();
 		ArrayList<VuelosVuelta> vuelosVuelta = Controlador.actualizarVuelosVuelta();
-		
+
 		DefaultTableModel modelo = (DefaultTableModel) tableEventos.getModel();
 		modelo.setRowCount(0);
-		
+
 		for (Alojamiento alojamiento : alojamientos) {
-		    String[] fila = new String[4];
-		    fila[0] = alojamiento.getNombreHotel();
-		    fila[1] = "Alojamiento";
-		    fila[2] = alojamiento.getFechaEntrada();
-		    String precio = String.valueOf(alojamiento.getPrecio());  
-		    fila[3] = precio;
-		    modelo.addRow(fila);
+			String[] fila = new String[4];
+			fila[0] = alojamiento.getNombreHotel();
+			fila[1] = "Alojamiento";
+			fila[2] = alojamiento.getFechaEntrada();
+			String precio = String.valueOf(alojamiento.getPrecio());
+			fila[3] = precio;
+			modelo.addRow(fila);
 		}
-		
+
 		for (Otros otro : otros) {
-		    String[] fila = new String[4];
-		    fila[0] = otro.getNombre();
-		    fila[1] = "Otros";
-		    fila[2] = otro.getFecha();
-		    String precio = String.valueOf(otro.getPrecio());  
-		    fila[3] = precio;
-		    modelo.addRow(fila);
+			String[] fila = new String[4];
+			fila[0] = otro.getNombre();
+			fila[1] = "Otros";
+			fila[2] = otro.getFecha();
+			String precio = String.valueOf(otro.getPrecio());
+			fila[3] = precio;
+			modelo.addRow(fila);
 		}
-		
+
 		for (VuelosIda vueloIda : vuelosIda) {
-		    String[] fila = new String[4];
-		    fila[0] = vueloIda.getNombre();
-		    fila[1] = "Vuelo Ida";
-		    fila[2] = vueloIda.getFechaSalida();
-		    String precio = String.valueOf(vueloIda.getPrecio());  
-		    fila[3] = precio;
-		    modelo.addRow(fila);
+			String[] fila = new String[4];
+			fila[0] = vueloIda.getNombre();
+			fila[1] = "Vuelo Ida";
+			fila[2] = vueloIda.getFechaSalida();
+			String precio = String.valueOf(vueloIda.getPrecio());
+			fila[3] = precio;
+			modelo.addRow(fila);
 		}
-		
-		 for (VuelosVuelta vueloVuelta : vuelosVuelta) { 
-		        String[] fila = new String[4];
-		        fila[0] = vueloVuelta.getNombre();
-		        fila[1] = "Vuelo Vuelta"; 
-		        fila[2] = vueloVuelta.getFechaSalida();
-		        String precio = String.valueOf(vueloVuelta.getPrecio());
-		        fila[3] = precio;
-		        modelo.addRow(fila);
-		    }
-		
-		
+
+		for (VuelosVuelta vueloVuelta : vuelosVuelta) {
+			String[] fila = new String[4];
+			fila[0] = vueloVuelta.getNombre();
+			fila[1] = "Vuelo Vuelta";
+			fila[2] = vueloVuelta.getFechaSalida();
+			String precio = String.valueOf(vueloVuelta.getPrecio());
+			fila[3] = precio;
+			modelo.addRow(fila);
+		}
 
 	}
 
