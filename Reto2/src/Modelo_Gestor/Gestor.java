@@ -158,7 +158,6 @@ public class Gestor {
 		            viajes.add(viaje);
 		        }
 		        
-		        System.out.println("Viajes recuperados: " + viajes.size());  // Verifica cuántos viajes se recuperan.
 		    } catch (SQLException sqle) {
 		        System.out.println("Error con la base de datos: " + sqle.getMessage());
 		    } catch (Exception e) {
@@ -170,7 +169,7 @@ public class Gestor {
 
 
 		
-		private static Pais obtenerPais(String paisId) {
+		private static Pais obtenerPais(String paisId) { 
 		    Pais pais = null;
 		    Connection conexion = null;
 		    PreparedStatement sentencia = null;
@@ -182,14 +181,15 @@ public class Gestor {
 
 		        String sql = SQLQuerys.SELECT_PAIS;
 		        sentencia = conexion.prepareStatement(sql);
-		        sentencia.setString(1, paisId);
+		        sentencia.setString(1, paisId);  
 		        resultSet = sentencia.executeQuery();
 
 		        if (resultSet.next()) {
-		            String paisNombre = resultSet.getString("nombre");
+		            String paisNombre = resultSet.getString("pais");
 		            String paisCodigo = resultSet.getString("codigo");
 		            pais = new Pais(paisNombre, paisCodigo);
-		        }
+		             
+		        } 
 		    } catch (SQLException sqle) {
 		        System.out.println("Error con la base de datos: " + sqle.getMessage());
 		    } catch (Exception e) {
@@ -205,5 +205,6 @@ public class Gestor {
 		    }
 		    return pais;  
 		}
+
 }
 

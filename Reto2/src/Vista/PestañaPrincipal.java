@@ -158,23 +158,24 @@ public class PestañaPrincipal extends JFrame {
 		
 	}
 	public void actualizarViajes() {
-        ArrayList<Viaje> viajes = Controlador.actualizarViajes(); 
-        DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
-        modelo.setRowCount(0); 
+	    ArrayList<Viaje> viajes = Controlador.actualizarViajes(); 
+	    DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
+	    modelo.setRowCount(0); 
 
-        if (viajes != null && !viajes.isEmpty()) {
-            for (Viaje viaje : viajes) {
-                modelo.addRow(new Object[] {
-                        viaje.getNombreViaje(),
-                        viaje.getTipoViaje(),
-                        viaje.getDuracionViaje(),
-                        viaje.getFechaInicio(),
-                        viaje.getFechaFin(),
-                        viaje.getPais() != null ? viaje.getPais().getCodigo() : "N/A" 
-                });
-            }
-        } else {
-            System.out.println("No hay viajes disponibles.");
-        }
-    }
+	    if (viajes != null && !viajes.isEmpty()) {
+	        for (Viaje viaje : viajes) {
+	            modelo.addRow(new Object[] {
+	                    viaje.getNombreViaje(),
+	                    viaje.getTipoViaje(),
+	                    viaje.getDuracionViaje(),
+	                    viaje.getFechaInicio(),
+	                    viaje.getFechaFin(),
+	                    viaje.getPais() != null ? viaje.getPais().getPais() : "N/A" 
+	            });
+	        }
+	    } else {
+	        System.out.println("No hay viajes disponibles.");
+	    }
+	}
+
 }

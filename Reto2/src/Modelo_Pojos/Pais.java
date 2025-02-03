@@ -21,7 +21,6 @@ public class Pais {
         this.iatas = null;   
     }
 
-
 	public String getPais() {
 		return pais;
 	}
@@ -52,6 +51,11 @@ public class Pais {
 
 	public void setIatas(IATAS iatas) {
 		this.iatas = iatas;
+	}
+
+	// Método adicional para acceder al nombre del país
+	public String getNombre() {
+		return pais;
 	}
 
 	@Override
