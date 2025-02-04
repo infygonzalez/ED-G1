@@ -11,8 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JComboBox;
-import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JCalendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Font;
