@@ -2,6 +2,7 @@ package Modelo_Pojos;
 
 public class Otros extends Evento {
 
+	private int id;
     private String nombre;
     private String fecha;
     private String descripcion;
@@ -12,6 +13,7 @@ public class Otros extends Evento {
     
     public Otros() {
     	super("");  
+    	this.id=0;
         this.nombre = "";
         this.fecha = "";
         this.descripcion = "";
@@ -22,8 +24,9 @@ public class Otros extends Evento {
     }
 
     // Constructor
-    public Otros(String nombre, String fecha, String descripcion, float precio, String nombreViaje, Viaje viajes, Evento evento) {
-        super(evento.getTipoEvento());  
+    public Otros(int id,String nombre, String fecha, String descripcion, float precio, String nombreViaje, Viaje viajes, Evento evento) {
+        super(evento.getTipoEvento()); 
+        this.id=id;
         this.nombre = nombre;
         this.fecha = fecha;
         this.descripcion = descripcion;
@@ -34,11 +37,20 @@ public class Otros extends Evento {
     }
 
     // Getters y setters
+    
     public Evento getEvento() {
         return evento;
     }
 
-    public void setEvento(Evento evento) {
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setEvento(Evento evento) {
         this.evento = evento;
     }
 
@@ -90,9 +102,12 @@ public class Otros extends Evento {
         this.viajes = viajes;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + " | Otros [nombre=" + nombre + ", fecha=" + fecha + ", descripcion=" + descripcion
-                + ", precio=" + precio + ", nombreViaje=" + nombreViaje + ", viajes=" + viajes + "]";
-    }
+	@Override
+	public String toString() {
+		return "Otros [id=" + id + ", nombre=" + nombre + ", fecha=" + fecha + ", descripcion=" + descripcion
+				+ ", precio=" + precio + ", nombreViaje=" + nombreViaje + ", viajes=" + viajes + ", evento=" + evento
+				+ "]";
+	}
+
+    
 }

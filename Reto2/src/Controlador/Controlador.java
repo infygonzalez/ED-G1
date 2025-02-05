@@ -76,6 +76,11 @@ public class Controlador {
 		return Gestor.borrarViajes(viajeID);
 	}
 	
+	public static boolean borrarEventos(int eventoID) {
+		return Gestor.borrarEventos(eventoID);
+
+	}
+	
 	
 	
 	

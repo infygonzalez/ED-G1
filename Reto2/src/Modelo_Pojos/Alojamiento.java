@@ -2,6 +2,7 @@ package Modelo_Pojos;
 
 public class Alojamiento extends Evento {
 
+	private int id;
     private String nombreHotel;
     private String ciudad;
     private float precio;
@@ -12,6 +13,7 @@ public class Alojamiento extends Evento {
     
     public Alojamiento() {
     	super("");  
+    	this.id=0;
         this.nombreHotel = "";
         this.ciudad = "";
         this.precio = 0;
@@ -22,9 +24,10 @@ public class Alojamiento extends Evento {
     }
 
     // Constructor extendiendo la clase Evento
-    public Alojamiento(String tipoEvento, String nombreHotel, String ciudad, float precio, String fechaEntrada,
+    public Alojamiento(int id,String tipoEvento, String nombreHotel, String ciudad, float precio, String fechaEntrada,
             String fechaSalida, String tipoHabitacion, Viaje viajes) {
         super(tipoEvento);  // Llamada al constructor de Evento
+        this.id=id;
         this.nombreHotel = nombreHotel;
         this.ciudad = ciudad;
         this.precio = precio;
@@ -35,11 +38,20 @@ public class Alojamiento extends Evento {
     }
 
     // Getters y setters
+    
     public String getNombreHotel() {
         return nombreHotel;
     }
 
-    public void setNombreHotel(String nombreHotel) {
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setNombreHotel(String nombreHotel) {
         this.nombreHotel = nombreHotel;
     }
 
@@ -91,10 +103,12 @@ public class Alojamiento extends Evento {
         this.viajes = viajes;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + " | Alojamiento [nombreHotel=" + nombreHotel + ", ciudad=" + ciudad + ", precio=" + precio
-                + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", tipoHabitacion=" + tipoHabitacion
-                + ", viajes=" + viajes + "]";
-    }
+	@Override
+	public String toString() {
+		return "Alojamiento [id=" + id + ", nombreHotel=" + nombreHotel + ", ciudad=" + ciudad + ", precio=" + precio
+				+ ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", tipoHabitacion="
+				+ tipoHabitacion + ", viajes=" + viajes + "]";
+	}
+
+   
 }

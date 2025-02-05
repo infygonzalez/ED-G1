@@ -115,7 +115,7 @@ public class PestañaPrincipal extends JFrame {
 
 		tableViajes = new JTable();
 		tableViajes.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Viajes", "Tipo", "Dias", "Fecha Inicio", "Fecha Fin", "Pais" }));
+				new String[] {"ID", "Viajes", "Tipo", "Dias", "Fecha Inicio", "Fecha Fin", "Pais" }));
 		scrollViajes.setViewportView(tableViajes);
 
 		scrollEventos = new JScrollPane();
@@ -124,7 +124,7 @@ public class PestañaPrincipal extends JFrame {
 
 		tableEventos = new JTable();
 		tableEventos.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "Nombre Evento", "Tipo", "Fecha", "Precio" }));
+				new DefaultTableModel(new Object[][] {}, new String[] {"ID", "Nombre Evento", "Tipo", "Fecha", "Precio" }));
 		scrollEventos.setViewportView(tableEventos);
 
 		JLabel lblViajes = new JLabel("VIAJES");
@@ -143,10 +143,10 @@ public class PestañaPrincipal extends JFrame {
 		btnBorrarViajes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 int filaSeleccionada = tableViajes.getSelectedRow();
-			        if (filaSeleccionada != -1) { // Verifica si hay una fila seleccionada
+			        if (filaSeleccionada != -1) { 
 			            int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
 			            
-			            // Confirmación antes de eliminar
+			            
 			            int opcion = JOptionPane.showConfirmDialog(null, 
 			                "¿Estás seguro de que quieres eliminar este viaje?", 
 			                "Confirmar eliminación", 
@@ -157,7 +157,7 @@ public class PestañaPrincipal extends JFrame {
 			                DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
 			                modelo.removeRow(filaSeleccionada);
 			                
-			                // Llamar al controlador para eliminar el viaje
+			                
 			                boolean eliminado = Controlador.borrarViajes(viajeId);
 			                if (eliminado) {
 			                    JOptionPane.showMessageDialog(null, "Viaje eliminado correctamente.");
@@ -199,13 +199,15 @@ public class PestañaPrincipal extends JFrame {
 		DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
 		modelo.setRowCount(0);
 		for (Viaje viaje : viajes) {
-			String[] fila = new String[6];
-			fila[0] = viaje.getNombreViaje();
-			fila[1] = viaje.getTipoViaje();
-			fila[2] = viaje.getDuracionViaje();
-			fila[3] = viaje.getFechaInicio();
-			fila[4] = viaje.getFechaFin();
-			fila[5] = viaje.getPais() != null ? viaje.getPais().getPais() : "N/A";
+			String[] fila = new String[7];
+			String id = String.valueOf(viaje.getId()) ;
+			fila[0] = id;
+			fila[1] = viaje.getNombreViaje();
+			fila[2] = viaje.getTipoViaje();
+			fila[3] = viaje.getDuracionViaje();
+			fila[4] = viaje.getFechaInicio();
+			fila[5] = viaje.getFechaFin();
+			fila[6] = viaje.getPais() != null ? viaje.getPais().getPais() : "N/A";
 			modelo.addRow(fila);
 		}
 
@@ -221,42 +223,50 @@ public class PestañaPrincipal extends JFrame {
 		modelo.setRowCount(0);
 
 		for (Alojamiento alojamiento : alojamientos) {
-			String[] fila = new String[4];
-			fila[0] = alojamiento.getNombreHotel();
-			fila[1] = "Alojamiento";
-			fila[2] = alojamiento.getFechaEntrada();
+			String[] fila = new String[5];
+			String id = String.valueOf(alojamiento.getId());
+			fila[0] = id;
+			fila[1] = alojamiento.getNombreHotel();
+			fila[2] = "Alojamiento";
+			fila[3] = alojamiento.getFechaEntrada();
 			String precio = String.valueOf(alojamiento.getPrecio());
-			fila[3] = precio;
+			fila[4] = precio;
 			modelo.addRow(fila);
 		}
 
 		for (Otros otro : otros) {
-			String[] fila = new String[4];
-			fila[0] = otro.getNombre();
-			fila[1] = "Otros";
-			fila[2] = otro.getFecha();
+			String[] fila = new String[5];
+			String id = String.valueOf(otro.getId());
+			fila[0] = id;
+			fila[1] = otro.getNombre();
+			fila[2] = "Otros";
+			fila[3] = otro.getFecha();
 			String precio = String.valueOf(otro.getPrecio());
-			fila[3] = precio;
+			fila[4] = precio;
 			modelo.addRow(fila);
 		}
 
 		for (VuelosIda vueloIda : vuelosIda) {
-			String[] fila = new String[4];
-			fila[0] = vueloIda.getNombre();
-			fila[1] = "Vuelo Ida";
-			fila[2] = vueloIda.getFechaSalida();
+			String[] fila = new String[5];
+			String id = String.valueOf(vueloIda.getCodigoVuelo());
+			fila[0] = id;
+			fila[1] = vueloIda.getNombre();
+			fila[2] = "Vuelo Ida";
+			fila[3] = vueloIda.getFechaSalida();
 			String precio = String.valueOf(vueloIda.getPrecio());
-			fila[3] = precio;
+			fila[4] = precio;
 			modelo.addRow(fila);
 		}
 
 		for (VuelosVuelta vueloVuelta : vuelosVuelta) {
-			String[] fila = new String[4];
-			fila[0] = vueloVuelta.getNombre();
-			fila[1] = "Vuelo Vuelta";
-			fila[2] = vueloVuelta.getFechaSalida();
+			String[] fila = new String[5];
+			String id = String.valueOf(vueloVuelta.getCodigoVuelo());
+			fila[0] = id;
+			fila[1] = vueloVuelta.getNombre();
+			fila[2] = "Vuelo Vuelta";
+			fila[3] = vueloVuelta.getFechaSalida();
 			String precio = String.valueOf(vueloVuelta.getPrecio());
-			fila[3] = precio;
+			fila[4] = precio;
 			modelo.addRow(fila);
 		}
 

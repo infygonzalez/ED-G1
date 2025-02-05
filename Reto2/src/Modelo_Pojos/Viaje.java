@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Viaje {
 
+	private int id;
 	private String NombreViaje;
 	private String Descripcion;
 	private String TipoViaje;
@@ -18,6 +19,7 @@ public class Viaje {
 	private ArrayList<VuelosIda> vuelosIda;
 
 	public Viaje() {
+		id = 0;
 		NombreViaje = "";
 		Descripcion = "";
 		TipoViaje = "";
@@ -32,10 +34,11 @@ public class Viaje {
 		this.vuelosIda = null;
 	}
 	
-	public Viaje(String nombreViaje, String descripcion, String tipoViaje, String fechaInicio, String fechaFin,
+	public Viaje(int id,String nombreViaje, String descripcion, String tipoViaje, String fechaInicio, String fechaFin,
 			String duracionViaje, String serviciosNoIncluidos, Pais pais, Agencia agencia,
 			ArrayList<Alojamiento> alojamiento, ArrayList<Otros> otros, ArrayList<VuelosIda> vuelosIda) {
 		super();
+		this.id=id;
 		NombreViaje = nombreViaje;
 		Descripcion = descripcion;
 		TipoViaje = tipoViaje;
@@ -48,6 +51,14 @@ public class Viaje {
 		this.alojamiento = alojamiento;
 		this.otros = otros;
 		this.vuelosIda = vuelosIda;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombreViaje() {

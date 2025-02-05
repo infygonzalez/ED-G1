@@ -155,6 +155,7 @@ public class Gestor {
 
 			while (resultSet.next()) {
 				Viaje viaje = new Viaje();
+				viaje.setId(resultSet.getInt("ID_Viaje"));
 				viaje.setNombreViaje(resultSet.getString("Nom_Via"));
 				viaje.setTipoViaje(resultSet.getString("Tipo_Viaje"));
 				viaje.setDuracionViaje(resultSet.getString("Duracion_Via"));
@@ -229,6 +230,7 @@ public class Gestor {
 
 			while (resultSet.next()) {
 				Alojamiento alojamiento = new Alojamiento();
+				alojamiento.setId(resultSet.getInt("id_alojamiento"));
 				alojamiento.setNombreHotel(resultSet.getString("Nom_Hotel"));;
 				alojamiento.setFechaEntrada(resultSet.getString("Fec_Ent"));
 				alojamiento.setFechaSalida(resultSet.getString("Fec_Sal"));
@@ -258,6 +260,7 @@ public class Gestor {
 
 			while (resultSet.next()) {
 				Otros otro = new Otros();
+				otro.setId(resultSet.getInt("id_otro"));
 				otro.setNombre(resultSet.getString("Nombre"));;
 				otro.setFecha(resultSet.getString("Fecha"));
 				otro.setPrecio(resultSet.getFloat("Precio"));
@@ -286,6 +289,7 @@ public class Gestor {
 
 			while (resultSet.next()) {
 				VuelosIda vueloIda = new VuelosIda();
+				vueloIda.setCodigoVuelo(resultSet.getInt("codigovuelo"));
 				vueloIda.setNombre(resultSet.getString("Nombre"));;
 				vueloIda.setFechaSalida(resultSet.getString("Fec_Sal"));
 				vueloIda.setPrecio(resultSet.getFloat("Precio"));
@@ -314,6 +318,7 @@ public class Gestor {
 
 			while (resultSet.next()) {
 				VuelosVuelta vueloVuelta = new VuelosVuelta();
+				vueloVuelta.setCodigoVuelo(resultSet.getInt("codigovuelo"));
 				vueloVuelta.setNombre(resultSet.getString("Nombre"));;
 				vueloVuelta.setFechaSalida(resultSet.getString("Fec_Sal"));
 				vueloVuelta.setPrecio(resultSet.getFloat("Precio"));
@@ -351,6 +356,25 @@ public class Gestor {
 
 
     }
+
+	public static boolean borrarEventos(int eventoID) {
+		  try {
+		        Class.forName(DBUtils.DRIVER);
+		        Connection conexion = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
+		        String sql = SQLQuerys.DELETE_VIAJES;
+		        PreparedStatement sentencia = conexion.prepareStatement(sql);
+		        sentencia.setInt(1, eventoID);
+		        int rowsAffected = sentencia.executeUpdate();
+		        return rowsAffected > 0;
+		        
+		    } catch (SQLException sqle) {
+		        System.out.println("Error con la base de datos: " + sqle.getMessage());
+		        return false;
+		    } catch (Exception e) {
+		        System.out.println("Error inesperado: " + e.getMessage());
+		        return false;
+		    }
+	}
 
 
 	
