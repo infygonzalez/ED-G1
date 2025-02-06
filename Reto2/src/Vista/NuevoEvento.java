@@ -30,21 +30,6 @@ public class NuevoEvento extends JFrame {
 	private JTextField textField_8;
 	private JTextField textField_9;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NuevoEvento frame = new NuevoEvento();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

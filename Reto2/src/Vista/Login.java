@@ -27,21 +27,7 @@ public class Login extends JFrame {
 	private JTextField textUsuario;
 	private JPasswordField password;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
@@ -90,7 +76,7 @@ public class Login extends JFrame {
 		        if (agencia == null) {
 		            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "Error de Login", JOptionPane.ERROR_MESSAGE);
 		        } else {
-		            PestañaPrincipal pestañaPrincipal = new PestañaPrincipal();
+		            PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
 		            pestañaPrincipal.setVisible(true);
 		            dispose();
 		        }

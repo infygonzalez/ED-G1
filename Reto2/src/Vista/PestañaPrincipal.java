@@ -28,6 +28,7 @@ import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
 
+import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Alojamiento;
 import Modelo_Pojos.Evento;
 import Modelo_Pojos.Otros;
@@ -45,26 +46,11 @@ public class PestañaPrincipal extends JFrame {
 	private JScrollPane scrollEventos;
 	private JTable tableViajes;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PestañaPrincipal frame = new PestañaPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public PestañaPrincipal() {
+	public PestañaPrincipal(Agencia agencia) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 856, 493);
 
@@ -110,7 +96,7 @@ public class PestañaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		scrollViajes = new JScrollPane();
-		scrollViajes.setBounds(187, 98, 452, 99);
+		scrollViajes.setBounds(212, 142, 552, 99);
 		contentPane.add(scrollViajes);
 
 		tableViajes = new JTable();
@@ -119,7 +105,7 @@ public class PestañaPrincipal extends JFrame {
 		scrollViajes.setViewportView(tableViajes);
 
 		scrollEventos = new JScrollPane();
-		scrollEventos.setBounds(187, 272, 452, 99);
+		scrollEventos.setBounds(212, 316, 552, 99);
 		contentPane.add(scrollEventos);
 
 		tableEventos = new JTable();
@@ -130,13 +116,13 @@ public class PestañaPrincipal extends JFrame {
 		JLabel lblViajes = new JLabel("VIAJES");
 		lblViajes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblViajes.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
-		lblViajes.setBounds(345, 21, 122, 66);
+		lblViajes.setBounds(426, 77, 122, 66);
 		contentPane.add(lblViajes);
 
 		JLabel lblEventos = new JLabel("EVENTOS");
 		lblEventos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEventos.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
-		lblEventos.setBounds(345, 195, 122, 66);
+		lblEventos.setBounds(426, 253, 122, 66);
 		contentPane.add(lblEventos);
 
 		JButton btnBorrarViajes = new JButton("");
@@ -171,7 +157,7 @@ public class PestañaPrincipal extends JFrame {
 
 			}
 		});
-		btnBorrarViajes.setBounds(661, 98, 33, 31);
+		btnBorrarViajes.setBounds(774, 145, 33, 31);
 		contentPane.add(btnBorrarViajes);
 		ImageIcon icon = new ImageIcon(BotonInicio.class.getResource("/img/Papelera.png"));
 		Image image = icon.getImage();
@@ -180,7 +166,7 @@ public class PestañaPrincipal extends JFrame {
 		btnBorrarViajes.setIcon(new ImageIcon(resizedImage));
 
 		JButton btnBorrarEventos = new JButton("");
-		btnBorrarEventos.setBounds(661, 275, 33, 31);
+		btnBorrarEventos.setBounds(774, 324, 33, 31);
 		contentPane.add(btnBorrarEventos);
 
 		ImageIcon iconEventos = new ImageIcon(BotonInicio.class.getResource("/img/Papelera.png"));
@@ -188,6 +174,17 @@ public class PestañaPrincipal extends JFrame {
 		Image resizedImageEventos = imageEventos.getScaledInstance(btnBorrarEventos.getWidth(),
 				btnBorrarEventos.getHeight(), Image.SCALE_SMOOTH);
 		btnBorrarEventos.setIcon(new ImageIcon(resizedImageEventos));
+		
+		JLabel lblNewLabel = new JLabel("Imagen");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 166, 154, 153);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblHolaX = new JLabel("HOLA (NOMBRE)!");
+		lblHolaX.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHolaX.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
+		lblHolaX.setBounds(10, 42, 250, 66);
+		contentPane.add(lblHolaX);
 
 		actualizarViajes();
 		actualizarEventos();
@@ -271,5 +268,4 @@ public class PestañaPrincipal extends JFrame {
 		}
 
 	}
-
 }
