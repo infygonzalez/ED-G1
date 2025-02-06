@@ -7,7 +7,6 @@ import Modelo_Gestor.Gestor;
 import Modelo_Gestor.GestorTablas;
 import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Alojamiento;
-import Modelo_Pojos.Evento;
 import Modelo_Pojos.Otros;
 import Modelo_Pojos.Viaje;
 import Modelo_Pojos.VuelosIda;
@@ -53,33 +52,37 @@ public class Controlador {
 		}
 	}
 
-	public static ArrayList<Viaje> actualizarViajes() {
-	    return GestorTablas.actualizarViaje();
+	public static ArrayList<Viaje> obtenerViajesPorAgencia(Agencia agencia) {
+	    return GestorTablas.actualizarViajePorAgencia(agencia);
 	}
 	
-	public static ArrayList<Alojamiento> actualizarAlojamiento(){
-		return GestorTablas.actualizarAlojamiento();
+	public static ArrayList<Alojamiento> obtenerAlojamientosPorAgencia(Viaje viaje) {
+	    return GestorTablas.actualizarAlojamientoPorAgencia(viaje);
 	}
 
-	public static ArrayList<Otros> actualizarOtros() {
-		return GestorTablas.actualizarOtros();
+	public static ArrayList<VuelosIda> obtenerVuelosIdaPorAgencia(Viaje viaje) {
+	    return GestorTablas.actualizarVuelosIdaPorAgencia(viaje);
 	}
 
-	public static ArrayList<VuelosIda> actualizarVuelosIda() {
-		return GestorTablas.actualizarVuelosIda();
+	public static ArrayList<VuelosVuelta> obtenerVuelosVueltaPorAgencia(Viaje viaje) {
+	    return GestorTablas.actualizarVuelosVueltaPorAgencia(viaje);
 	}
 
-	public static ArrayList<VuelosVuelta> actualizarVuelosVuelta() {
-		return GestorTablas.actualizarVuelosVuelta();	
+	public static ArrayList<Otros> obtenerOtrosPorAgencia(Viaje viaje) {
+	    return GestorTablas.actualizarOtrosPorAgencia(viaje);
 	}
 	
-	public static boolean borrarViajes(int viajeID) {
-		return GestorTablas.borrarViajes(viajeID);
+	public static boolean borrarViaje(int viajeID) {
+		return GestorTablas.borrarViaje(viajeID);
 	}
 	
-	public static boolean borrarEventos(int eventoID) {
-		return GestorTablas.borrarEventos(eventoID);
+	public static boolean borrarEvento(int eventoID, String tipoEvento) {
+		return GestorTablas.borrarEvento(eventoID, tipoEvento);
 
+	}
+
+	public static boolean borrarEventosPorViaje(int viajeId) {
+		return GestorTablas.borrarEventosPorViaje(viajeId);
 	}
 	
 	

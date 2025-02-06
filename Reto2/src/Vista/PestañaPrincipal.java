@@ -1,7 +1,5 @@
 package Vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +14,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -25,17 +22,17 @@ import javax.swing.JOptionPane;
 
 import java.awt.Component;
 import javax.swing.Box;
-import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
 
 import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Alojamiento;
-import Modelo_Pojos.Evento;
 import Modelo_Pojos.Otros;
 import Modelo_Pojos.Viaje;
 import Modelo_Pojos.VuelosIda;
 import Modelo_Pojos.VuelosVuelta;
 import Controlador.Controlador;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PestañaPrincipal extends JFrame {
 
@@ -46,10 +43,6 @@ public class PestañaPrincipal extends JFrame {
 	private JScrollPane scrollEventos;
 	private JTable tableViajes;
 
-
-	/**
-	 * Create the frame.
-	 */
 	public PestañaPrincipal(Agencia agencia) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 856, 493);
@@ -88,10 +81,10 @@ public class PestañaPrincipal extends JFrame {
 		Component horizontalGlue_2 = Box.createHorizontalGlue();
 		menuBar.add(horizontalGlue_2);
 		menuBar.add(mntmDesconectar);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -100,8 +93,21 @@ public class PestañaPrincipal extends JFrame {
 		contentPane.add(scrollViajes);
 
 		tableViajes = new JTable();
+		tableViajes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int filaSeleccionada = tableViajes.getSelectedRow();
+				if (filaSeleccionada != -1) {
+					int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
+					Viaje viaje = new Viaje();
+					viaje.setId(viajeId);
+
+					actualizarEventos(viaje);
+				}
+			}
+		});
 		tableViajes.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] {"ID", "Viajes", "Tipo", "Dias", "Fecha Inicio", "Fecha Fin", "Pais" }));
+				new String[] { "ID", "Viajes", "Tipo", "Dias", "Fecha Inicio", "Fecha Fin", "Pais" }));
 		scrollViajes.setViewportView(tableViajes);
 
 		scrollEventos = new JScrollPane();
@@ -109,8 +115,8 @@ public class PestañaPrincipal extends JFrame {
 		contentPane.add(scrollEventos);
 
 		tableEventos = new JTable();
-		tableEventos.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] {"ID", "Nombre Evento", "Tipo", "Fecha", "Precio" }));
+		tableEventos.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "ID", "Nombre Evento", "Tipo", "Fecha", "Precio" }));
 		scrollEventos.setViewportView(tableEventos);
 
 		JLabel lblViajes = new JLabel("VIAJES");
@@ -128,33 +134,31 @@ public class PestañaPrincipal extends JFrame {
 		JButton btnBorrarViajes = new JButton("");
 		btnBorrarViajes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 int filaSeleccionada = tableViajes.getSelectedRow();
-			        if (filaSeleccionada != -1) { 
-			            int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
-			            
-			            
-			            int opcion = JOptionPane.showConfirmDialog(null, 
-			                "¿Estás seguro de que quieres eliminar este viaje?", 
-			                "Confirmar eliminación", 
-			                JOptionPane.YES_NO_OPTION, 
-			                JOptionPane.WARNING_MESSAGE);
-			            
-			            if (opcion == JOptionPane.YES_OPTION) {
-			                DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
-			                modelo.removeRow(filaSeleccionada);
-			                
-			                
-			                boolean eliminado = Controlador.borrarViajes(viajeId);
-			                if (eliminado) {
-			                    JOptionPane.showMessageDialog(null, "Viaje eliminado correctamente.");
-			                } else {
-			                    JOptionPane.showMessageDialog(null, "Hubo un error al eliminar el viaje.");
-			                }
-			            }
-			        } else {
-			            JOptionPane.showMessageDialog(null, "Por favor, selecciona un viaje para eliminar.");
-			        }
+				int filaSeleccionada = tableViajes.getSelectedRow();
+				if (filaSeleccionada != -1) {
+					int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
+					int opcion = JOptionPane.showConfirmDialog(null,
+							"¿Estás seguro de que quieres eliminar este viaje y sus eventos asociados?",
+							"Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if (opcion == JOptionPane.YES_OPTION) {
+						boolean eventosEliminados = Controlador.borrarEventosPorViaje(viajeId);
 
+						if (eventosEliminados) {
+							boolean viajeEliminado = Controlador.borrarViaje(viajeId);
+							if (viajeEliminado) {
+								DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
+								modelo.removeRow(filaSeleccionada); // Eliminar fila de la tabla
+								JOptionPane.showMessageDialog(null, "Viaje y eventos eliminados correctamente.");
+							} else {
+								JOptionPane.showMessageDialog(null, "Hubo un error al eliminar el viaje.");
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Hubo un error al eliminar los eventos asociados.");
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Por favor, selecciona un viaje para eliminar.");
+				}
 			}
 		});
 		btnBorrarViajes.setBounds(774, 145, 33, 31);
@@ -165,60 +169,85 @@ public class PestañaPrincipal extends JFrame {
 				Image.SCALE_SMOOTH);
 		btnBorrarViajes.setIcon(new ImageIcon(resizedImage));
 
+		// Botón para borrar eventos
 		JButton btnBorrarEventos = new JButton("");
+		btnBorrarEventos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int filaSeleccionada = tableEventos.getSelectedRow();
+				if (filaSeleccionada != -1) {
+					int eventoId = Integer.parseInt(tableEventos.getValueAt(filaSeleccionada, 0).toString());
+					String tipoEvento = tableEventos.getValueAt(filaSeleccionada, 2).toString(); // Obtener el tipo de
+																									// evento
+					int opcion = JOptionPane.showConfirmDialog(null,
+							"¿Estás seguro de que quieres eliminar este evento?", "Confirmar eliminación",
+							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					if (opcion == JOptionPane.YES_OPTION) {
+						DefaultTableModel modelo = (DefaultTableModel) tableEventos.getModel();
+						modelo.removeRow(filaSeleccionada);
+						boolean eliminado = Controlador.borrarEvento(eventoId, tipoEvento); // Pasamos el tipo de evento
+						if (eliminado) {
+							JOptionPane.showMessageDialog(null, "Evento eliminado correctamente.");
+						} else {
+							JOptionPane.showMessageDialog(null, "Hubo un error al eliminar el evento.");
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Por favor, selecciona un evento para eliminar.");
+				}
+			}
+		});
 		btnBorrarEventos.setBounds(774, 324, 33, 31);
 		contentPane.add(btnBorrarEventos);
-
 		ImageIcon iconEventos = new ImageIcon(BotonInicio.class.getResource("/img/Papelera.png"));
 		Image imageEventos = iconEventos.getImage();
 		Image resizedImageEventos = imageEventos.getScaledInstance(btnBorrarEventos.getWidth(),
 				btnBorrarEventos.getHeight(), Image.SCALE_SMOOTH);
 		btnBorrarEventos.setIcon(new ImageIcon(resizedImageEventos));
-		
+
 		JLabel lblNewLabel = new JLabel("Imagen");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 166, 154, 153);
 		contentPane.add(lblNewLabel);
-		
-		JLabel lblHolaX = new JLabel("HOLA (NOMBRE)!");
+
+		JLabel lblHolaX = new JLabel("HOLA " + agencia.getNombre() + "!");
 		lblHolaX.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHolaX.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
 		lblHolaX.setBounds(10, 42, 250, 66);
 		contentPane.add(lblHolaX);
 
-		actualizarViajes();
-		actualizarEventos();
+		actualizarViajes(agencia);
 
 	}
 
-	public void actualizarViajes() {
-		ArrayList<Viaje> viajes = Controlador.actualizarViajes();
+	public void actualizarViajes(Agencia agencia) {
+		ArrayList<Viaje> viajes = Controlador.obtenerViajesPorAgencia(agencia);
 		DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
 		modelo.setRowCount(0);
 		for (Viaje viaje : viajes) {
 			String[] fila = new String[7];
-			String id = String.valueOf(viaje.getId()) ;
+			String id = String.valueOf(viaje.getId());
 			fila[0] = id;
 			fila[1] = viaje.getNombreViaje();
 			fila[2] = viaje.getTipoViaje();
 			fila[3] = viaje.getDuracionViaje();
 			fila[4] = viaje.getFechaInicio();
 			fila[5] = viaje.getFechaFin();
-			fila[6] = viaje.getPais() != null ? viaje.getPais().getPais() : "N/A";
+			fila[6] = viaje.getPais() != null ? viaje.getPais().getPais() : "N/A"; // Actualizado para que sea el país
+																					// directamente
 			modelo.addRow(fila);
 		}
-
 	}
 
-	public void actualizarEventos() {
-		ArrayList<Alojamiento> alojamientos = Controlador.actualizarAlojamiento();
-		ArrayList<Otros> otros = Controlador.actualizarOtros();
-		ArrayList<VuelosIda> vuelosIda = Controlador.actualizarVuelosIda();
-		ArrayList<VuelosVuelta> vuelosVuelta = Controlador.actualizarVuelosVuelta();
+	public void actualizarEventos(Viaje viaje) {
+		ArrayList<Alojamiento> alojamientos = Controlador.obtenerAlojamientosPorAgencia(viaje);
+		ArrayList<Otros> otros = Controlador.obtenerOtrosPorAgencia(viaje);
+		ArrayList<VuelosIda> vuelosIda = Controlador.obtenerVuelosIdaPorAgencia(viaje);
+		ArrayList<VuelosVuelta> vuelosVuelta = Controlador.obtenerVuelosVueltaPorAgencia(viaje);
 
 		DefaultTableModel modelo = (DefaultTableModel) tableEventos.getModel();
 		modelo.setRowCount(0);
 
+		// Alojamiento
 		for (Alojamiento alojamiento : alojamientos) {
 			String[] fila = new String[5];
 			String id = String.valueOf(alojamiento.getId());
@@ -231,6 +260,7 @@ public class PestañaPrincipal extends JFrame {
 			modelo.addRow(fila);
 		}
 
+		// Otros
 		for (Otros otro : otros) {
 			String[] fila = new String[5];
 			String id = String.valueOf(otro.getId());
@@ -243,6 +273,7 @@ public class PestañaPrincipal extends JFrame {
 			modelo.addRow(fila);
 		}
 
+		// Vuelos de Ida
 		for (VuelosIda vueloIda : vuelosIda) {
 			String[] fila = new String[5];
 			String id = String.valueOf(vueloIda.getCodigoVuelo());
@@ -255,6 +286,7 @@ public class PestañaPrincipal extends JFrame {
 			modelo.addRow(fila);
 		}
 
+		// Vuelos de Vuelta
 		for (VuelosVuelta vueloVuelta : vuelosVuelta) {
 			String[] fila = new String[5];
 			String id = String.valueOf(vueloVuelta.getCodigoVuelo());
@@ -266,6 +298,6 @@ public class PestañaPrincipal extends JFrame {
 			fila[4] = precio;
 			modelo.addRow(fila);
 		}
-
 	}
+
 }

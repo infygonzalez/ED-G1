@@ -72,10 +72,10 @@ public class Login extends JFrame {
 		      
 
 		        Agencia agencia = Controlador.comprobarAgencias(usuario, contraseña);
-
 		        if (agencia == null) {
 		            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "Error de Login", JOptionPane.ERROR_MESSAGE);
 		        } else {
+		        	
 		            PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
 		            pestañaPrincipal.setVisible(true);
 		            dispose();

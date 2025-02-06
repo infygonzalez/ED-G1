@@ -37,6 +37,8 @@ public class Gestor {
 
 			if (resultSet.next()) {
 				ret = new Agencia();
+				ret.setId(resultSet.getInt("id"));
+				ret.setLogo(resultSet.getString("Logo"));
 				ret.setNombre(resultSet.getString("nombre"));
 				ret.setContraseña(resultSet.getString("contraseña"));
 			}

@@ -2,18 +2,15 @@ package Modelo_Utils;
 
 public class SQLQuerys {
 	// SELECTS
-	public static final String SELECT_COMPROBAR_AGENCIA = "SELECT * FROM Agencia WHERE Nombre = ? AND Contraseña = ?";
-	public static final String SELECT_VIAJES = "SELECT v.Id_viaje, v.Nom_Via, v.Tipo_Viaje, v.Duracion_Via, v.Fec_Ini, v.Fec_Fin, p.pais AS Pais "
-			+ "FROM viajes v "
-			+ "JOIN codigopaises p ON v.pais = p.pais"
-			+ "WHERE v.id = ?;";
-
+	public static final String SELECT_COMPROBAR_AGENCIA = "SELECT id,logo, Nombre, Contraseña FROM Agencia WHERE Nombre = ? AND Contraseña = ?";
+	public static final String SELECT_VIAJES = "SELECT * FROM Viajes WHERE id = ?";
 	public static final String SELECT_PAIS = "SELECT pais, codigo FROM codigopaises WHERE pais = ?";
 
-	public static final String SELECT_ALOJAMIENTO = "Select * FROM alojamiento ";
-	public static final String SELECT_OTROS = "Select * FROM otros ";
-	public static final String SELECT_VUELOSIDA = "Select * FROM Vuelos WHERE IdaVuelta = 'Ida' ";
-	public static final String SELECT_VUELOSVUELTA = "SELECT * FROM Vuelos where IdaVuelta = 'Ida y Vuelta'";
+	public static final String SELECT_ALOJAMIENTO = "SELECT * FROM alojamiento JOIN agencia a WHERE id = ?";
+
+	public static final String SELECT_OTROS = "SELECT * FROM otros WHERE id_viaje = ?";
+	public static final String SELECT_VUELOSIDA = "SELECT * FROM Vuelos WHERE IdaVuelta = 'ida' AND id_viaje = ?";
+	public static final String SELECT_VUELOSVUELTA = "SELECT * FROM Vuelos WHERE IdaVuelta = 'ida y vuelta' AND id_viaje = ?";
 
 	// INSERTS
 	public static final String INSERT_NUEVA_AGENCIA = "INSERT INTO agencia (nombre, logo, Col_Marca, Num_Emp, Tipo_Agencia, Contraseña) VALUES (?, ?, ?, ?, ?, ?)";
@@ -23,9 +20,9 @@ public class SQLQuerys {
 
 	// DELETES
 
-	public static final String DELETE_VIAJES = "DELETE FROM Viajes WHERE ID_Viaje = ?";
-	public static final String DELETE_ALOJAMIENTOS = "";
-	public static final String DELETE_OTROS = "";
-	public static final String DELETE_VUELOS = "";
+	public static final String DELETE_VIAJES = "DELETE FROM Viajes WHERE id_Viaje = ?";
+	public static final String DELETE_ALOJAMIENTOS = "DELETE FROM Alojamiento WHERE id_alojamiento = ?";
+	public static final String DELETE_VUELOS = "DELETE FROM Vuelos WHERE codigovuelo = ?";
+	public static final String DELETE_OTROS = "DELETE FROM Otros WHERE id_otro = ?";
 
 }
