@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import Modelo_Gestor.Gestor;
+import Modelo_Gestor.GestorTablas;
 import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Alojamiento;
 import Modelo_Pojos.Evento;
@@ -53,31 +54,31 @@ public class Controlador {
 	}
 
 	public static ArrayList<Viaje> actualizarViajes() {
-	    return Gestor.actualizarViaje();
+	    return GestorTablas.actualizarViaje();
 	}
 	
 	public static ArrayList<Alojamiento> actualizarAlojamiento(){
-		return Gestor.actualizarAlojamiento();
+		return GestorTablas.actualizarAlojamiento();
 	}
 
 	public static ArrayList<Otros> actualizarOtros() {
-		return Gestor.actualizarOtros();
+		return GestorTablas.actualizarOtros();
 	}
 
 	public static ArrayList<VuelosIda> actualizarVuelosIda() {
-		return Gestor.actualizarVuelosIda();
+		return GestorTablas.actualizarVuelosIda();
 	}
 
 	public static ArrayList<VuelosVuelta> actualizarVuelosVuelta() {
-		return Gestor.actualizarVuelosVuelta();	
+		return GestorTablas.actualizarVuelosVuelta();	
 	}
 	
 	public static boolean borrarViajes(int viajeID) {
-		return Gestor.borrarViajes(viajeID);
+		return GestorTablas.borrarViajes(viajeID);
 	}
 	
 	public static boolean borrarEventos(int eventoID) {
-		return Gestor.borrarEventos(eventoID);
+		return GestorTablas.borrarEventos(eventoID);
 
 	}
 	
