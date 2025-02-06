@@ -21,6 +21,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.Component;
+
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 
@@ -33,6 +35,9 @@ import Modelo_Pojos.VuelosVuelta;
 import Controlador.Controlador;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class PestañaPrincipal extends JFrame {
 
@@ -44,6 +49,7 @@ public class PestañaPrincipal extends JFrame {
 	private JTable tableViajes;
 
 	public PestañaPrincipal(Agencia agencia) {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 856, 493);
 
@@ -147,7 +153,7 @@ public class PestañaPrincipal extends JFrame {
 							boolean viajeEliminado = Controlador.borrarViaje(viajeId);
 							if (viajeEliminado) {
 								DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
-								modelo.removeRow(filaSeleccionada); // Eliminar fila de la tabla
+								modelo.removeRow(filaSeleccionada); 
 								JOptionPane.showMessageDialog(null, "Viaje y eventos eliminados correctamente.");
 							} else {
 								JOptionPane.showMessageDialog(null, "Hubo un error al eliminar el viaje.");
@@ -163,28 +169,27 @@ public class PestañaPrincipal extends JFrame {
 		});
 		btnBorrarViajes.setBounds(774, 145, 33, 31);
 		contentPane.add(btnBorrarViajes);
-		ImageIcon icon = new ImageIcon(BotonInicio.class.getResource("/img/Papelera.png"));
-		Image image = icon.getImage();
-		Image resizedImage = image.getScaledInstance(btnBorrarViajes.getWidth(), btnBorrarViajes.getHeight(),
+		ImageIcon iconViajes = new ImageIcon(BotonInicio.class.getResource("/img/Papelera.png"));
+		Image imageViajes = iconViajes.getImage();
+		Image resizedViajes = imageViajes.getScaledInstance(btnBorrarViajes.getWidth(), btnBorrarViajes.getHeight(),
 				Image.SCALE_SMOOTH);
-		btnBorrarViajes.setIcon(new ImageIcon(resizedImage));
+		btnBorrarViajes.setIcon(new ImageIcon(resizedViajes));
 
-		// Botón para borrar eventos
 		JButton btnBorrarEventos = new JButton("");
 		btnBorrarEventos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int filaSeleccionada = tableEventos.getSelectedRow();
 				if (filaSeleccionada != -1) {
 					int eventoId = Integer.parseInt(tableEventos.getValueAt(filaSeleccionada, 0).toString());
-					String tipoEvento = tableEventos.getValueAt(filaSeleccionada, 2).toString(); // Obtener el tipo de
-																									// evento
+					String tipoEvento = tableEventos.getValueAt(filaSeleccionada, 2).toString();
+																									
 					int opcion = JOptionPane.showConfirmDialog(null,
 							"¿Estás seguro de que quieres eliminar este evento?", "Confirmar eliminación",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (opcion == JOptionPane.YES_OPTION) {
 						DefaultTableModel modelo = (DefaultTableModel) tableEventos.getModel();
 						modelo.removeRow(filaSeleccionada);
-						boolean eliminado = Controlador.borrarEvento(eventoId, tipoEvento); // Pasamos el tipo de evento
+						boolean eliminado = Controlador.borrarEvento(eventoId, tipoEvento); 
 						if (eliminado) {
 							JOptionPane.showMessageDialog(null, "Evento eliminado correctamente.");
 						} else {
@@ -204,16 +209,37 @@ public class PestañaPrincipal extends JFrame {
 				btnBorrarEventos.getHeight(), Image.SCALE_SMOOTH);
 		btnBorrarEventos.setIcon(new ImageIcon(resizedImageEventos));
 
-		JLabel lblNewLabel = new JLabel("Imagen");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 166, 154, 153);
-		contentPane.add(lblNewLabel);
-
-		JLabel lblHolaX = new JLabel("HOLA " + agencia.getNombre() + "!");
+		JLabel lblHolaX = new JLabel("HOLA " + agencia.getNombre().toUpperCase() + "!");
 		lblHolaX.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHolaX.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
 		lblHolaX.setBounds(10, 42, 250, 66);
 		contentPane.add(lblHolaX);
+		
+		
+		
+		
+		String logoUrl = agencia.getLogo();
+		URL imgUrl = null;
+		try {
+		    imgUrl = new URL(logoUrl);
+		} catch (MalformedURLException e) {
+		    e.printStackTrace();
+		}
+
+		ImageIcon image = new ImageIcon(imgUrl);
+		Image img = image.getImage();  // Obtener la imagen original
+		Image resizedImg = img.getScaledInstance(163, 149, Image.SCALE_SMOOTH);  // Redimensionar la imagen
+
+		JLabel lblNewLabel = new JLabel(new ImageIcon(resizedImg));  // Usar la imagen redimensionada en el JLabel
+		lblNewLabel.setBounds(10, 142, 163, 149);  // Establecer el tamaño del JLabel
+		contentPane.add(lblNewLabel);
+
+		contentPane.revalidate();  // Forzar la validación de los componentes
+		contentPane.repaint();    // Redibujar el panel
+
+
+
+		
 
 		actualizarViajes(agencia);
 
@@ -299,5 +325,4 @@ public class PestañaPrincipal extends JFrame {
 			modelo.addRow(fila);
 		}
 	}
-
 }

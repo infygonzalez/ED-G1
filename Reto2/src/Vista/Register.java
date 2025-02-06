@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,7 +23,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
 
 public class Register extends JFrame {
 
@@ -57,6 +55,7 @@ public class Register extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Register() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 896, 531);
@@ -87,7 +86,7 @@ public class Register extends JFrame {
 		lblTipoDeAgencia.setBounds(84, 182, 182, 27);
 		contentPane.add(lblTipoDeAgencia);
 
-		JLabel lblLogo = new JLabel("Logo");
+		JLabel lblLogo = new JLabel("Logo (JPG)");
 		lblLogo.setFont(new Font("Tw Cen MT", Font.BOLD, 15));
 		lblLogo.setBounds(84, 220, 182, 27);
 		contentPane.add(lblLogo);
@@ -109,30 +108,30 @@ public class Register extends JFrame {
 
 		textColor = new JTextField();
 		textColor.getDocument().addDocumentListener(new DocumentListener() {
-		    @Override
-		    public void insertUpdate(DocumentEvent e) {
-		        actualizarColor();
-		    }
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				actualizarColor();
+			}
 
-		    @Override
-		    public void removeUpdate(DocumentEvent e) {
-		        actualizarColor();
-		    }
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				actualizarColor();
+			}
 
-		    @Override
-		    public void changedUpdate(DocumentEvent e) {
-		        actualizarColor();
-		    }
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				actualizarColor();
+			}
 
-		    private void actualizarColor() {
-		        String hexColor = textColor.getText().trim();
+			private void actualizarColor() {
+				String hexColor = textColor.getText().trim();
 
-		        if (Controlador.validacionColor(hexColor)) {
-		            colorPanel.setBackground(Color.decode(hexColor));
-		        } else {
-		            colorPanel.setBackground(Color.WHITE);
-		        }
-		    }
+				if (Controlador.validacionColor(hexColor)) {
+					colorPanel.setBackground(Color.decode(hexColor));
+				} else {
+					colorPanel.setBackground(Color.WHITE);
+				}
+			}
 		});
 
 		textColor.setBounds(297, 107, 140, 27);
@@ -173,37 +172,44 @@ public class Register extends JFrame {
 		JButton btnCrearCuenta = new JButton("CREAR CUENTA");
 		btnCrearCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		        String nombreAgencia = textNombreAgencia.getText().trim();
-		        String logo = textLogo.getText().trim();
-		        String color = textColor.getText().trim();
-		        String tipoEmpleados = (String) comboBox.getSelectedItem();
-		        String tipoAgencia = (String) comboBox_1.getSelectedItem();
-		        String contraseña = new String(password.getPassword()).trim();
-		        String contraseñaValidar = new String(passwordValidar.getPassword()).trim();
+				String nombreAgencia = textNombreAgencia.getText().trim();
+				String logo = textLogo.getText().trim();
+				String color = textColor.getText().trim();
+				String tipoEmpleados = (String) comboBox.getSelectedItem();
+				String tipoAgencia = (String) comboBox_1.getSelectedItem();
+				String contraseña = new String(password.getPassword()).trim();
+				String contraseñaValidar = new String(passwordValidar.getPassword()).trim();
 
-		        if (nombreAgencia.isEmpty() || logo.isEmpty() || color.isEmpty() || tipoEmpleados.isEmpty()
-		                || tipoAgencia.isEmpty() || contraseña.isEmpty() || contraseñaValidar.isEmpty()) {
-		            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error de validación",
+				
+		        if (!logo.toLowerCase().endsWith(".jpg")) {
+		            JOptionPane.showMessageDialog(null, "El logo debe tener una extensión .jpg", "Error de validación",
 		                    JOptionPane.ERROR_MESSAGE);
-		            return; 
+		            return;
 		        }
+				
+				if (nombreAgencia.isEmpty() || logo.isEmpty() || color.isEmpty() || tipoEmpleados.isEmpty()
+						|| tipoAgencia.isEmpty() || contraseña.isEmpty() || contraseñaValidar.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.", "Error de validación",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 
-		        if (Controlador.validarContraseña(contraseña, contraseñaValidar)) {
-		            Agencia agencia = new Agencia(nombreAgencia, logo, color, tipoEmpleados, tipoAgencia, contraseña);
+				if (Controlador.validarContraseña(contraseña, contraseñaValidar)) {
+					Agencia agencia = new Agencia(nombreAgencia, logo, color, tipoEmpleados, tipoAgencia, contraseña);
 
-		            if (Controlador.registrarAgencia(agencia)) {
-		                JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente.", "Usuario Creado",
-		                        JOptionPane.INFORMATION_MESSAGE);
-		            } else {
-		                JOptionPane.showMessageDialog(null, "Error al Registrar Agencia.", "Error de creacion",
-		                        JOptionPane.ERROR_MESSAGE);
-		            }
-		        } else {
-		            System.out.println("Las contraseñas no coinciden.");
-		            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.", "Error de contraseñas",
-		                    JOptionPane.ERROR_MESSAGE);
-		        }
-		    }
+					if (Controlador.registrarAgencia(agencia)) {
+						JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente.", "Usuario Creado",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Error al Registrar Agencia.", "Error de creacion",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					System.out.println("Las contraseñas no coinciden.");
+					JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.", "Error de contraseñas",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		btnCrearCuenta.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
 		btnCrearCuenta.setBounds(81, 362, 185, 76);

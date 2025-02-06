@@ -1,6 +1,5 @@
 package Vista;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,7 +13,6 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 
-import Modelo_Gestor.Gestor;
 import Modelo_Pojos.Agencia;
 import Controlador.Controlador;
 import javax.swing.JPasswordField;
