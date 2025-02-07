@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 import Modelo_Gestor.Gestor;
 import Modelo_Gestor.GestorTablas;
+import Modelo_Gestor.GestorViaje;
 import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Alojamiento;
 import Modelo_Pojos.Otros;
+import Modelo_Pojos.Pais;
 import Modelo_Pojos.Viaje;
 import Modelo_Pojos.VuelosIda;
 import Modelo_Pojos.VuelosVuelta;
@@ -84,6 +86,16 @@ public class Controlador {
 	public static boolean borrarEventosPorViaje(int viajeId) {
 		return GestorTablas.borrarEventosPorViaje(viajeId);
 	}
+	
+	public static boolean crearViaje(Viaje viaje, Agencia agencia) {
+		return GestorViaje.crearViaje(viaje, agencia);
+		
+	}
+
+	public static ArrayList<Pais> obtenerPaises() {
+	    return GestorViaje.obtenerPais();
+	}
+
 	
 	
 	

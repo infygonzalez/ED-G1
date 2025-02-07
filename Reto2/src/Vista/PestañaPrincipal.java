@@ -67,6 +67,13 @@ public class PestañaPrincipal extends JFrame {
 		});
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Nuevo Viaje");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NuevoViaje nuevoViaje = new NuevoViaje(agencia);
+	            nuevoViaje.setVisible(true);
+				dispose();
+			}
+		});
 		mntmNewMenuItem.setHorizontalAlignment(SwingConstants.CENTER);
 		menuBar.add(mntmNewMenuItem);
 

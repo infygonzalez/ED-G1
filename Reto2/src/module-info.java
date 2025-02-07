@@ -9,4 +9,5 @@ module Reto2 {
 	requires java.sql;
 	requires org.junit.jupiter.api;
 	requires junit;
+	requires jcalendar;
 }

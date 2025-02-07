@@ -68,17 +68,17 @@ public class NuevoEvento extends JFrame {
 		lblNewLabel_2.setBounds(10, 103, 400, 21);
 		contentPane.add(lblNewLabel_2);
 		
-		JDateChooser dateChooser = new JDateChooser();
+		/*JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(10, 126, 265, 20);
-		contentPane.add(dateChooser);
+		contentPane.add(dateChooser);*/
 		
 		JLabel lblNewLabel_3 = new JLabel("Fecha vuelta");
 		lblNewLabel_3.setBounds(10, 147, 400, 21);
 		contentPane.add(lblNewLabel_3);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
+		/*JDateChooser dateChooser_1 = new JDateChooser();
 		dateChooser_1.setBounds(10, 166, 265, 20);
-		contentPane.add(dateChooser_1);
+		contentPane.add(dateChooser_1);*/
 		
 		JLabel lblNewLabel_4 = new JLabel("Trayecto");
 		lblNewLabel_4.setBounds(10, 188, 400, 21);

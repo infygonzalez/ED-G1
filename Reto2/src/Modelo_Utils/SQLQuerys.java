@@ -14,6 +14,8 @@ public class SQLQuerys {
 
 	// INSERTS
 	public static final String INSERT_NUEVA_AGENCIA = "INSERT INTO agencia (nombre, logo, Col_Marca, Num_Emp, Tipo_Agencia, Contraseña) VALUES (?, ?, ?, ?, ?, ?)";
+	public static final String INSERT_NUEVO_VIAJE = "";
+
 
 	public static final String END_BLOCK = "')";
 	public static final String SEPARATOR = "', '";
