@@ -192,7 +192,7 @@ public class NuevoViaje extends JFrame {
                  viaje.setPais(pais);
 
                  // Formatear las fechas al formato "dd/MM/yyyy"
-                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                  String fechaInicioFormateada = sdf.format(fechaInicio);
                  String fechaFinFormateada = sdf.format(fechaFin);
 

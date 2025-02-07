@@ -239,7 +239,6 @@ public class GestorTablas {
 	}
 
 	public static boolean borrarViaje(int viajeId) {
-		System.out.println(viajeId);
 		try {
 			Class.forName(DBUtils.DRIVER);
 			Connection conexion = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
