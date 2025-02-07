@@ -239,10 +239,11 @@ public class GestorTablas {
 	}
 
 	public static boolean borrarViaje(int viajeId) {
+		System.out.println(viajeId);
 		try {
 			Class.forName(DBUtils.DRIVER);
 			Connection conexion = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
-			String sql = SQLQuerys.DELETE_VIAJES;
+			String sql = "DELETE FROM Viajes WHERE ID_Viaje = ?";
 			PreparedStatement sentencia = conexion.prepareStatement(sql);
 			sentencia.setInt(1, viajeId);
 			int rowsAffected = sentencia.executeUpdate();
@@ -333,22 +334,22 @@ public class GestorTablas {
 	    try {
 			conexion = DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS);
 	        
-	        String sqlAlojamiento = "DELETE FROM Alojamiento WHERE idViaje = ?";
+	        String sqlAlojamiento = "DELETE FROM Alojamiento WHERE id_Viaje = ?";
 	        stmt = conexion.prepareStatement(sqlAlojamiento);
 	        stmt.setInt(1, viajeId);
 	        stmt.executeUpdate();
 	        
-	        String sqlOtros = "DELETE FROM Otros WHERE idViaje = ?";
+	        String sqlOtros = "DELETE FROM Otros WHERE id_Viaje = ?";
 	        stmt = conexion.prepareStatement(sqlOtros);
 	        stmt.setInt(1, viajeId);
 	        stmt.executeUpdate();
 	        
-	        String sqlVueloIda = "DELETE FROM VuelosIda WHERE idViaje = ?";
+	        String sqlVueloIda = "DELETE FROM Vuelos WHERE id_Viaje = ?";
 	        stmt = conexion.prepareStatement(sqlVueloIda);
 	        stmt.setInt(1, viajeId);
 	        stmt.executeUpdate();
 	        
-	        String sqlVueloVuelta = "DELETE FROM VuelosVuelta WHERE idViaje = ?";
+	        String sqlVueloVuelta = "DELETE FROM Vuelos WHERE id_Viaje = ?";
 	        stmt = conexion.prepareStatement(sqlVueloVuelta);
 	        stmt.setInt(1, viajeId);
 	        stmt.executeUpdate();

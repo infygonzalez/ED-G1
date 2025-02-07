@@ -22,7 +22,7 @@ public class SQLQuerys {
 
 	// DELETES
 
-	public static final String DELETE_VIAJES = "DELETE FROM Viajes WHERE id_Viaje = ?";
+	public static final String DELETE_VIAJES = "DELETE FROM Viajes WHERE id_viaje = ?";
 	public static final String DELETE_ALOJAMIENTOS = "DELETE FROM Alojamiento WHERE id_alojamiento = ?";
 	public static final String DELETE_VUELOS = "DELETE FROM Vuelos WHERE codigovuelo = ?";
 	public static final String DELETE_OTROS = "DELETE FROM Otros WHERE id_otro = ?";

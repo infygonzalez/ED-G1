@@ -140,49 +140,76 @@ public class NuevoViaje extends JFrame {
         JButton btnCrearViaje = new JButton("CREAR VIAJE");
         btnCrearViaje.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String nombreViaje = textNombreViaje.getText();
-                String tipoViaje = textTipoViaje.getText();
-                Date fechaInicio = dateChooserInicio.getDate();
-                Date fechaFin = dateChooserFin.getDate();
-                String dias = textDias.getText();
-                String paisSeleccionado = (String) comboBoxPais.getSelectedItem();
-                String descripcion = textDescripcion.getText();
-                String serviciosNoIncluidos = textServiciosNoIncluidos.getText();
+            	
+            	 String nombreViaje = textNombreViaje.getText();
+                 String tipoViaje = textTipoViaje.getText();
+                 Date fechaInicio = dateChooserInicio.getDate();
+                 Date fechaFin = dateChooserFin.getDate();
+                 String dias = textDias.getText();
+                 String paisSeleccionado = (String) comboBoxPais.getSelectedItem();
+                 String descripcion = textDescripcion.getText();
+                 String serviciosNoIncluidos = textServiciosNoIncluidos.getText();
 
-                if (fechaInicio == null || fechaFin == null) {
-                    JOptionPane.showMessageDialog(null, "Por favor, selecciona las fechas de inicio y fin del viaje.");
-                    return;
-                }
+                 // Verificación de campos vacíos
+                 if (nombreViaje.isEmpty()) {
+                     JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del viaje.");
+                     return;
+                 }
+                 if (tipoViaje.isEmpty()) {
+                     JOptionPane.showMessageDialog(null, "Por favor, ingrese el tipo de viaje.");
+                     return;
+                 }
+                 if (fechaInicio == null || fechaFin == null) {
+                     JOptionPane.showMessageDialog(null, "Por favor, selecciona las fechas de inicio y fin del viaje.");
+                     return;
+                 }
+                 if (fechaFin.before(fechaInicio)) {
+                     JOptionPane.showMessageDialog(null, "La fecha de fin no puede ser anterior a la fecha de inicio.");
+                     return;
+                 }
+                 if (paisSeleccionado == null || paisSeleccionado.isEmpty()) {
+                     JOptionPane.showMessageDialog(null, "Por favor, seleccione un país.");
+                     return;
+                 }
+                 if (descripcion.isEmpty()) {
+                     JOptionPane.showMessageDialog(null, "Por favor, ingrese una descripción para el viaje.");
+                     return;
+                 }
+                 if (serviciosNoIncluidos.isEmpty()) {
+                     JOptionPane.showMessageDialog(null, "Por favor, ingrese los servicios no incluidos.");
+                     return;
+                 }
 
-                Pais pais = new Pais();
-                pais.setPais(paisSeleccionado);
+                 // Si todo está válido, crear el viaje
+                 Pais pais = new Pais();
+                 pais.setPais(paisSeleccionado);
 
-                Viaje viaje = new Viaje();
-                viaje.setNombreViaje(nombreViaje);
-                viaje.setTipoViaje(tipoViaje);
-                viaje.setDescripcion(descripcion);
-                viaje.setServiciosNoIncluidos(serviciosNoIncluidos);
-                viaje.setPais(pais);
+                 Viaje viaje = new Viaje();
+                 viaje.setNombreViaje(nombreViaje);
+                 viaje.setTipoViaje(tipoViaje);
+                 viaje.setDescripcion(descripcion);
+                 viaje.setServiciosNoIncluidos(serviciosNoIncluidos);
+                 viaje.setPais(pais);
 
-                // Formatear las fechas al formato "dd/MM/yyyy"
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                String fechaInicioFormateada = sdf.format(fechaInicio);
-                String fechaFinFormateada = sdf.format(fechaFin);
+                 // Formatear las fechas al formato "dd/MM/yyyy"
+                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                 String fechaInicioFormateada = sdf.format(fechaInicio);
+                 String fechaFinFormateada = sdf.format(fechaFin);
 
-                viaje.setFechaInicio(fechaInicioFormateada);
-                viaje.setFechaFin(fechaFinFormateada);
-                viaje.setDuracionViaje(dias);
+                 viaje.setFechaInicio(fechaInicioFormateada);
+                 viaje.setFechaFin(fechaFinFormateada);
+                 viaje.setDuracionViaje(dias);
 
-                boolean resultado = Controlador.crearViaje(viaje, agencia);
+                 boolean resultado = Controlador.crearViaje(viaje, agencia);
 
-                if (resultado) {
-                    JOptionPane.showMessageDialog(null, "Viaje creado exitosamente.");
-                    PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
-                    pestañaPrincipal.setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Hubo un error al crear el viaje. Intenta nuevamente.");
-                }
+                 if (resultado) {
+                     JOptionPane.showMessageDialog(null, "Viaje creado exitosamente.");
+                     PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+                     pestañaPrincipal.setVisible(true);
+                     dispose();
+                 } else {
+                     JOptionPane.showMessageDialog(null, "Hubo un error al crear el viaje. Intenta nuevamente.");
+                 }
             }
         });
         btnCrearViaje.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
@@ -200,6 +227,21 @@ public class NuevoViaje extends JFrame {
         btnCancelar.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
         btnCancelar.setBounds(217, 386, 122, 57);
         contentPane.add(btnCancelar);
+        
+        JLabel lblPais = new JLabel("Pais");
+        lblPais.setFont(new Font("Tw Cen MT", Font.BOLD, 16));
+        lblPais.setBounds(414, 25, 122, 47);
+        contentPane.add(lblPais);
+        
+        JLabel lblDescripcion = new JLabel("Descripcion");
+        lblDescripcion.setFont(new Font("Tw Cen MT", Font.BOLD, 16));
+        lblDescripcion.setBounds(414, 108, 122, 47);
+        contentPane.add(lblDescripcion);
+        
+        JLabel lblServiciosNoIncluidos = new JLabel("Servicios No Incluidos");
+        lblServiciosNoIncluidos.setFont(new Font("Tw Cen MT", Font.BOLD, 16));
+        lblServiciosNoIncluidos.setBounds(414, 263, 161, 47);
+        contentPane.add(lblServiciosNoIncluidos);
 
         // Listener para asegurar que la fecha de fin no sea menor que la fecha de inicio
         dateChooserInicio.addPropertyChangeListener(new PropertyChangeListener() {
