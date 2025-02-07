@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Modelo_Pojos.Viaje;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
@@ -34,7 +37,7 @@ public class NuevoEvento extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NuevoEvento() {
+	public NuevoEvento(Viaje viaje) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 856, 712);
 		contentPane = new JPanel();
