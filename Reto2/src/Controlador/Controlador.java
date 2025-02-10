@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import Modelo_Gestor.Gestor;
+import Modelo_Gestor.GestorEvento;
 import Modelo_Gestor.GestorTablas;
 import Modelo_Gestor.GestorViaje;
 import Modelo_Pojos.Agencia;
@@ -94,6 +95,10 @@ public class Controlador {
 
 	public static ArrayList<Pais> obtenerPaises() {
 	    return GestorViaje.obtenerPais();
+	}
+
+	public static boolean crearOtro(Viaje viaje, Otros otro) {
+		return GestorEvento.crearOtro(viaje, otro);
 	}
 
 	

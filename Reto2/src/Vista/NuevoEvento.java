@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Modelo_Pojos.Agencia;
+import Modelo_Pojos.Otros;
 import Modelo_Pojos.Viaje;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,10 +17,17 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Font;
 import com.toedter.calendar.JDateChooser;
+
+import Controlador.Controlador;
+
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class NuevoEvento extends JFrame {
@@ -41,6 +49,7 @@ public class NuevoEvento extends JFrame {
 	private JTextField textOtroPrecio;
 	private JTextField textOtroDescripcion;
 	private JPanel panelOtros;
+	private JDateChooser dateChooserOtro;
 
 	/**
 	 * Create the frame.
@@ -73,6 +82,55 @@ public class NuevoEvento extends JFrame {
 		contentPane.add(comboBoxTipo);
 
 		JButton btnCrearEvento = new JButton("CREAR EVENTO");
+		btnCrearEvento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String eleccion = (String) comboBoxTipo.getSelectedItem();
+
+				switch (eleccion) {
+				case "Otros": {
+	                Otros otro = new Otros();
+	                String nombre = textNombre.getText().trim();
+	                Float precio = Float.parseFloat(textOtroPrecio.getText());
+	                String descripcion = textOtroDescripcion.getText().trim();
+	                Date fecha = dateChooserOtro.getDate();
+
+	                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	                String fechaFormateada = sdf.format(fecha);
+
+	                if (nombre.isEmpty() || precio == null || descripcion.isEmpty() || fechaFormateada.isEmpty()) {
+	                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos para 'Otros'.",
+	                            "Error", JOptionPane.ERROR_MESSAGE);
+	                    return;
+	                } else {
+	                    otro.setNombre(nombre);
+	                    otro.setPrecio(precio);
+	                    otro.setDescripcion(descripcion);
+	                    otro.setFecha(fechaFormateada);
+	                    boolean resultado = Controlador.crearOtro(viaje, otro);
+
+	                    if (resultado) {
+	                        JOptionPane.showMessageDialog(null, "Evento 'Otros' creado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	                        PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+	                        pestañaPrincipal.setVisible(true);
+	                        dispose();
+	                    } else {
+	                        JOptionPane.showMessageDialog(null, "Hubo un error al crear el evento. Intenta nuevamente.");
+	                    }
+	                }
+	                break;
+	            }
+				case "Alojamiento": {
+
+				}
+
+				default:
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de evento válido.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+			}
+		});
+
 		btnCrearEvento.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
 		btnCrearEvento.setBounds(205, 480, 131, 57);
 		contentPane.add(btnCrearEvento);
@@ -89,6 +147,38 @@ public class NuevoEvento extends JFrame {
 		btnVolver.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
 		btnVolver.setBounds(391, 480, 131, 57);
 		contentPane.add(btnVolver);
+
+		panelOtros = new JPanel();
+		panelOtros.setBounds(10, 96, 502, 309);
+		contentPane.add(panelOtros);
+		panelOtros.setLayout(null);
+		panelOtros.setVisible(false);
+
+		JLabel lblOtroDescripcion = new JLabel("Descripción");
+		lblOtroDescripcion.setBounds(10, 22, 131, 14);
+		panelOtros.add(lblOtroDescripcion);
+
+		JLabel lblPrecio_1 = new JLabel("Precio");
+		lblPrecio_1.setBounds(10, 103, 131, 14);
+		panelOtros.add(lblPrecio_1);
+
+		JLabel lblOtroFecha = new JLabel("Fecha");
+		lblOtroFecha.setBounds(10, 140, 131, 14);
+		panelOtros.add(lblOtroFecha);
+
+		textOtroPrecio = new JTextField();
+		textOtroPrecio.setColumns(10);
+		textOtroPrecio.setBounds(156, 100, 183, 20);
+		panelOtros.add(textOtroPrecio);
+
+		textOtroDescripcion = new JTextField();
+		textOtroDescripcion.setColumns(10);
+		textOtroDescripcion.setBounds(156, 19, 300, 70);
+		panelOtros.add(textOtroDescripcion);
+
+		dateChooserOtro = new JDateChooser();
+		dateChooserOtro.setBounds(156, 140, 183, 20);
+		panelOtros.add(dateChooserOtro);
 
 		panelVuelo = new JPanel();
 		panelVuelo.setBounds(0, 88, 749, 394);
@@ -255,38 +345,6 @@ public class NuevoEvento extends JFrame {
 		textPrecio.setColumns(10);
 		textPrecio.setBounds(164, 295, 106, 20);
 		panelVuelo.add(textPrecio);
-
-		panelOtros = new JPanel();
-		panelOtros.setBounds(10, 96, 502, 309);
-		contentPane.add(panelOtros);
-		panelOtros.setLayout(null);
-		panelOtros.setVisible(false);
-
-		JLabel lblOtroDescripcion = new JLabel("Descripción");
-		lblOtroDescripcion.setBounds(10, 22, 131, 14);
-		panelOtros.add(lblOtroDescripcion);
-
-		JLabel lblPrecio_1 = new JLabel("Precio");
-		lblPrecio_1.setBounds(10, 103, 131, 14);
-		panelOtros.add(lblPrecio_1);
-
-		JLabel lblOtroFecha = new JLabel("Fecha");
-		lblOtroFecha.setBounds(10, 140, 131, 14);
-		panelOtros.add(lblOtroFecha);
-
-		textOtroPrecio = new JTextField();
-		textOtroPrecio.setColumns(10);
-		textOtroPrecio.setBounds(156, 100, 183, 20);
-		panelOtros.add(textOtroPrecio);
-
-		textOtroDescripcion = new JTextField();
-		textOtroDescripcion.setColumns(10);
-		textOtroDescripcion.setBounds(156, 19, 300, 70);
-		panelOtros.add(textOtroDescripcion);
-
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(156, 140, 183, 20);
-		panelOtros.add(dateChooser);
 		panelVueloVuelta.setVisible(false);
 
 		comboBoxTipo.addActionListener(new ActionListener() {
@@ -295,20 +353,20 @@ public class NuevoEvento extends JFrame {
 				switch (tipoSeleccionado) {
 				case "Vuelo": {
 					panelVuelo.setVisible(true);
-					/*panelAlojamiento.setVisible(false);*/
+					/* panelAlojamiento.setVisible(false); */
 					panelOtros.setVisible(false);
 
 					break;
 				}
 				case "Alojamiento": {
 					panelVuelo.setVisible(false);
-					/*panelAlojamiento.setVisible(true);*/
+					/* panelAlojamiento.setVisible(true); */
 					panelOtros.setVisible(false);
 					break;
 				}
 				case "Otros": {
 					panelVuelo.setVisible(false);
-					/*panelAlojamiento.setVisible(false);*/
+					/* panelAlojamiento.setVisible(false); */
 					panelOtros.setVisible(true);
 					break;
 				}
@@ -318,5 +376,7 @@ public class NuevoEvento extends JFrame {
 
 			}
 		});
+
 	}
+
 }
