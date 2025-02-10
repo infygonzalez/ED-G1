@@ -1,198 +1,280 @@
 package Vista;
 
+import java.awt.Desktop;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Viaje;
-
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Font;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.awt.event.ActionEvent;
 
 public class NuevoEvento extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-
+	private JTextField textNombre;
+	private JComboBox<String> comboBoxTipo;
+	private JTextField textCodigoVueloIda;
+	private JTextField textAerolineaIda;
+	private JTextField textHorarioSalida;
+	private JTextField textDuracion;
+	private JTextField textPrecio;
+	private JTextField txtCodigoVueloVuelta;
+	private JTextField textAerolineaVuelta;
+	private JTextField textHorarioVuelta;
+	private JTextField textDuracionVuelta;
+	private JPanel panelVueloVuelta;
+	private JPanel panelVuelo;
 
 	/**
 	 * Create the frame.
 	 */
-	public NuevoEvento(Viaje viaje) {
+	public NuevoEvento(Viaje viaje, Agencia agencia) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 856, 712);
-		contentPane = new JPanel();
+		setBounds(100, 100, 765, 602);
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		JLabel lblNombre = new JLabel("Nombre evento");
+		lblNombre.setBounds(23, 27, 131, 14);
+		contentPane.add(lblNombre);
+
+		JLabel lblTipoDeEvento = new JLabel("Tipo de evento");
+		lblTipoDeEvento.setBounds(23, 67, 131, 14);
+		contentPane.add(lblTipoDeEvento);
+
+		textNombre = new JTextField();
+		textNombre.setBounds(164, 24, 183, 20);
+		contentPane.add(textNombre);
+		textNombre.setColumns(10);
+
+		comboBoxTipo = new JComboBox<>();
+		comboBoxTipo.setModel(new DefaultComboBoxModel<>(new String[] { "", "Vuelo", "Alojamiento", "Otros" }));
+		comboBoxTipo.setBounds(164, 63, 183, 22);
+		contentPane.add(comboBoxTipo);
+
+		panelVuelo = new JPanel();
+		panelVuelo.setVisible(false);
+		panelVuelo.setBounds(0, 92, 755, 377);
+		contentPane.add(panelVuelo);
+		panelVuelo.setLayout(null);
+
+		JComboBox comboBoxTrayecto = new JComboBox();
+		comboBoxTrayecto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tipoSeleccionado = (String) comboBoxTrayecto.getSelectedItem();
+				switch (tipoSeleccionado) {
+				case "Ida": {
+					panelVueloVuelta.setVisible(false);
+					break;
+				}
+				case "Ida y vuelta": {
+					panelVueloVuelta.setVisible(true);
+					break;
+				}
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + tipoSeleccionado);
+				}
+			}
+		});
+		comboBoxTrayecto.setModel(new DefaultComboBoxModel(new String[] { "Ida", "Ida y vuelta" }));
+		comboBoxTrayecto.setBounds(164, 7, 186, 22);
+		panelVuelo.add(comboBoxTrayecto);
+
+		JLabel lblTrayecto = new JLabel("Trayecto");
+		lblTrayecto.setBounds(23, 11, 131, 14);
+		panelVuelo.add(lblTrayecto);
+
+		JLabel lblAeropuertoorigne = new JLabel("Aeropuerto origen");
+		lblAeropuertoorigne.setBounds(23, 45, 131, 14);
+		panelVuelo.add(lblAeropuertoorigne);
+
+		JLabel lblAeropuertoDestino = new JLabel("Aeropuerto destino");
+		lblAeropuertoDestino.setBounds(23, 82, 131, 14);
+		panelVuelo.add(lblAeropuertoDestino);
+
+		JComboBox comboBoxTrayecto_1 = new JComboBox();
+		comboBoxTrayecto_1.setBounds(164, 41, 106, 22);
+		panelVuelo.add(comboBoxTrayecto_1);
+
+		JComboBox comboBoxTrayecto_1_1 = new JComboBox();
+		comboBoxTrayecto_1_1.setBounds(164, 78, 106, 22);
+		panelVuelo.add(comboBoxTrayecto_1_1);
+
+		JButton btnBuscarVuelo = new JButton("Buscar Vuelo");
+		btnBuscarVuelo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://www.booking.com"));
+				} catch (IOException | URISyntaxException ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, "No se pudo abrir el navegador.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		btnBuscarVuelo.setBounds(328, 61, 186, 23);
+		panelVuelo.add(btnBuscarVuelo);
+
+		JLabel lblFechaIda = new JLabel("Fecha Ida");
+		lblFechaIda.setBounds(23, 116, 131, 14);
+		panelVuelo.add(lblFechaIda);
+
+		JLabel lblCodigoVuelo = new JLabel("Codigo Vuelo");
+		lblCodigoVuelo.setBounds(23, 150, 131, 14);
+		panelVuelo.add(lblCodigoVuelo);
+
+		JLabel lblAerolinea = new JLabel("Aerolinea");
+		lblAerolinea.setBounds(23, 187, 131, 14);
+		panelVuelo.add(lblAerolinea);
+
+		JLabel lblHorarioSalida = new JLabel("Horario salida");
+		lblHorarioSalida.setBounds(23, 225, 131, 14);
+		panelVuelo.add(lblHorarioSalida);
+
+		JLabel lblDuracin = new JLabel("Duración");
+		lblDuracin.setBounds(23, 263, 131, 14);
+		panelVuelo.add(lblDuracin);
 		
-		JLabel lblNewLabel = new JLabel("Nombre de evento");
-		lblNewLabel.setBounds(10, 11, 271, 30);
-		contentPane.add(lblNewLabel);
+		JDateChooser dateChooserIda = new JDateChooser();
+		dateChooserIda.setBounds(164, 111, 106, 20);
+		panelVuelo.add(dateChooserIda);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 40, 400, 21);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textCodigoVueloIda = new JTextField();
+		textCodigoVueloIda.setColumns(10);
+		textCodigoVueloIda.setBounds(164, 147, 106, 20);
+		panelVuelo.add(textCodigoVueloIda);
 		
-		JLabel lblNewLabel_1 = new JLabel("Tipo de evento");
-		lblNewLabel_1.setBounds(10, 63, 400, 21);
-		contentPane.add(lblNewLabel_1);
+		textAerolineaIda = new JTextField();
+		textAerolineaIda.setColumns(10);
+		textAerolineaIda.setBounds(164, 184, 106, 20);
+		panelVuelo.add(textAerolineaIda);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Vuelo", "Alojamiento", "Actividad"}));
-		comboBox.setBounds(10, 82, 400, 21);
-		contentPane.add(comboBox);
+		textHorarioSalida = new JTextField();
+		textHorarioSalida.setColumns(10);
+		textHorarioSalida.setBounds(164, 222, 106, 20);
+		panelVuelo.add(textHorarioSalida);
 		
-		JLabel lblNewLabel_2 = new JLabel("Fecha ida");
-		lblNewLabel_2.setBounds(10, 103, 400, 21);
-		contentPane.add(lblNewLabel_2);
+		textDuracion = new JTextField();
+		textDuracion.setColumns(10);
+		textDuracion.setBounds(164, 260, 106, 20);
+		panelVuelo.add(textDuracion);
 		
-		/*JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(10, 126, 265, 20);
-		contentPane.add(dateChooser);*/
+		panelVueloVuelta = new JPanel();
+		panelVueloVuelta.setBounds(328, 95, 351, 202);
+		panelVuelo.add(panelVueloVuelta);
+		panelVueloVuelta.setLayout(null);
 		
-		JLabel lblNewLabel_3 = new JLabel("Fecha vuelta");
-		lblNewLabel_3.setBounds(10, 147, 400, 21);
-		contentPane.add(lblNewLabel_3);
+		JLabel lblFechaIda_1 = new JLabel("Fecha Vuelta");
+		lblFechaIda_1.setBounds(10, 21, 131, 14);
+		panelVueloVuelta.add(lblFechaIda_1);
 		
-		/*JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(10, 166, 265, 20);
-		contentPane.add(dateChooser_1);*/
+		JLabel lblCodigoVueloVuelta = new JLabel("Codigo Vuelo");
+		lblCodigoVueloVuelta.setBounds(10, 56, 131, 14);
+		panelVueloVuelta.add(lblCodigoVueloVuelta);
 		
-		JLabel lblNewLabel_4 = new JLabel("Trayecto");
-		lblNewLabel_4.setBounds(10, 188, 400, 21);
-		contentPane.add(lblNewLabel_4);
+		JLabel lblAerolineavuelta = new JLabel("AerolineaVuelta");
+		lblAerolineavuelta.setBounds(10, 92, 131, 14);
+		panelVueloVuelta.add(lblAerolineavuelta);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Ida", "Ida y Vuelta"}));
-		comboBox_1.setToolTipText("");
-		comboBox_1.setBounds(10, 208, 400, 21);
-		contentPane.add(comboBox_1);
+		JLabel lblHorarioSalida_1 = new JLabel("Horario salida");
+		lblHorarioSalida_1.setBounds(10, 127, 131, 14);
+		panelVueloVuelta.add(lblHorarioSalida_1);
 		
-		JLabel lblNewLabel_5 = new JLabel("Aeropuerto origen");
-		lblNewLabel_5.setBounds(10, 249, 112, 21);
-		contentPane.add(lblNewLabel_5);
+		JLabel lblDuracinVuelta = new JLabel("Duración Vuelta");
+		lblDuracinVuelta.setBounds(10, 164, 131, 14);
+		panelVueloVuelta.add(lblDuracinVuelta);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Alicante (ALC)", "Asturias (OVD)", "Barcelona (BCN)", "Córdoba (ODB)", "Gerona (GRO)", "Granada (GRX)", "Ibiza (IBZ)", "La Coruña (LCG)", "Lanzarote (ACE)", "Madrid (MAD)", "Mahón (MAH)", "Murcia (MJV)", "Pamplona (PNA)", "Salamanca (SLM)", "Santa Cruz de la Palma (SPC)", "Santiago de Compostela (SCQ)", "Valencia (VLC)", "Vigo (VGO)", "Zaragoza (ZAZ)", "Badajoz (BJZ)", "Bilbao (BIO)", "Vitoria (VIT)", "Tenerife Norte (TFN)", "Tenerife Sur (TFS)", "Santander (SDR)", "San Sebastián (EAS)", "Reus (REU)", "Palma de Mallorca (PMI)", "Málaga (AGP)", "Jerez de la Frontera (XRY)", "Gran Canaria (LPA)", "Fuerteventura (FUE)", "Hierro (VDE)", "La Gomera (GMZ)", "Montreal, Québec (YMQ)", "Ottawa, Ontario, Canadá (YOW)", "Toronto, Ontario, Canadá (YTO)", "Vancouver, Canadá (YVR)", "Boston (BOS)", "Houston (HOU)", "Miami (MIA)", "Los Angeles (LAX)", "Nueva York (JFK)", "Detroit (DTT)", "Philadelphia (PHL)", "San Francisco (SFO)", "Seattle (SEA)", "Washington (WAS)", "Santo Domingo, República Dominicana (SDQ)", "Kingston, Jamaica (KIN)", "Buenos Aires (BUE)", "Río de Janeiro, Brasil (RIO)", "São Paulo, Brasil (SAO)", "Bogotá, Colombia (BOG)", "Lima, Perú (LIM)", "Caracas, Venezuela (CCS)", "Viena, Austria (VIE)", "Praga, República Checa (PRG)", "Helsinki, Finlandia (HEL)", "Lyon, Francia (LYS)", "París, Francia (aeropuerto Charles de Gaulle) (CDG)", "Le Bourget, Francia (LBG)", "Orly, Francia (ORY)", "Marsella, Francia (MRS)", "Berlín, Alemania (BER)", "Düsseldorf, Alemania (DUS)", "Frankfurt, Alemania (FRA)", "Múnich, Alemania (MUC)", "Hamburgo, Alemania (HAM)", "Atenas, Grecia (ATH)", "Dublín, Irlanda (DUB)", "Milán, Italia (MIL)", "México D.F., México (MEX)", "Acapulco, México (ACA)", "Brasilia, Brasil (BSB)", "Stuttgart, Alemania (STR)", "Copenhague, Dinamarca (CPH)", "Bruselas, Bélgica (BRU)", "Ámsterdam, Países Bajos (AMS)", "Oslo, Noruega (OSL)", "Varsovia, Polonia (WAW)", "Lisboa, Portugal (LIS)", "Estocolmo, Suecia (STO)", "Moscú, Rusia (MOW)", "Ginebra, Suiza (GVA)", "Zúrich, Suiza (ZRH)", "Estambul, Turquía (IST)", "Londres, Gatwick (LGH)", "Londres, Heathrow (LHR)", "Londres, Stansted (STN)", "El Cairo, Egipto (CAI)", "Nairobi, Kenia (NBO)", "Casablanca, Marruecos (CAS)", "Marrakech, Marruecos (RAK)", "Túnez (TUN)", "Ammán, Jordania (AMM)", "Bangkok, Tailandia (BKK)", "Melbourne, Australia (MEL)", "Sídney, Australia (SYD)"}));
-		comboBox_2.setBounds(132, 249, 354, 20);
-		contentPane.add(comboBox_2);
+		JDateChooser dateChooserVuelta = new JDateChooser();
+		dateChooserVuelta.setBounds(116, 15, 106, 20);
+		panelVueloVuelta.add(dateChooserVuelta);
 		
-		JLabel lblNewLabel_6 = new JLabel("Aeropuerto destino");
-		lblNewLabel_6.setBounds(10, 281, 112, 21);
-		contentPane.add(lblNewLabel_6);
+		txtCodigoVueloVuelta = new JTextField();
+		txtCodigoVueloVuelta.setColumns(10);
+		txtCodigoVueloVuelta.setBounds(116, 53, 106, 20);
+		panelVueloVuelta.add(txtCodigoVueloVuelta);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Alicante (ALC)", "Asturias (OVD)", "Barcelona (BCN)", "Córdoba (ODB)", "Gerona (GRO)", "Granada (GRX)", "Ibiza (IBZ)", "La Coruña (LCG)", "Lanzarote (ACE)", "Madrid (MAD)", "Mahón (MAH)", "Murcia (MJV)", "Pamplona (PNA)", "Salamanca (SLM)", "Santa Cruz de la Palma (SPC)", "Santiago de Compostela (SCQ)", "Valencia (VLC)", "Vigo (VGO)", "Zaragoza (ZAZ)", "Badajoz (BJZ)", "Bilbao (BIO)", "Vitoria (VIT)", "Tenerife Norte (TFN)", "Tenerife Sur (TFS)", "Santander (SDR)", "San Sebastián (EAS)", "Reus (REU)", "Palma de Mallorca (PMI)", "Málaga (AGP)", "Jerez de la Frontera (XRY)", "Gran Canaria (LPA)", "Fuerteventura (FUE)", "Hierro (VDE)", "La Gomera (GMZ)", "Montreal, Québec (YMQ)", "Ottawa, Ontario, Canadá (YOW)", "Toronto, Ontario, Canadá (YTO)", "Vancouver, Canadá (YVR)", "Boston (BOS)", "Houston (HOU)", "Miami (MIA)", "Los Angeles (LAX)", "Nueva York (JFK)", "Detroit (DTT)", "Philadelphia (PHL)", "San Francisco (SFO)", "Seattle (SEA)", "Washington (WAS)", "Santo Domingo, República Dominicana (SDQ)", "Kingston, Jamaica (KIN)", "Buenos Aires (BUE)", "Río de Janeiro, Brasil (RIO)", "São Paulo, Brasil (SAO)", "Bogotá, Colombia (BOG)", "Lima, Perú (LIM)", "Caracas, Venezuela (CCS)", "Viena, Austria (VIE)", "Praga, República Checa (PRG)", "Helsinki, Finlandia (HEL)", "Lyon, Francia (LYS)", "París, Francia (aeropuerto Charles de Gaulle) (CDG)", "Le Bourget, Francia (LBG)", "Orly, Francia (ORY)", "Marsella, Francia (MRS)", "Berlín, Alemania (BER)", "Düsseldorf, Alemania (DUS)", "Frankfurt, Alemania (FRA)", "Múnich, Alemania (MUC)", "Hamburgo, Alemania (HAM)", "Atenas, Grecia (ATH)", "Dublín, Irlanda (DUB)", "Milán, Italia (MIL)", "México D.F., México (MEX)", "Acapulco, México (ACA)", "Brasilia, Brasil (BSB)", "Stuttgart, Alemania (STR)", "Copenhague, Dinamarca (CPH)", "Bruselas, Bélgica (BRU)", "Ámsterdam, Países Bajos (AMS)", "Oslo, Noruega (OSL)", "Varsovia, Polonia (WAW)", "Lisboa, Portugal (LIS)", "Estocolmo, Suecia (STO)", "Moscú, Rusia (MOW)", "Ginebra, Suiza (GVA)", "Zúrich, Suiza (ZRH)", "Estambul, Turquía (IST)", "Londres, Gatwick (LGH)", "Londres, Heathrow (LHR)", "Londres, Stansted (STN)", "El Cairo, Egipto (CAI)", "Nairobi, Kenia (NBO)", "Casablanca, Marruecos (CAS)", "Marrakech, Marruecos (RAK)", "Túnez (TUN)", "Ammán, Jordania (AMM)", "Bangkok, Tailandia (BKK)", "Melbourne, Australia (MEL)", "Sídney, Australia (SYD)"}));
-		comboBox_3.setBounds(132, 280, 354, 21);
-		contentPane.add(comboBox_3);
+		textAerolineaVuelta = new JTextField();
+		textAerolineaVuelta.setColumns(10);
+		textAerolineaVuelta.setBounds(116, 89, 106, 20);
+		panelVueloVuelta.add(textAerolineaVuelta);
 		
-		JButton btnNewButton = new JButton("Buscar viaje");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton.setBounds(514, 249, 177, 53);
-		contentPane.add(btnNewButton);
+		textHorarioVuelta = new JTextField();
+		textHorarioVuelta.setColumns(10);
+		textHorarioVuelta.setBounds(116, 124, 106, 20);
+		panelVueloVuelta.add(textHorarioVuelta);
 		
-		JLabel lblNewLabel_7 = new JLabel("Codigo vuelo (ida)");
-		lblNewLabel_7.setBounds(10, 341, 354, 21);
-		contentPane.add(lblNewLabel_7);
+		textDuracionVuelta = new JTextField();
+		textDuracionVuelta.setColumns(10);
+		textDuracionVuelta.setBounds(116, 161, 106, 20);
+		panelVueloVuelta.add(textDuracionVuelta);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(10, 366, 271, 21);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel lblPrecio = new JLabel("Precio");
+		lblPrecio.setBounds(23, 298, 131, 14);
+		panelVuelo.add(lblPrecio);
 		
-		JLabel lblNewLabel_8 = new JLabel("Codigo vuelo (vuelta)");
-		lblNewLabel_8.setBounds(371, 341, 171, 21);
-		contentPane.add(lblNewLabel_8);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(371, 366, 271, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblNewLabel_9 = new JLabel("Aerolinea (ida)");
-		lblNewLabel_9.setBounds(10, 398, 237, 21);
-		contentPane.add(lblNewLabel_9);
-		
-		JLabel lblNewLabel_9_1 = new JLabel("Aerolinea (vuelta)");
-		lblNewLabel_9_1.setBounds(371, 398, 237, 21);
-		contentPane.add(lblNewLabel_9_1);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(10, 418, 271, 21);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(371, 418, 271, 21);
-		contentPane.add(textField_4);
-		textField_4.setColumns(10);
-		
-		JLabel lblNewLabel_10 = new JLabel("Horario salida (ida)");
-		lblNewLabel_10.setBounds(10, 450, 271, 21);
-		contentPane.add(lblNewLabel_10);
-		
-		JLabel lblNewLabel_11 = new JLabel("Horario salida (vuelta)");
-		lblNewLabel_11.setBounds(371, 450, 261, 21);
-		contentPane.add(lblNewLabel_11);
-		
-		textField_5 = new JTextField();
-		textField_5.setBounds(10, 470, 271, 21);
-		contentPane.add(textField_5);
-		textField_5.setColumns(10);
-		
-		textField_6 = new JTextField();
-		textField_6.setBounds(371, 470, 271, 21);
-		contentPane.add(textField_6);
-		textField_6.setColumns(10);
-		
-		JLabel lblNewLabel_12 = new JLabel("Duracion (ida)");
-		lblNewLabel_12.setBounds(10, 502, 171, 21);
-		contentPane.add(lblNewLabel_12);
-		
-		JLabel lblNewLabel_13 = new JLabel("Duracion (vuelta)");
-		lblNewLabel_13.setBounds(371, 505, 225, 21);
-		contentPane.add(lblNewLabel_13);
-		
-		textField_7 = new JTextField();
-		textField_7.setBounds(10, 521, 271, 21);
-		contentPane.add(textField_7);
-		textField_7.setColumns(10);
-		
-		textField_8 = new JTextField();
-		textField_8.setBounds(371, 521, 276, 21);
-		contentPane.add(textField_8);
-		textField_8.setColumns(10);
-		
-		JLabel lblNewLabel_14 = new JLabel("Precio");
-		lblNewLabel_14.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_14.setBounds(10, 597, 64, 30);
-		contentPane.add(lblNewLabel_14);
-		
-		textField_9 = new JTextField();
-		textField_9.setBounds(84, 594, 112, 41);
-		contentPane.add(textField_9);
-		textField_9.setColumns(10);
+		textPrecio = new JTextField();
+		textPrecio.setColumns(10);
+		textPrecio.setBounds(164, 295, 106, 20);
+		panelVuelo.add(textPrecio);
+		panelVueloVuelta.setVisible(false);
+
+		JButton btnCrearEvento = new JButton("CREAR EVENTO");
+		btnCrearEvento.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
+		btnCrearEvento.setBounds(205, 480, 131, 57);
+		contentPane.add(btnCrearEvento);
+
+		JButton btnVolver = new JButton("CANCELAR");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+				pestañaPrincipal.setVisible(true);
+				dispose();
+			}
+
+		});
+		btnVolver.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
+		btnVolver.setBounds(391, 480, 131, 57);
+		contentPane.add(btnVolver);
+
+		comboBoxTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tipoSeleccionado = (String) comboBoxTipo.getSelectedItem();
+				switch (tipoSeleccionado) {
+				case "Vuelo": {
+					panelVuelo.setVisible(true);
+					break;
+				}
+				case "Alojamiento": {
+
+					break;
+				}
+				case "Otros": {
+
+					break;
+				}
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + tipoSeleccionado);
+				}
+
+			}
+		});
 	}
 }

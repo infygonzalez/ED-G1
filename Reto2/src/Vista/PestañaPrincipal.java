@@ -47,6 +47,8 @@ public class PestañaPrincipal extends JFrame {
 	private JScrollPane scrollViajes;
 	private JScrollPane scrollEventos;
 	private JTable tableViajes;
+	private Viaje viajeSeleccionado;
+
 
 	public PestañaPrincipal(Agencia agencia) {
 
@@ -81,6 +83,21 @@ public class PestañaPrincipal extends JFrame {
 		menuBar.add(horizontalGlue);
 
 		JMenuItem mntmNuevoEvento = new JMenuItem("Nuevo Evento");
+		mntmNuevoEvento.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        NuevoEvento nuevoEvento;
+		        if (viajeSeleccionado != null) {
+		            nuevoEvento = new NuevoEvento(viajeSeleccionado, agencia);
+		        } else {
+		            nuevoEvento = new NuevoEvento(null, agencia);
+		            JOptionPane.showMessageDialog(null, "No se ha seleccionado un viaje. Podrás elegir uno dentro del evento.");
+		        }
+		        nuevoEvento.setVisible(true);
+		        dispose();  
+		    }
+		});
+
+
 		mntmNuevoEvento.setHorizontalAlignment(SwingConstants.CENTER);
 		menuBar.add(mntmNuevoEvento);
 
@@ -107,20 +124,25 @@ public class PestañaPrincipal extends JFrame {
 
 		tableViajes = new JTable();
 		tableViajes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int filaSeleccionada = tableViajes.getSelectedRow();
-				if (filaSeleccionada != -1) {
-					int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
-					Viaje viaje = new Viaje();
-					viaje.setId(viajeId);
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int filaSeleccionada = tableViajes.getSelectedRow();
+		        if (filaSeleccionada != -1) {
+		            int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
+		            String nombreViaje = tableViajes.getValueAt(filaSeleccionada, 1).toString();
+		            
+		            viajeSeleccionado = new Viaje();  // Asumiendo que Viaje tiene setters
+		            viajeSeleccionado.setId(viajeId);
+		            viajeSeleccionado.setNombreViaje(nombreViaje);
 
-					actualizarEventos(viaje);
-				}
-			}
+		            actualizarEventos(viajeSeleccionado);
+		        }
+		    }
 		});
+
 		tableViajes.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Viajes", "Tipo", "Dias", "Fecha Inicio", "Fecha Fin", "Pais" }));
+		tableViajes.setDefaultEditor(Object.class, null);
 		scrollViajes.setViewportView(tableViajes);
 
 		scrollEventos = new JScrollPane();
@@ -130,6 +152,7 @@ public class PestañaPrincipal extends JFrame {
 		tableEventos = new JTable();
 		tableEventos.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Nombre Evento", "Tipo", "Fecha", "Precio" }));
+		tableEventos.setDefaultEditor(Object.class, null);
 		scrollEventos.setViewportView(tableEventos);
 
 		JLabel lblViajes = new JLabel("VIAJES");
