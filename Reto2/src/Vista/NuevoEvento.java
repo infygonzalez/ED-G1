@@ -38,6 +38,9 @@ public class NuevoEvento extends JFrame {
 	private JTextField textDuracionVuelta;
 	private JPanel panelVueloVuelta;
 	private JPanel panelVuelo;
+	private JTextField textOtroPrecio;
+	private JTextField textOtroDescripcion;
+	private JPanel panelOtros;
 
 	/**
 	 * Create the frame.
@@ -69,10 +72,28 @@ public class NuevoEvento extends JFrame {
 		comboBoxTipo.setBounds(164, 63, 183, 22);
 		contentPane.add(comboBoxTipo);
 
+		JButton btnCrearEvento = new JButton("CREAR EVENTO");
+		btnCrearEvento.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
+		btnCrearEvento.setBounds(205, 480, 131, 57);
+		contentPane.add(btnCrearEvento);
+
+		JButton btnVolver = new JButton("CANCELAR");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+				pestañaPrincipal.setVisible(true);
+				dispose();
+			}
+
+		});
+		btnVolver.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
+		btnVolver.setBounds(391, 480, 131, 57);
+		contentPane.add(btnVolver);
+
 		panelVuelo = new JPanel();
-		panelVuelo.setVisible(false);
-		panelVuelo.setBounds(0, 92, 755, 377);
+		panelVuelo.setBounds(0, 88, 749, 394);
 		contentPane.add(panelVuelo);
+		panelVuelo.setVisible(false);
 		panelVuelo.setLayout(null);
 
 		JComboBox comboBoxTrayecto = new JComboBox();
@@ -152,107 +173,121 @@ public class NuevoEvento extends JFrame {
 		JLabel lblDuracin = new JLabel("Duración");
 		lblDuracin.setBounds(23, 263, 131, 14);
 		panelVuelo.add(lblDuracin);
-		
+
 		JDateChooser dateChooserIda = new JDateChooser();
 		dateChooserIda.setBounds(164, 111, 106, 20);
 		panelVuelo.add(dateChooserIda);
-		
+
 		textCodigoVueloIda = new JTextField();
 		textCodigoVueloIda.setColumns(10);
 		textCodigoVueloIda.setBounds(164, 147, 106, 20);
 		panelVuelo.add(textCodigoVueloIda);
-		
+
 		textAerolineaIda = new JTextField();
 		textAerolineaIda.setColumns(10);
 		textAerolineaIda.setBounds(164, 184, 106, 20);
 		panelVuelo.add(textAerolineaIda);
-		
+
 		textHorarioSalida = new JTextField();
 		textHorarioSalida.setColumns(10);
 		textHorarioSalida.setBounds(164, 222, 106, 20);
 		panelVuelo.add(textHorarioSalida);
-		
+
 		textDuracion = new JTextField();
 		textDuracion.setColumns(10);
 		textDuracion.setBounds(164, 260, 106, 20);
 		panelVuelo.add(textDuracion);
-		
+
 		panelVueloVuelta = new JPanel();
 		panelVueloVuelta.setBounds(328, 95, 351, 202);
 		panelVuelo.add(panelVueloVuelta);
 		panelVueloVuelta.setLayout(null);
-		
+
 		JLabel lblFechaIda_1 = new JLabel("Fecha Vuelta");
 		lblFechaIda_1.setBounds(10, 21, 131, 14);
 		panelVueloVuelta.add(lblFechaIda_1);
-		
+
 		JLabel lblCodigoVueloVuelta = new JLabel("Codigo Vuelo");
 		lblCodigoVueloVuelta.setBounds(10, 56, 131, 14);
 		panelVueloVuelta.add(lblCodigoVueloVuelta);
-		
+
 		JLabel lblAerolineavuelta = new JLabel("AerolineaVuelta");
 		lblAerolineavuelta.setBounds(10, 92, 131, 14);
 		panelVueloVuelta.add(lblAerolineavuelta);
-		
+
 		JLabel lblHorarioSalida_1 = new JLabel("Horario salida");
 		lblHorarioSalida_1.setBounds(10, 127, 131, 14);
 		panelVueloVuelta.add(lblHorarioSalida_1);
-		
+
 		JLabel lblDuracinVuelta = new JLabel("Duración Vuelta");
 		lblDuracinVuelta.setBounds(10, 164, 131, 14);
 		panelVueloVuelta.add(lblDuracinVuelta);
-		
+
 		JDateChooser dateChooserVuelta = new JDateChooser();
 		dateChooserVuelta.setBounds(116, 15, 106, 20);
 		panelVueloVuelta.add(dateChooserVuelta);
-		
+
 		txtCodigoVueloVuelta = new JTextField();
 		txtCodigoVueloVuelta.setColumns(10);
 		txtCodigoVueloVuelta.setBounds(116, 53, 106, 20);
 		panelVueloVuelta.add(txtCodigoVueloVuelta);
-		
+
 		textAerolineaVuelta = new JTextField();
 		textAerolineaVuelta.setColumns(10);
 		textAerolineaVuelta.setBounds(116, 89, 106, 20);
 		panelVueloVuelta.add(textAerolineaVuelta);
-		
+
 		textHorarioVuelta = new JTextField();
 		textHorarioVuelta.setColumns(10);
 		textHorarioVuelta.setBounds(116, 124, 106, 20);
 		panelVueloVuelta.add(textHorarioVuelta);
-		
+
 		textDuracionVuelta = new JTextField();
 		textDuracionVuelta.setColumns(10);
 		textDuracionVuelta.setBounds(116, 161, 106, 20);
 		panelVueloVuelta.add(textDuracionVuelta);
-		
+
 		JLabel lblPrecio = new JLabel("Precio");
 		lblPrecio.setBounds(23, 298, 131, 14);
 		panelVuelo.add(lblPrecio);
-		
+
 		textPrecio = new JTextField();
 		textPrecio.setColumns(10);
 		textPrecio.setBounds(164, 295, 106, 20);
 		panelVuelo.add(textPrecio);
+
+		panelOtros = new JPanel();
+		panelOtros.setBounds(10, 96, 502, 309);
+		contentPane.add(panelOtros);
+		panelOtros.setLayout(null);
+		panelOtros.setVisible(false);
+
+		JLabel lblOtroDescripcion = new JLabel("Descripción");
+		lblOtroDescripcion.setBounds(10, 22, 131, 14);
+		panelOtros.add(lblOtroDescripcion);
+
+		JLabel lblPrecio_1 = new JLabel("Precio");
+		lblPrecio_1.setBounds(10, 103, 131, 14);
+		panelOtros.add(lblPrecio_1);
+
+		JLabel lblOtroFecha = new JLabel("Fecha");
+		lblOtroFecha.setBounds(10, 140, 131, 14);
+		panelOtros.add(lblOtroFecha);
+
+		textOtroPrecio = new JTextField();
+		textOtroPrecio.setColumns(10);
+		textOtroPrecio.setBounds(156, 100, 183, 20);
+		panelOtros.add(textOtroPrecio);
+
+		textOtroDescripcion = new JTextField();
+		textOtroDescripcion.setColumns(10);
+		textOtroDescripcion.setBounds(156, 19, 300, 70);
+		panelOtros.add(textOtroDescripcion);
+
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(156, 140, 183, 20);
+		panelOtros.add(dateChooser);
 		panelVueloVuelta.setVisible(false);
-
-		JButton btnCrearEvento = new JButton("CREAR EVENTO");
-		btnCrearEvento.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
-		btnCrearEvento.setBounds(205, 480, 131, 57);
-		contentPane.add(btnCrearEvento);
-
-		JButton btnVolver = new JButton("CANCELAR");
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
-				pestañaPrincipal.setVisible(true);
-				dispose();
-			}
-
-		});
-		btnVolver.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 17));
-		btnVolver.setBounds(391, 480, 131, 57);
-		contentPane.add(btnVolver);
 
 		comboBoxTipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -260,14 +295,21 @@ public class NuevoEvento extends JFrame {
 				switch (tipoSeleccionado) {
 				case "Vuelo": {
 					panelVuelo.setVisible(true);
+					/*panelAlojamiento.setVisible(false);*/
+					panelOtros.setVisible(false);
+
 					break;
 				}
 				case "Alojamiento": {
-
+					panelVuelo.setVisible(false);
+					/*panelAlojamiento.setVisible(true);*/
+					panelOtros.setVisible(false);
 					break;
 				}
 				case "Otros": {
-
+					panelVuelo.setVisible(false);
+					/*panelAlojamiento.setVisible(false);*/
+					panelOtros.setVisible(true);
 					break;
 				}
 				default:
