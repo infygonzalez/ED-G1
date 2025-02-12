@@ -3,14 +3,17 @@ package Modelo_Pojos;
 public class IATAS {
 	private String Aeropuerto;
 	private String Codigo;
-	private Pais pais;
 	
+	
+	public IATAS(String aeropuerto) {
+		Aeropuerto = aeropuerto;
+		Codigo = "";
+	}
 
-	public IATAS(String aeropuerto, String codigo, Pais pais ) {
+	public IATAS(String aeropuerto, String codigo) {
 		super();
 		Aeropuerto = aeropuerto;
 		Codigo = codigo;
-		this.pais = pais;
 		
 	}
 
@@ -30,19 +33,13 @@ public class IATAS {
 		Codigo = codigo;
 	}
 
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
+	
 
 	
 
 	@Override
 	public String toString() {
-		return "IATAS [Aeropuerto=" + Aeropuerto + ", Codigo=" + Codigo + ", pais=" + pais + "]";
+		return "IATAS [Aeropuerto=" + Aeropuerto + ", Codigo=" + Codigo + "]";
 	}
 
 }
