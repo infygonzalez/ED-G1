@@ -59,6 +59,9 @@ public class PestañaPrincipal extends JFrame {
 		setBounds(100, 100, 856, 493);
 
 		JMenuBar menuBar = new JMenuBar();
+		String colorfondo = agencia.getColorMarca();
+		Color color = Color.decode(colorfondo);
+		menuBar.setBackground(color);
 		setJMenuBar(menuBar);
 
 		JMenuItem mntmDesconectar = new JMenuItem("Desconectar");
@@ -109,83 +112,81 @@ public class PestañaPrincipal extends JFrame {
 		mntmOfertaCliente = new JMenuItem("Oferta Cliente");
 		mntmOfertaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		        int filaSeleccionada = tableViajes.getSelectedRow();
+				int filaSeleccionada = tableViajes.getSelectedRow();
 
-		        if (filaSeleccionada == -1) {
-		            JOptionPane.showMessageDialog(null, "Por favor, selecciona un viaje para generar la oferta.");
-		            return;
-		        }
+				if (filaSeleccionada == -1) {
+					JOptionPane.showMessageDialog(null, "Por favor, selecciona un viaje para generar la oferta.");
+					return;
+				}
 
-		        // Obtener los datos del viaje seleccionado
-		        int id = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString()); // ID del viaje
-		        String nombreViaje = (String) tableViajes.getValueAt(filaSeleccionada, 1);
-		        String tipoViaje = (String) tableViajes.getValueAt(filaSeleccionada, 2);
-		        int duracion = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 3).toString()); // Duración en días
-		        String fechaInicio = (String) tableViajes.getValueAt(filaSeleccionada, 4); // Fecha de inicio
-		        String fechaFin = (String) tableViajes.getValueAt(filaSeleccionada, 5); // Fecha de fin
-		        String paisDestino = (String) tableViajes.getValueAt(filaSeleccionada, 6);
+				// Obtener los datos del viaje seleccionado
+				int id = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString()); // ID del viaje
+				String nombreViaje = (String) tableViajes.getValueAt(filaSeleccionada, 1);
+				String tipoViaje = (String) tableViajes.getValueAt(filaSeleccionada, 2);
+				int duracion = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 3).toString()); // Duración en
+																											// días
+				String fechaInicio = (String) tableViajes.getValueAt(filaSeleccionada, 4); // Fecha de inicio
+				String fechaFin = (String) tableViajes.getValueAt(filaSeleccionada, 5); // Fecha de fin
+				String paisDestino = (String) tableViajes.getValueAt(filaSeleccionada, 6);
 
-		        // Validar que las fechas sean correctas
-		        try {
-		            // Intentar parsear las fechas
-		            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		            sdf.setLenient(false); // Para que no acepte fechas incorrectas
+				// Validar que las fechas sean correctas
+				try {
+					// Intentar parsear las fechas
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					sdf.setLenient(false); // Para que no acepte fechas incorrectas
 
-		            // Si no es posible parsear, se lanzará una excepción
-		            sdf.parse(fechaInicio);
-		            sdf.parse(fechaFin);
-		        } catch (ParseException ex) {
-		            JOptionPane.showMessageDialog(null, "Las fechas no tienen el formato correcto (yyyy-MM-dd).");
-		            return;
-		        }
+					// Si no es posible parsear, se lanzará una excepción
+					sdf.parse(fechaInicio);
+					sdf.parse(fechaFin);
+				} catch (ParseException ex) {
+					JOptionPane.showMessageDialog(null, "Las fechas no tienen el formato correcto (yyyy-MM-dd).");
+					return;
+				}
 
-		        StringBuilder oferta = new StringBuilder();
-		        oferta.append("*** OFERTA DE VIAJE ***\n\n");
-		        oferta.append("Id del Viaje: " + id + "\n");
-		        oferta.append("Nombre del Viaje: " + nombreViaje + "\n");
-		        oferta.append("Tipo de Viaje: " + tipoViaje + "\n");
-		        oferta.append("Duración: " + duracion + " días\n");
-		        oferta.append("Fecha de Inicio: " + fechaInicio + "\n");
-		        oferta.append("Fecha de Fin: " + fechaFin + "\n");
-		        oferta.append("Destino: " + paisDestino + "\n\n");
-		        oferta.append("Eventos incluidos:\n");
+				StringBuilder oferta = new StringBuilder();
+				oferta.append("*** OFERTA DE VIAJE ***\n\n");
+				oferta.append("Id del Viaje: " + id + "\n");
+				oferta.append("Nombre del Viaje: " + nombreViaje + "\n");
+				oferta.append("Tipo de Viaje: " + tipoViaje + "\n");
+				oferta.append("Duración: " + duracion + " días\n");
+				oferta.append("Fecha de Inicio: " + fechaInicio + "\n");
+				oferta.append("Fecha de Fin: " + fechaFin + "\n");
+				oferta.append("Destino: " + paisDestino + "\n\n");
+				oferta.append("Eventos incluidos:\n");
 
-		        DefaultTableModel modelEventos = (DefaultTableModel) tableEventos.getModel();
+				DefaultTableModel modelEventos = (DefaultTableModel) tableEventos.getModel();
 
-		        for (int i = 0; i < modelEventos.getRowCount(); i++) {
-		        	String idEvento = (String) modelEventos.getValueAt(i, 0);
-		            String nombreEvento = (String) modelEventos.getValueAt(i, 1);
-		            String tipoEvento = (String) modelEventos.getValueAt(i, 2);
-		            String fechaEvento = (String) modelEventos.getValueAt(i, 3); // Fecha como String
+				for (int i = 0; i < modelEventos.getRowCount(); i++) {
+					String idEvento = (String) modelEventos.getValueAt(i, 0);
+					String nombreEvento = (String) modelEventos.getValueAt(i, 1);
+					String tipoEvento = (String) modelEventos.getValueAt(i, 2);
+					String fechaEvento = (String) modelEventos.getValueAt(i, 3); // Fecha como String
 
-		            Object precioEventoObj = modelEventos.getValueAt(i, 4);
-		            double precioEvento = 0.0;
-		            if (precioEventoObj instanceof String) {
-		                precioEvento = Double.parseDouble((String) precioEventoObj);
-		            } else if (precioEventoObj instanceof Double) {
-		                precioEvento = (Double) precioEventoObj;
-		            }
+					Object precioEventoObj = modelEventos.getValueAt(i, 4);
+					double precioEvento = 0.0;
+					if (precioEventoObj instanceof String) {
+						precioEvento = Double.parseDouble((String) precioEventoObj);
+					} else if (precioEventoObj instanceof Double) {
+						precioEvento = (Double) precioEventoObj;
+					}
 
-		            oferta.append("- " + nombreEvento + " (" + tipoEvento + ", " + fechaEvento + ") - Precio: " + precioEvento + "€\n");
-		        }
+					oferta.append("- " + nombreEvento + " (" + tipoEvento + ", " + fechaEvento + ") - Precio: "
+							+ precioEvento + "€\n");
+				}
 
-		        try {
-		            String fileName = "Oferta_" + nombreViaje.replace(" ", "_") + ".txt";
-		            FileWriter writer = new FileWriter(fileName);
-		            writer.write(oferta.toString());
-		            writer.close();
-		            JOptionPane.showMessageDialog(null, "Oferta generada exitosamente en un archivo de texto: " + fileName);
-		        } catch (IOException IOE) {
-		            JOptionPane.showMessageDialog(null, "Error al generar la oferta: " + IOE.getMessage());
-		        }
-		    }
+				try {
+					String fileName = "Oferta_" + nombreViaje.replace(" ", "_") + ".txt";
+					FileWriter writer = new FileWriter(fileName);
+					writer.write(oferta.toString());
+					writer.close();
+					JOptionPane.showMessageDialog(null,
+							"Oferta generada exitosamente en un archivo de texto: " + fileName);
+				} catch (IOException IOE) {
+					JOptionPane.showMessageDialog(null, "Error al generar la oferta: " + IOE.getMessage());
+				}
+			}
 		});
 
-
-
-
-
-		
 		mntmOfertaCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		menuBar.add(mntmOfertaCliente);
 

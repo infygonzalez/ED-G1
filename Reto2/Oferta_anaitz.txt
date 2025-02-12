@@ -1,0 +1,12 @@
+*** OFERTA DE VIAJE ***
+
+Id del Viaje: 13
+Nombre del Viaje: anaitz
+Tipo de Viaje: teamo
+Duración: 1 días
+Fecha de Inicio: 2025-02-12
+Fecha de Fin: 2025-02-13
+Destino: ARGENTINA
+
+Eventos incluidos:
+- teamomucho (Otros, 2025-02-20) - Precio: 123.0€

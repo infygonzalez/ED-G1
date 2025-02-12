@@ -33,6 +33,7 @@ public class Gestor {
 			sentencia = conexion.prepareStatement(sql);
 			sentencia.setString(1, nombre);
 			sentencia.setString(2, contraseña);
+			
 			resultSet = sentencia.executeQuery();
 
 			if (resultSet.next()) {
@@ -40,6 +41,7 @@ public class Gestor {
 				ret.setId(resultSet.getInt("id"));
 				ret.setLogo(resultSet.getString("Logo"));
 				ret.setNombre(resultSet.getString("nombre"));
+				ret.setColorMarca(resultSet.getString("Col_marca"));
 				ret.setContraseña(resultSet.getString("contraseña"));
 			}
 		} catch (SQLException sqle) {

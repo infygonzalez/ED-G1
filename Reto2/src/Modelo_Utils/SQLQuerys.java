@@ -2,7 +2,7 @@ package Modelo_Utils;
 
 public class SQLQuerys {
 	// SELECTS
-	public static final String SELECT_COMPROBAR_AGENCIA = "SELECT id,logo, Nombre, Contraseña FROM Agencia WHERE Nombre = ? AND Contraseña = ?";
+	public static final String SELECT_COMPROBAR_AGENCIA = "SELECT * FROM Agencia WHERE Nombre = ? AND Contraseña = ?";
 	public static final String SELECT_VIAJES = "SELECT * FROM Viajes WHERE id = ?";
 	public static final String SELECT_PAIS = "SELECT pais, codigo FROM codigopaises WHERE pais = ?";
 
