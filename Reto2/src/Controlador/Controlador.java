@@ -9,6 +9,7 @@ import Modelo_Gestor.GestorTablas;
 import Modelo_Gestor.GestorViaje;
 import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Alojamiento;
+import Modelo_Pojos.CompañiasAereas;
 import Modelo_Pojos.IATAS;
 import Modelo_Pojos.Otros;
 import Modelo_Pojos.Pais;
@@ -116,6 +117,15 @@ public class Controlador {
 	
 	public static ArrayList<IATAS> obtenerAeropuerto(){
 		return GestorEvento.obtenerAeropuerto();
+	}
+
+	public static ArrayList<CompañiasAereas> obtenerCompañiaAerea() {
+		// TODO Auto-generated method stub
+		return GestorEvento.obtenerCompañiaAerea();
+	}
+
+	public static boolean crearAlojamiento(Viaje viaje, Alojamiento alojamiento) {
+		return GestorEvento.obtenerAlojamiento(viaje,alojamiento);
 	}
 
 

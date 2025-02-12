@@ -292,7 +292,7 @@ public class GestorTablas {
 				sentencia.setInt(1, eventoID);
 				break;
 
-			case "Otro":
+			case "Otros":
 				sql = SQLQuerys.DELETE_OTROS; 
 				sentencia = conexion.prepareStatement(sql);
 				sentencia.setInt(1, eventoID);
