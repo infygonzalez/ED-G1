@@ -124,7 +124,7 @@ public class NuevoEvento extends JFrame {
 		btnBuscarVuelo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Desktop.getDesktop().browse(new URI("https://www.booking.com"));
+					Desktop.getDesktop().browse(new URI("https://www.skyscanner.es/"));
 				} catch (IOException | URISyntaxException ex) {
 					ex.printStackTrace();
 					JOptionPane.showMessageDialog(null, "No se pudo abrir el navegador.", "Error",
@@ -407,147 +407,183 @@ public class NuevoEvento extends JFrame {
 			}
 		});
 		btnCrearEvento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String eleccion = (String) comboBoxTipo.getSelectedItem();
+		    public void actionPerformed(ActionEvent e) {
+		        String eleccion = (String) comboBoxTipo.getSelectedItem();
 
-				switch (eleccion) {
-				case "Otros": {
-					Otros otro = new Otros();
-					String nombre = textNombre.getText().trim();
-					Float precio = Float.parseFloat(textOtroPrecio.getText());
-					String descripcion = textOtroDescripcion.getText().trim();
-					Date fecha = dateChooserOtro.getDate();
+		        switch (eleccion) {
+		            case "Otros": {
+		                Otros otro = new Otros();
+		                String nombre = textNombre.getText().trim();
+		                Float precio = null;
+		                try {
+		                    precio = Float.parseFloat(textOtroPrecio.getText().trim());
+		                } catch (NumberFormatException ex) {
+		                    JOptionPane.showMessageDialog(null, "El precio debe ser un número válido para 'Otros'.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                }
+		                String descripcion = textOtroDescripcion.getText().trim();
+		                Date fecha = dateChooserOtro.getDate();
 
-					String fechaFormateada = fechaFormato(fecha);
+		                String fechaFormateada = fechaFormato(fecha);
 
-					if (nombre.isEmpty() || precio == null || descripcion.isEmpty() || fechaFormateada.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos para 'Otros'.",
-								"Error", JOptionPane.ERROR_MESSAGE);
-						return;
-					} else {
-						otro.setNombre(nombre);
-						otro.setPrecio(precio);
-						otro.setDescripcion(descripcion);
-						otro.setFecha(fechaFormateada);
-						boolean resultado = Controlador.crearOtro(viaje, otro);
+		                // Verificación de campos vacíos o null
+		                if (nombre == null || nombre.isEmpty() || precio == null || descripcion == null || descripcion.isEmpty() || fechaFormateada == null || fechaFormateada.isEmpty()) {
+		                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos para 'Otros'.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                } else {
+		                    otro.setNombre(nombre);
+		                    otro.setPrecio(precio);
+		                    otro.setDescripcion(descripcion);
+		                    otro.setFecha(fechaFormateada);
+		                    boolean resultado = Controlador.crearOtro(viaje, otro);
 
-						if (resultado) {
-							JOptionPane.showMessageDialog(null, "Evento 'Otros' creado con éxito.", "Éxito",
-									JOptionPane.INFORMATION_MESSAGE);
-							PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
-							pestañaPrincipal.setVisible(true);
-							dispose();
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Hubo un error al crear el evento. Intenta nuevamente.");
-						}
-					}
-					break;
-				}
-				case "Vuelo": {
-					String nombre = textNombre.getText().trim();
-					String trayecto = (String) comboBoxTrayecto.getSelectedItem();
-					String aeropuertoOrigen = (String) comboBoxAeropuertoOrigen.getSelectedItem();
-					String aeropuertoDestino = (String) comboBoxAeropuertoDestino.getSelectedItem();
-					String aerolineaIda = (String) comboBoxAerolinea.getSelectedItem();
-					float precio = Float.parseFloat(textPrecio.getText().trim());
-					String codigoVuelo = textCodigoVueloIda.getText().trim();
-					Date fechaIda = dateChooserIda.getDate();
-					String fechaSalida = fechaFormato(fechaIda);
-					String horaSalida = textHorarioSalida.getText().trim();
-					String duracion = textDuracion.getText().trim();
+		                    if (resultado) {
+		                        JOptionPane.showMessageDialog(null, "Evento 'Otros' creado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+		                        PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+		                        pestañaPrincipal.setVisible(true);
+		                        dispose();
+		                    } else {
+		                        JOptionPane.showMessageDialog(null, "Hubo un error al crear el evento. Intenta nuevamente.");
+		                    }
+		                }
+		                break;
+		            }
+		            case "Vuelo": {
+		                String nombre = textNombre.getText().trim();
+		                String trayecto = (String) comboBoxTrayecto.getSelectedItem();
+		                String aeropuertoOrigen = (String) comboBoxAeropuertoOrigen.getSelectedItem();
+		                String aeropuertoDestino = (String) comboBoxAeropuertoDestino.getSelectedItem();
+		                String aerolineaIda = (String) comboBoxAerolinea.getSelectedItem();
+		                float precio = 0;
+		                try {
+		                    precio = Float.parseFloat(textPrecio.getText().trim());
+		                } catch (NumberFormatException ex) {
+		                    JOptionPane.showMessageDialog(null, "El precio debe ser un número válido para 'Vuelo'.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                }
+		                String codigoVuelo = textCodigoVueloIda.getText().trim();
+		                Date fechaIda = dateChooserIda.getDate();
+		                String fechaSalida = fechaFormato(fechaIda);
+		                String horaSalida = textHorarioSalida.getText().trim();
+		                String duracion = textDuracion.getText().trim();
 
-					if (trayecto.equals("Ida")) {
-						VuelosIda vueloIda = new VuelosIda();
-						vueloIda.setNombre(nombre);
-						vueloIda.setAerolinea(aerolineaIda);
-						vueloIda.setCodigoVuelo(Integer.parseInt(codigoVuelo));
-						vueloIda.setPrecio(precio);
-						vueloIda.setFechaSalida(fechaSalida);
-						vueloIda.setHoraSalida(horaSalida);
-						vueloIda.setDuracion(duracion);
-						vueloIda.setSalida(new IATAS(aeropuertoOrigen));
-						vueloIda.setDestino(new IATAS(aeropuertoDestino));
-						vueloIda.setViajes(viaje);
+		                // Verificación de campos vacíos o null
+		                if (nombre == null || nombre.isEmpty() || trayecto == null || trayecto.isEmpty() || aeropuertoOrigen == null || aeropuertoOrigen.isEmpty() ||
+		                        aeropuertoDestino == null || aeropuertoDestino.isEmpty() || aerolineaIda == null || aerolineaIda.isEmpty() || codigoVuelo == null || codigoVuelo.isEmpty() ||
+		                        fechaSalida == null || fechaSalida.isEmpty() || horaSalida == null || horaSalida.isEmpty() || duracion == null || duracion.isEmpty()) {
+		                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos para 'Vuelo'.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                }
 
-						boolean resultado = Controlador.crearVueloIda(viaje, vueloIda);
+		                if (trayecto.equals("Ida")) {
+		                    VuelosIda vueloIda = new VuelosIda();
+		                    vueloIda.setNombre(nombre);
+		                    vueloIda.setAerolinea(aerolineaIda);
+		                    vueloIda.setCodigoVuelo(Integer.parseInt(codigoVuelo));
+		                    vueloIda.setPrecio(precio);
+		                    vueloIda.setFechaSalida(fechaSalida);
+		                    vueloIda.setHoraSalida(horaSalida);
+		                    vueloIda.setDuracion(duracion);
+		                    vueloIda.setSalida(new IATAS(aeropuertoOrigen));
+		                    vueloIda.setDestino(new IATAS(aeropuertoDestino));
+		                    vueloIda.setViajes(viaje);
 
-						if (resultado) {
-							JOptionPane.showMessageDialog(null, "Vuelo de ida creado con éxito.", "Éxito",
-									JOptionPane.INFORMATION_MESSAGE);
-							PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
-							pestañaPrincipal.setVisible(true);
-							dispose();
-						} else {
-							JOptionPane.showMessageDialog(null, "Error al crear el vuelo. Intenta nuevamente.");
-						}
-					} else if (trayecto.equals("Ida y vuelta")) {
-						String fechaVuelta = fechaFormato(dateChooserVuelta.getDate());
-						String horaVuelta = textHorarioVuelta.getText().trim();
-						String duracionVuelta = textDuracionVuelta.getText().trim();
+		                    boolean resultado = Controlador.crearVueloIda(viaje, vueloIda);
 
-						VuelosVuelta vueloVuelta = new VuelosVuelta();
-						vueloVuelta.setNombre(nombre);
-						vueloVuelta.setAerolinea(aerolineaIda);
-						vueloVuelta.setCodigoVuelo(Integer.parseInt(codigoVuelo));
-						vueloVuelta.setPrecio(precio);
-						vueloVuelta.setFechaSalida(fechaSalida);
-						vueloVuelta.setHoraSalida(horaSalida);
-						vueloVuelta.setDuracion(duracion);
-						vueloVuelta.setSalida(new IATAS(aeropuertoOrigen));
-						vueloVuelta.setDestino(new IATAS(aeropuertoDestino));
-						vueloVuelta.setFechaVuelta(fechaVuelta);
-						vueloVuelta.setHoraVuelta(horaVuelta);
-						vueloVuelta.setDuracionVuelta(duracionVuelta);
-						vueloVuelta.setViajes(viaje);
+		                    if (resultado) {
+		                        JOptionPane.showMessageDialog(null, "Vuelo de ida creado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+		                        PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+		                        pestañaPrincipal.setVisible(true);
+		                        dispose();
+		                    } else {
+		                        JOptionPane.showMessageDialog(null, "Error al crear el vuelo. Intenta nuevamente.");
+		                    }
+		                } else if (trayecto.equals("Ida y vuelta")) {
+		                    String fechaVuelta = fechaFormato(dateChooserVuelta.getDate());
+		                    String horaVuelta = textHorarioVuelta.getText().trim();
+		                    String duracionVuelta = textDuracionVuelta.getText().trim();
 
-						boolean resultado = Controlador.crearVueloVuelta(viaje, vueloVuelta);
+		                    VuelosVuelta vueloVuelta = new VuelosVuelta();
+		                    vueloVuelta.setNombre(nombre);
+		                    vueloVuelta.setAerolinea(aerolineaIda);
+		                    vueloVuelta.setCodigoVuelo(Integer.parseInt(codigoVuelo));
+		                    vueloVuelta.setPrecio(precio);
+		                    vueloVuelta.setFechaSalida(fechaSalida);
+		                    vueloVuelta.setHoraSalida(horaSalida);
+		                    vueloVuelta.setDuracion(duracion);
+		                    vueloVuelta.setSalida(new IATAS(aeropuertoOrigen));
+		                    vueloVuelta.setDestino(new IATAS(aeropuertoDestino));
+		                    vueloVuelta.setFechaVuelta(fechaVuelta);
+		                    vueloVuelta.setHoraVuelta(horaVuelta);
+		                    vueloVuelta.setDuracionVuelta(duracionVuelta);
+		                    vueloVuelta.setViajes(viaje);
 
-						if (resultado) {
-							JOptionPane.showMessageDialog(null, "Vuelo de ida y vuelta creado con éxito.", "Éxito",
-									JOptionPane.INFORMATION_MESSAGE);
-							PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
-							pestañaPrincipal.setVisible(true);
-							dispose();
-						} else {
-							JOptionPane.showMessageDialog(null, "Error al crear el vuelo. Intenta nuevamente.");
-						}
-					}
-					break;
-				}
-				
-				case "Alojamiento":{
-					Alojamiento alojamiento = new Alojamiento();
-					String nombre = textNombre.getText().trim();
-					String habitacion = (String) comboBoxHabitacion.getSelectedItem();
-					String ciudad = textCiudad.getText().trim();
-					float precio = Float.parseFloat(textPrecioAlojamiento.getText().trim());
-					Date fechaEntrada = dateEntrada.getDate();
-					Date fechaSalida = dateSalida.getDate();
-					String entradaFormato = fechaFormato(fechaEntrada);
-					String salidaFormato = fechaFormato(fechaSalida);
+		                    boolean resultado = Controlador.crearVueloVuelta(viaje, vueloVuelta);
 
-					boolean resultado = Controlador.crearAlojamiento(viaje,alojamiento);
-					
-					if (resultado) {
-						JOptionPane.showMessageDialog(null, "Alojamiento creado con éxito.", "Éxito",
-								JOptionPane.INFORMATION_MESSAGE);
-						PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
-						pestañaPrincipal.setVisible(true);
-						dispose();
-					} else {
-						JOptionPane.showMessageDialog(null, "Error al crear el alojamiento. Intenta nuevamente.");
-					}
-				}
-				break;
+		                    if (resultado) {
+		                        JOptionPane.showMessageDialog(null, "Vuelo de ida y vuelta creado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+		                        PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+		                        pestañaPrincipal.setVisible(true);
+		                        dispose();
+		                    } else {
+		                        JOptionPane.showMessageDialog(null, "Error al crear el vuelo. Intenta nuevamente.");
+		                    }
+		                }
+		                break;
+		            }
 
-				default:
-					JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de evento válido.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					break;
-				}
-			}
+		            case "Alojamiento": {
+		                Alojamiento alojamiento = new Alojamiento();
+		                String nombre = textNombre.getText().trim();
+		                String habitacion = (String) comboBoxHabitacion.getSelectedItem();
+		                String ciudad = textCiudad.getText().trim();
+		                float precio = 0;
+		                try {
+		                    precio = Float.parseFloat(textPrecioAlojamiento.getText().trim());
+		                } catch (NumberFormatException ex) {
+		                    JOptionPane.showMessageDialog(null, "El precio debe ser un número válido para 'Alojamiento'.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                }
+		                Date fechaEntrada = dateEntrada.getDate();
+		                Date fechaSalida = dateSalida.getDate();
+		                String entradaFormato = fechaFormato(fechaEntrada);
+		                String salidaFormato = fechaFormato(fechaSalida);
+
+		                // Verificación de campos vacíos o null
+		                if (nombre == null || nombre.isEmpty() || habitacion == null || habitacion.isEmpty() || ciudad == null || ciudad.isEmpty() ||
+		                        entradaFormato == null || entradaFormato.isEmpty() || salidaFormato == null || salidaFormato.isEmpty()) {
+		                    JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos para 'Alojamiento'.", "Error", JOptionPane.ERROR_MESSAGE);
+		                    return;
+		                }
+
+		                alojamiento.setNombreHotel(nombre);
+		                alojamiento.setTipoHabitacion(habitacion);
+		                alojamiento.setCiudad(ciudad);
+		                alojamiento.setPrecio(precio);
+		                alojamiento.setFechaEntrada(entradaFormato);
+		                alojamiento.setFechaSalida(salidaFormato);
+
+		                boolean resultado = Controlador.crearAlojamiento(viaje, alojamiento);
+
+		                if (resultado) {
+		                    JOptionPane.showMessageDialog(null, "Alojamiento creado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+		                    PestañaPrincipal pestañaPrincipal = new PestañaPrincipal(agencia);
+		                    pestañaPrincipal.setVisible(true);
+		                    dispose();
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Error al crear el alojamiento. Intenta nuevamente.");
+		                }
+		                break;
+		            }
+
+		            default:
+		                JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de evento válido.", "Error", JOptionPane.ERROR_MESSAGE);
+		                break;
+		        }
+		    }
 		});
+
+
 
 		ArrayList<IATAS> listaAeropuertos = Controlador.obtenerAeropuerto();
 

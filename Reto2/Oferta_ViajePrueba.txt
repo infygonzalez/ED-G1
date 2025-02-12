@@ -1,0 +1,15 @@
+*** OFERTA DE VIAJE ***
+
+Id del Viaje: 12
+Nombre del Viaje: ViajePrueba
+Tipo de Viaje: asd
+Duración: 1 días
+Fecha de Inicio: 2025-02-12
+Fecha de Fin: 2025-02-13
+Destino: CANADA
+
+Eventos incluidos:
+- Alojamiento UWU (Alojamiento, 2025-02-12) - Precio: 12.0€
+- asdasd (Alojamiento, 2025-02-12) - Precio: 21.0€
+- asd (Otros, 2025-02-14) - Precio: 123.0€
+- Hola (Vuelo Ida, 2025-02-13) - Precio: 123.0€

@@ -1,6 +1,7 @@
 package Controlador;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import Modelo_Gestor.Gestor;
@@ -108,25 +109,26 @@ public class Controlador {
 		}
 		return GestorEvento.crearVueloIda(viaje, vuelo);
 	}
+
 	public static boolean crearVueloVuelta(Viaje viaje, VuelosVuelta vuelo) {
 		if (vuelo == null || viaje == null) {
 			return false;
 		}
 		return GestorEvento.crearVueloVuelta(viaje, vuelo);
 	}
-	
-	public static ArrayList<IATAS> obtenerAeropuerto(){
+
+	public static ArrayList<IATAS> obtenerAeropuerto() {
 		return GestorEvento.obtenerAeropuerto();
 	}
 
 	public static ArrayList<CompañiasAereas> obtenerCompañiaAerea() {
-		// TODO Auto-generated method stub
 		return GestorEvento.obtenerCompañiaAerea();
 	}
 
 	public static boolean crearAlojamiento(Viaje viaje, Alojamiento alojamiento) {
-		return GestorEvento.obtenerAlojamiento(viaje,alojamiento);
+		return GestorEvento.obtenerAlojamiento(viaje, alojamiento);
 	}
 
+	
 
 }

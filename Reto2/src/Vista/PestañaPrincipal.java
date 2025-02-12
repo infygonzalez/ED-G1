@@ -35,9 +35,12 @@ import Modelo_Pojos.VuelosVuelta;
 import Controlador.Controlador;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class PestañaPrincipal extends JFrame {
 
@@ -48,7 +51,7 @@ public class PestañaPrincipal extends JFrame {
 	private JScrollPane scrollEventos;
 	private JTable tableViajes;
 	private Viaje viajeSeleccionado;
-
+	private JMenuItem mntmOfertaCliente;
 
 	public PestañaPrincipal(Agencia agencia) {
 
@@ -72,7 +75,7 @@ public class PestañaPrincipal extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NuevoViaje nuevoViaje = new NuevoViaje(agencia);
-	            nuevoViaje.setVisible(true);
+				nuevoViaje.setVisible(true);
 				dispose();
 			}
 		});
@@ -84,19 +87,18 @@ public class PestañaPrincipal extends JFrame {
 
 		JMenuItem mntmNuevoEvento = new JMenuItem("Nuevo Evento");
 		mntmNuevoEvento.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        NuevoEvento nuevoEvento;
-		        if (viajeSeleccionado != null) {
-		            nuevoEvento = new NuevoEvento(viajeSeleccionado, agencia);
-		        } else {
-		            nuevoEvento = new NuevoEvento(null, agencia);
-		            JOptionPane.showMessageDialog(null, "No se ha seleccionado un viaje. Podrás elegir uno dentro del evento.");
-		        }
-		        nuevoEvento.setVisible(true);
-		        dispose();  
-		    }
-		});
+			public void actionPerformed(ActionEvent e) {
+				NuevoEvento nuevoEvento;
+				if (viajeSeleccionado != null) {
+					nuevoEvento = new NuevoEvento(viajeSeleccionado, agencia);
+					nuevoEvento.setVisible(true);
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado un viaje.");
+				}
 
+			}
+		});
 
 		mntmNuevoEvento.setHorizontalAlignment(SwingConstants.CENTER);
 		menuBar.add(mntmNuevoEvento);
@@ -104,7 +106,86 @@ public class PestañaPrincipal extends JFrame {
 		Component horizontalGlue_1 = Box.createHorizontalGlue();
 		menuBar.add(horizontalGlue_1);
 
-		JMenuItem mntmOfertaCliente = new JMenuItem("Oferta Cliente");
+		mntmOfertaCliente = new JMenuItem("Oferta Cliente");
+		mntmOfertaCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		        int filaSeleccionada = tableViajes.getSelectedRow();
+
+		        if (filaSeleccionada == -1) {
+		            JOptionPane.showMessageDialog(null, "Por favor, selecciona un viaje para generar la oferta.");
+		            return;
+		        }
+
+		        // Obtener los datos del viaje seleccionado
+		        int id = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString()); // ID del viaje
+		        String nombreViaje = (String) tableViajes.getValueAt(filaSeleccionada, 1);
+		        String tipoViaje = (String) tableViajes.getValueAt(filaSeleccionada, 2);
+		        int duracion = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 3).toString()); // Duración en días
+		        String fechaInicio = (String) tableViajes.getValueAt(filaSeleccionada, 4); // Fecha de inicio
+		        String fechaFin = (String) tableViajes.getValueAt(filaSeleccionada, 5); // Fecha de fin
+		        String paisDestino = (String) tableViajes.getValueAt(filaSeleccionada, 6);
+
+		        // Validar que las fechas sean correctas
+		        try {
+		            // Intentar parsear las fechas
+		            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		            sdf.setLenient(false); // Para que no acepte fechas incorrectas
+
+		            // Si no es posible parsear, se lanzará una excepción
+		            sdf.parse(fechaInicio);
+		            sdf.parse(fechaFin);
+		        } catch (ParseException ex) {
+		            JOptionPane.showMessageDialog(null, "Las fechas no tienen el formato correcto (yyyy-MM-dd).");
+		            return;
+		        }
+
+		        StringBuilder oferta = new StringBuilder();
+		        oferta.append("*** OFERTA DE VIAJE ***\n\n");
+		        oferta.append("Id del Viaje: " + id + "\n");
+		        oferta.append("Nombre del Viaje: " + nombreViaje + "\n");
+		        oferta.append("Tipo de Viaje: " + tipoViaje + "\n");
+		        oferta.append("Duración: " + duracion + " días\n");
+		        oferta.append("Fecha de Inicio: " + fechaInicio + "\n");
+		        oferta.append("Fecha de Fin: " + fechaFin + "\n");
+		        oferta.append("Destino: " + paisDestino + "\n\n");
+		        oferta.append("Eventos incluidos:\n");
+
+		        DefaultTableModel modelEventos = (DefaultTableModel) tableEventos.getModel();
+
+		        for (int i = 0; i < modelEventos.getRowCount(); i++) {
+		        	String idEvento = (String) modelEventos.getValueAt(i, 0);
+		            String nombreEvento = (String) modelEventos.getValueAt(i, 1);
+		            String tipoEvento = (String) modelEventos.getValueAt(i, 2);
+		            String fechaEvento = (String) modelEventos.getValueAt(i, 3); // Fecha como String
+
+		            Object precioEventoObj = modelEventos.getValueAt(i, 4);
+		            double precioEvento = 0.0;
+		            if (precioEventoObj instanceof String) {
+		                precioEvento = Double.parseDouble((String) precioEventoObj);
+		            } else if (precioEventoObj instanceof Double) {
+		                precioEvento = (Double) precioEventoObj;
+		            }
+
+		            oferta.append("- " + nombreEvento + " (" + tipoEvento + ", " + fechaEvento + ") - Precio: " + precioEvento + "€\n");
+		        }
+
+		        try {
+		            String fileName = "Oferta_" + nombreViaje.replace(" ", "_") + ".txt";
+		            FileWriter writer = new FileWriter(fileName);
+		            writer.write(oferta.toString());
+		            writer.close();
+		            JOptionPane.showMessageDialog(null, "Oferta generada exitosamente en un archivo de texto: " + fileName);
+		        } catch (IOException IOE) {
+		            JOptionPane.showMessageDialog(null, "Error al generar la oferta: " + IOE.getMessage());
+		        }
+		    }
+		});
+
+
+
+
+
+		
 		mntmOfertaCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		menuBar.add(mntmOfertaCliente);
 
@@ -124,20 +205,20 @@ public class PestañaPrincipal extends JFrame {
 
 		tableViajes = new JTable();
 		tableViajes.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		        int filaSeleccionada = tableViajes.getSelectedRow();
-		        if (filaSeleccionada != -1) {
-		            int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
-		            String nombreViaje = tableViajes.getValueAt(filaSeleccionada, 1).toString();
-		            
-		            viajeSeleccionado = new Viaje();  // Asumiendo que Viaje tiene setters
-		            viajeSeleccionado.setId(viajeId);
-		            viajeSeleccionado.setNombreViaje(nombreViaje);
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int filaSeleccionada = tableViajes.getSelectedRow();
+				if (filaSeleccionada != -1) {
+					int viajeId = Integer.parseInt(tableViajes.getValueAt(filaSeleccionada, 0).toString());
+					String nombreViaje = tableViajes.getValueAt(filaSeleccionada, 1).toString();
 
-		            actualizarEventos(viajeSeleccionado);
-		        }
-		    }
+					viajeSeleccionado = new Viaje(); // Asumiendo que Viaje tiene setters
+					viajeSeleccionado.setId(viajeId);
+					viajeSeleccionado.setNombreViaje(nombreViaje);
+
+					actualizarEventos(viajeSeleccionado);
+				}
+			}
 		});
 
 		tableViajes.setModel(new DefaultTableModel(new Object[][] {},
@@ -183,7 +264,7 @@ public class PestañaPrincipal extends JFrame {
 							boolean viajeEliminado = Controlador.borrarViaje(viajeId);
 							if (viajeEliminado) {
 								DefaultTableModel modelo = (DefaultTableModel) tableViajes.getModel();
-								modelo.removeRow(filaSeleccionada); 
+								modelo.removeRow(filaSeleccionada);
 								JOptionPane.showMessageDialog(null, "Viaje y eventos eliminados correctamente.");
 							} else {
 								JOptionPane.showMessageDialog(null, "Hubo un error al eliminar el viaje.");
@@ -212,14 +293,14 @@ public class PestañaPrincipal extends JFrame {
 				if (filaSeleccionada != -1) {
 					int eventoId = Integer.parseInt(tableEventos.getValueAt(filaSeleccionada, 0).toString());
 					String tipoEvento = tableEventos.getValueAt(filaSeleccionada, 2).toString();
-																									
+
 					int opcion = JOptionPane.showConfirmDialog(null,
 							"¿Estás seguro de que quieres eliminar este evento?", "Confirmar eliminación",
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (opcion == JOptionPane.YES_OPTION) {
 						DefaultTableModel modelo = (DefaultTableModel) tableEventos.getModel();
 						modelo.removeRow(filaSeleccionada);
-						boolean eliminado = Controlador.borrarEvento(eventoId, tipoEvento); 
+						boolean eliminado = Controlador.borrarEvento(eventoId, tipoEvento);
 						if (eliminado) {
 							JOptionPane.showMessageDialog(null, "Evento eliminado correctamente.");
 						} else {
@@ -244,32 +325,25 @@ public class PestañaPrincipal extends JFrame {
 		lblHolaX.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
 		lblHolaX.setBounds(10, 42, 250, 66);
 		contentPane.add(lblHolaX);
-		
-		
-		
-		
+
 		String logoUrl = agencia.getLogo();
 		URL imgUrl = null;
 		try {
-		    imgUrl = new URL(logoUrl);
+			imgUrl = new URL(logoUrl);
 		} catch (MalformedURLException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		ImageIcon image = new ImageIcon(imgUrl);
-		Image img = image.getImage();  // Obtener la imagen original
-		Image resizedImg = img.getScaledInstance(163, 149, Image.SCALE_SMOOTH);  // Redimensionar la imagen
+		Image img = image.getImage(); // Obtener la imagen original
+		Image resizedImg = img.getScaledInstance(163, 149, Image.SCALE_SMOOTH); // Redimensionar la imagen
 
-		JLabel lblNewLabel = new JLabel(new ImageIcon(resizedImg));  // Usar la imagen redimensionada en el JLabel
-		lblNewLabel.setBounds(10, 142, 163, 149);  // Establecer el tamaño del JLabel
+		JLabel lblNewLabel = new JLabel(new ImageIcon(resizedImg)); // Usar la imagen redimensionada en el JLabel
+		lblNewLabel.setBounds(10, 142, 163, 149); // Establecer el tamaño del JLabel
 		contentPane.add(lblNewLabel);
 
-		contentPane.revalidate();  // Forzar la validación de los componentes
-		contentPane.repaint();    // Redibujar el panel
-
-
-
-		
+		contentPane.revalidate(); // Forzar la validación de los componentes
+		contentPane.repaint(); // Redibujar el panel
 
 		actualizarViajes(agencia);
 

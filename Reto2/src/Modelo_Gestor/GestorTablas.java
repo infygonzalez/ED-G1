@@ -1,11 +1,17 @@
 package Modelo_Gestor;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import Modelo_Pojos.Agencia;
 import Modelo_Pojos.Alojamiento;
@@ -366,6 +372,8 @@ public class GestorTablas {
 	        }
 	    }
 	}
+	
+
 
 
 }

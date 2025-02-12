@@ -6,7 +6,7 @@ public class SQLQuerys {
 	public static final String SELECT_VIAJES = "SELECT * FROM Viajes WHERE id = ?";
 	public static final String SELECT_PAIS = "SELECT pais, codigo FROM codigopaises WHERE pais = ?";
 
-	public static final String SELECT_ALOJAMIENTO = "SELECT * FROM alojamiento JOIN agencia a WHERE id = ?";
+	public static final String SELECT_ALOJAMIENTO = "SELECT * FROM alojamiento WHERE id_viaje = ?";
 
 	public static final String SELECT_OTROS = "SELECT * FROM otros WHERE id_viaje = ?";
 	public static final String SELECT_VUELOSIDA = "SELECT * FROM Vuelos WHERE IdaVuelta = 'ida' AND id_viaje = ?";
