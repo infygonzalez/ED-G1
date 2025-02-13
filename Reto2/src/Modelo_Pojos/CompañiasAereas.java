@@ -6,6 +6,13 @@ public class CompañiasAereas {
 	private String codigo;
 
 
+	public CompañiasAereas() {
+		super();
+		this.nombre = "";
+		this.codigo = "";
+		
+	}
+	
 	public CompañiasAereas(String nombre, String codigo) {
 		super();
 		this.nombre = nombre;

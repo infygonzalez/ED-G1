@@ -5,6 +5,11 @@ public class IATAS {
 	private String Codigo;
 	
 	
+	public IATAS() {
+		Aeropuerto = "";
+		Codigo = "";
+	}
+	
 	public IATAS(String aeropuerto) {
 		Aeropuerto = aeropuerto;
 		Codigo = "";
